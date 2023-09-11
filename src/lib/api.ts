@@ -1,3 +1,6 @@
+const linkExternalApiCrawl = process.env.NEXT_PUBLIC_EXTERNAL_API_CRAWL;
+
 export const externalApi = {
-  manga: `${process.env.NEXT_PUBLIC_EXTERNAL_API_CRAWL}/api/manga`,
+  manga: `${linkExternalApiCrawl}/api/manga`,
+  user: `${linkExternalApiCrawl}/api/user`,
 };

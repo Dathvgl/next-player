@@ -19,6 +19,7 @@ import { ChildReact } from "~/types/type";
 
 export interface AuthContextProps {
   user: User | null;
+  idToken: () => Promise<string | undefined>;
   googleSignIn: () => Promise<void>;
   handleSignOut: () => Promise<void>;
 }
@@ -59,6 +60,14 @@ export const AuthContextProvider = ({ children }: ChildReact) => {
     await signOut(auth);
   };
 
+  const idToken = async () => {
+    try {
+      return user?.getIdToken();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const googleSignIn = async () => {
     const provider = new GoogleAuthProvider();
     await signInWithPopup(auth, provider);
@@ -77,7 +86,9 @@ export const AuthContextProvider = ({ children }: ChildReact) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, googleSignIn, handleSignOut }}>
+    <AuthContext.Provider
+      value={{ user, idToken, googleSignIn, handleSignOut }}
+    >
       {children}
     </AuthContext.Provider>
   );

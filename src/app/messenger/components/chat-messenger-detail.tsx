@@ -19,7 +19,10 @@ import { Input } from "~/components/ui/input";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import {
   listenRealtime,
-  pushRealTime
+  onceRealtime,
+  pushRealTime,
+  updateRealTime,
+  writeRealTime,
 } from "~/firebase/firebase";
 import { timestampNow } from "~/lib/convert";
 import { MotionLi } from "~/lib/motion";
@@ -34,6 +37,7 @@ interface MessageLogType {
 interface ChatMessengerDetailProps {
   uid: string;
   messageId: string;
+  members: string[];
 }
 
 const formSchema = z.object({
@@ -41,7 +45,7 @@ const formSchema = z.object({
 });
 
 export default function ChatMessengerDetail(props: ChatMessengerDetailProps) {
-  const { uid, messageId } = props;
+  const { uid, messageId, members } = props;
   const pathRef = `/messageLog/${messageId}`;
 
   const [chats, setChats] = useState<MessageLogType[]>([]);
@@ -70,10 +74,43 @@ export default function ChatMessengerDetail(props: ChatMessengerDetailProps) {
 
   async function onSubmit({ message }: z.infer<typeof formSchema>) {
     form.reset();
+
     await pushRealTime(pathRef, {
       uid,
       message,
       timestamp: timestampNow(),
+    }).then(async () => {
+      const length = members.length;
+
+      for (let index = 0; index < length; index++) {
+        const item = members[index];
+        const pathRef = `/chatNotify/${item}/${messageId}`;
+
+        const once = await onceRealtime(pathRef);
+        if (once.exists()) {
+          if (uid == once.val().sender) {
+            await updateRealTime(pathRef, {
+              seen: false,
+              content: message,
+              timestamp: timestampNow(),
+            });
+          } else {
+            await updateRealTime(pathRef, {
+              seen: false,
+              sender: uid,
+              content: message,
+              timestamp: timestampNow(),
+            });
+          }
+        } else {
+          await writeRealTime(pathRef, {
+            seen: false,
+            sender: uid,
+            content: message,
+            timestamp: timestampNow(),
+          });
+        }
+      }
     });
   }
 

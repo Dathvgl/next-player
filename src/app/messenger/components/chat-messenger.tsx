@@ -11,6 +11,7 @@ export default function ChatMessenger() {
   const uid = useAuth()?.user?.uid;
   const currentUid = useSearchParams().get("uid");
   const [messageId, setMessageId] = useState<string>();
+  const [members, setMembers] = useState<string[]>([]);
 
   useEffect(() => {
     handleChat();
@@ -41,11 +42,19 @@ export default function ChatMessenger() {
 
         if (result) {
           setMessageId(result.key);
+
+          if (uid != currentUid) {
+            setMembers([uid, currentUid]);
+          } else setMembers([currentUid]);
         } else {
           const push = await pushRealTime(pathRef, {
             [uid]: true,
             [currentUid]: true,
           });
+
+          if (uid != currentUid) {
+            setMembers([uid, currentUid]);
+          } else setMembers([currentUid]);
 
           setMessageId(push.key ?? undefined);
         }
@@ -54,5 +63,7 @@ export default function ChatMessenger() {
   }
 
   if (!messageId || !uid) return <></>;
-  return <ChatMessengerDetail uid={uid} messageId={messageId} />;
+  return (
+    <ChatMessengerDetail uid={uid} messageId={messageId} members={members} />
+  );
 }

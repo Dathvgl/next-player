@@ -1,22 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { CustomImage } from "~/components/custom-image";
-import { useAuth } from "~/contexts/auth-context";
+import { useFirebaseInfo } from "~/hooks/firebase-info";
 import { timeFromNow } from "~/lib/convert";
 
 interface PeopleType {
   uid: string;
   status: "online" | "offline";
   lastTimeOnline: number;
-}
-
-interface PersonType {
-  uid: string;
-  email?: string;
-  photoURL?: string;
-  displayName?: string;
 }
 
 interface ListMessengerDetailProps {
@@ -28,29 +20,8 @@ export default function ListMessengerDetail({
   person,
   currentUid,
 }: ListMessengerDetailProps) {
-  const authContext = useAuth();
-  const [data, setData] = useState<PersonType>();
-
-  useEffect(() => {
-    try {
-      init();
-    } catch (error) {
-      console.error(error);
-    }
-  }, [person.uid]);
-
-  async function init() {
-    const token = await authContext?.idToken();
-
-    const res = await fetch(`api/user/firebaseUser/${person.uid}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    setData(await res.json());
-  }
-
+  const data = useFirebaseInfo(person.uid);
   if (!data) return <></>;
-
   const isFocused = currentUid == data.uid;
 
   return (

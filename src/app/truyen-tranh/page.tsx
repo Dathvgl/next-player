@@ -8,10 +8,6 @@ const mangaTypes = [
     type: "blogtruyen",
     icon: "/manga/blogtruyen-favicon.png",
   },
-  {
-    type: "blogtruyen2",
-    icon: "/manga/blogtruyen-favicon.png",
-  },
 ];
 
 export default function Page() {

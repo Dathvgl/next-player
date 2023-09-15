@@ -1,16 +1,18 @@
 import moment from "moment";
 import "moment/locale/vi";
 import type { Metadata } from "next";
-import SiteHeader from "~/components/home/header/site-header";
-import ThemeProvider from "~/components/home/theme-provider";
+import { Suspense } from "react";
+import NavHeader from "~/app/components/header/nav-header";
+import SiteHeader from "~/app/components/header/site-header";
+import { NavigationEvents } from "~/components/navigation-event";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { siteConfig } from "~/config/site";
 import { AuthContextProvider } from "~/contexts/auth-context";
-import { fontSans } from "~/lib/fonts";
+import { fontDancingScript, fontSans } from "~/lib/fonts";
 import { cn } from "~/lib/utils";
 import { ChildReact } from "~/types/type";
+import ThemeProvider from "./components/theme-provider";
 import "./globals.css";
-import NavHeader from "~/components/home/header/nav-header";
 
 moment.locale("vi");
 
@@ -38,7 +40,8 @@ export default function RootLayout({ children }: ChildReact) {
         id="root"
         className={cn(
           "min-h-screen bg-background font-sans antialiased overflow-hidden",
-          fontSans.variable
+          fontSans.variable,
+          fontDancingScript.variable
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
@@ -54,6 +57,9 @@ export default function RootLayout({ children }: ChildReact) {
             </div>
           </AuthContextProvider>
         </ThemeProvider>
+        <Suspense fallback={null}>
+          <NavigationEvents />
+        </Suspense>
       </body>
     </html>
   );

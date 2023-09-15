@@ -2,7 +2,7 @@
 
 import { MessageCircle } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { CustomImage } from "~/components/custom-image";
 import LIcon from "~/components/lucide-icon";
 import {
@@ -69,9 +69,9 @@ function ChatNotifyDetail({ chatNotifies }: ChatNotifyDetailProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-80">
         <ul className="p-2">
-          {chatNotifies.map((item) => {
+          {chatNotifies.map((item, index) => {
             const info = infos?.find(({ uid }) => uid == item.sender);
-            if (!info) return <></>;
+            if (!info) return <Fragment key={index} />;
 
             return (
               <li

@@ -131,3 +131,7 @@
 .no-focus-tw-ring:focus {
   @apply focus:ring-offset-0 focus:ring-0 focus:ring-transparent focus:ring-offset-transparent;
 }
+
+.shadow-custom {
+  @apply shadow-[0_0_15px_0_rgba(0,0,0,0.5)] dark:shadow-[0_0_15px_0_rgba(255,255,255,0.5)]
+}

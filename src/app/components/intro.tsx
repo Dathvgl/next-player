@@ -10,7 +10,7 @@ export default function Intro() {
 
   return (
     <MotionDiv
-      className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 flex justify-center items-center relative"
+      className="select-none bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 flex justify-center items-center relative"
       initial="init"
       animate={isOpen ? "click" : "init"}
       exit="init"

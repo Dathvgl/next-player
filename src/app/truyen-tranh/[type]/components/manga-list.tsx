@@ -6,23 +6,6 @@ import { numChapter, timeFromNow } from "~/lib/convert";
 import { MotionLi, MotionUl } from "~/lib/motion";
 import { MangaList } from "~/types/manga";
 
-const item = {
-  _id: "testId",
-  title: "testTitle testTitle",
-  chapters: [
-    {
-      _id: "lalalla2",
-      time: 1672949040,
-      chapter: 1,
-    },
-    {
-      _id: "lalalla13",
-      time: 1672949040,
-      chapter: 1,
-    },
-  ],
-};
-
 export default async function MangaList({ type }: { type: string }) {
   const res = await fetch(
     `${externalApi.manga}/list?type=${type}&sort=desc&order=lastest`

@@ -2,7 +2,6 @@ import moment from "moment";
 import "moment/locale/vi";
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import NavHeader from "~/app/components/header/nav-header";
 import SiteHeader from "~/app/components/header/site-header";
 import { NavigationEvents } from "~/components/navigation-event";
 import { ScrollArea } from "~/components/ui/scroll-area";
@@ -11,6 +10,7 @@ import { AuthContextProvider } from "~/contexts/auth-context";
 import { fontDancingScript, fontSans } from "~/lib/fonts";
 import { cn } from "~/lib/utils";
 import { ChildReact } from "~/types/type";
+import NavSide from "./components/header/nav-side";
 import ThemeProvider from "./components/theme-provider";
 import "./globals.css";
 
@@ -47,9 +47,7 @@ export default function RootLayout({ children }: ChildReact) {
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AuthContextProvider>
             <div className="flex relative">
-              <div id="root-menu-outside">
-                <NavHeader />
-              </div>
+              <NavSide />
               <ScrollArea className="flex-1 relative h-screen flex flex-col">
                 <SiteHeader />
                 <div className="flex-1">{children}</div>

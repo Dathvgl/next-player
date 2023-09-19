@@ -63,7 +63,7 @@ export function useFirebaseInfos(uids: string[], list?: PersonType[]) {
       for (let index = 0; index < length; index++) {
         const item = filter[index];
 
-        const res = await fetch(`api/user/firebaseUser/${item}`, {
+        const res = await fetch(`${location.origin}/api/user/firebaseUser/${item}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

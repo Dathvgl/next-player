@@ -1,7 +1,6 @@
 import { LucideProps } from "lucide-react";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
-import { useRef } from "react";
 
 interface IconProps {
   icon: React.FC<LucideProps>;

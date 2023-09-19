@@ -70,11 +70,17 @@ export default function ChartStat() {
 }
 
 function CustomTooltip(props: any) {
-  const { active, payload, label } = props as RechartsToolTip;
+  const { active, payload } = props as RechartsToolTip<{
+    fill: string;
+    name: string;
+    value: number;
+  }>;
 
   if (!active || !payload || !payload.length) {
     return <></>;
   }
+
+  console.log(payload);
 
   const data = payload[0].payload;
 

@@ -75,56 +75,53 @@
   }
 }
 
-#root-menu-header {
-  @apply appearance-none cursor-pointer;
-}
-
-#root:has(#root-menu-header:not(:checked)) #root-menu-outside {
-  @apply absolute pl-8 flex flex-row items-center h-16 z-10;
-}
-
-#root:has(#root-menu-header:not(:checked)) #root-menu-outside > div {
-  @apply gap-10;
-}
-
-#root:has(#root-menu-header:not(:checked)) #root-menu-outside > div nav {
-  @apply max-md:hidden;
-}
-
-#root:has(#root-menu-header:checked) #root-menu-outside {
-  @apply w-[20%] border-r;
-  @apply bg-black dark:bg-white;
+#root-menu-outside {
+  @apply flex flex-col divide-y relative z-20;
+  @apply transition-[width] ease-linear duration-1000;
+  @apply w-64 block bg-black dark:bg-white;
   @apply text-white dark:text-black;
-  @apply max-md:absolute max-md:z-10 max-md:w-[50vw] max-md:h-screen;
-  @apply transform duration-500;
+  @apply max-md:absolute max-md:w-[60vw] max-md:h-screen;
 }
 
-#root:has(#root-menu-header:checked) #root-menu-outside > div {
-  @apply flex-col items-start gap-0;
+#root-menu-outside li > * {
+  @apply p-4 w-full flex items-center font-bold before:content-['\00a0'];
+  @apply hover:bg-indigo-700 dark:hover:bg-sky-400;
 }
 
-#root:has(#root-menu-header:checked) #root-menu-outside > div > div {
-  @apply h-[65px] border-b;
+#root:has(
+    input[type="radio"][name="root-menu-header"][value="close"]:checked
+  )
+  #root-menu-click-outside {
+  @apply hidden;
 }
 
-#root:has(#root-menu-header:checked) #root-menu-outside > div div {
-  @apply w-full px-3;
+#root:has(
+    input[type="radio"][name="root-menu-header"][value="open"]:not(:checked)
+  )
+  #root-menu-click-outside {
+  @apply hidden;
 }
 
-#root:has(#root-menu-header:checked) #root-menu-outside > div nav {
-  @apply w-full;
+#root:has(
+    input[type="radio"][name="root-menu-header"][value="open"]:not(:checked)
+  )
+  #root-menu-outside {
+  @apply hidden;
 }
 
-#root:has(#root-menu-header:checked) #root-menu-outside > div ul {
-  @apply flex-col gap-0;
+.root-menu-header {
+  @apply transition opacity-100 ease-linear duration-500 static;
 }
 
-#root:has(#root-menu-header:checked) #root-menu-outside > div ul > li > * {
-  @apply px-4 py-2 w-full block font-bold;
-  @apply hover:bg-green-400 hover:bg-opacity-30 dark:hover:bg-opacity-70;
+#root:has(input[type="radio"][name="root-menu-header"][value="open"]:checked)
+  .root-menu-header {
+  @apply opacity-0 absolute -z-50;
 }
 
-#root:has(#root-menu-header:not(:checked)) #root-container {
+#root:has(
+    input[type="radio"][name="root-menu-header"][value="open"]:not(:checked)
+  )
+  #root-container {
   padding-inline: 15%;
 }
 
@@ -133,5 +130,5 @@
 }
 
 .shadow-custom {
-  @apply shadow-[0_0_15px_0_rgba(0,0,0,0.5)] dark:shadow-[0_0_15px_0_rgba(255,255,255,0.5)]
+  @apply shadow-[0_0_15px_0_rgba(0,0,0,0.5)] dark:shadow-[0_0_15px_0_rgba(255,255,255,0.5)];
 }

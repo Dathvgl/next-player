@@ -15,18 +15,15 @@ export interface WebStat {
   };
 }
 
-export interface RechartsToolTip {
+export interface RechartsToolTip<T> {
   active: boolean;
   label: number;
   payload: {
     dataKey: string;
     name: string;
     value: number;
-    payload: {
-      fill: string;
-      name: string;
-      value: number;
-    };
+    fill?: string;
+    payload: T;
   }[];
 }
 

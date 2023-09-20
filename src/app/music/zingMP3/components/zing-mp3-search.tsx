@@ -48,21 +48,18 @@ function ZingMP3SearchList({ name }: { name: string }) {
   const musicDispatch = useZingMP3Dispatch();
 
   useEffect(() => {
-    try {
-      init();
-    } catch (error) {
-      console.error(error);
+    async function init() {
+      if (name) {
+        await fetch(
+          `${location.origin}/api/music/zingMP3/search?q=${name}`
+        ).then(async (res) => {
+          setData(await res.json());
+        });
+      }
     }
-  }, [name]);
 
-  async function init() {
-    if (name) {
-      const res = await fetch(
-        `${location.origin}/api/music/zingMP3/search?q=${name}`
-      );
-      setData(await res.json());
-    }
-  }
+    init();
+  }, [name]);
 
   async function song(id: string) {
     const res = await fetch(`${location.origin}/api/music/zingMP3/song/${id}`);

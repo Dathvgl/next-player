@@ -23,20 +23,18 @@ export function NavigationEvents() {
   const [stat, setStat] = useLocalStorage<WebStat>("web-stats", initStat);
 
   useEffect(() => {
-    const url = `${pathname}${searchParams ? `?${searchParams}` : ""}`;
-    console.log(url);
+    function handleStat(str: string) {
+      if (str == "/") {
+        handleStatWrite("home");
+      } else if (str.includes("/truyen-tranh")) {
+        handleStatWrite("manga");
+      } else if (str.includes("/messenger")) {
+        handleStatWrite("message");
+      }
+    }
+
     handleStat(pathname);
   }, [pathname, searchParams]);
-
-  function handleStat(str: string) {
-    if (str == "/") {
-      handleStatWrite("home");
-    } else if (str.includes("/truyen-tranh")) {
-      handleStatWrite("manga");
-    } else if (str.includes("/messenger")) {
-      handleStatWrite("message");
-    }
-  }
 
   function handleStatWrite(key: WebLinkType) {
     const today = stat.date == new Date().toDateString();

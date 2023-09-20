@@ -10,19 +10,19 @@ interface UseWeatherProps {
 
 export default function useWeather(props: UseWeatherProps) {
   const { coords } = props;
-  const link = `https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lon}&units=metric&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`;
-
+  
   const [data, setData] = useState<CurrentWeatherData>();
-
+  
   useEffect(() => {
+    async function init() {
+      const link = `https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lon}&units=metric&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`;
+      const res = await fetch(link);
+      const data = await res.json();
+      setData(data);
+    }
+
     init();
   }, [coords.lat, coords.lon]);
-
-  async function init() {
-    const res = await fetch(link);
-    const data = await res.json();
-    setData(data);
-  }
 
   return data;
 }

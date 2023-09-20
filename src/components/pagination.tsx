@@ -85,8 +85,9 @@ export default function Pagination({ total }: PaginationProps) {
               <LinkLIcon
                 href={item == page ? "" : `${pathname}?page=${item}`}
                 active={item == page}
-                children={item}
-              />
+              >
+                {item}
+              </LinkLIcon>
             </li>
           );
         })}

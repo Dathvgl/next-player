@@ -16,7 +16,7 @@ export default function ZingMP3NewRelease(props: {
 }) {
   const { data } = props;
   if (!data) return <></>;
-  else return <ZingMP3NewReleaseItem data={data} />
+  else return <ZingMP3NewReleaseItem data={data} />;
 }
 
 function ZingMP3NewReleaseItem({ data }: { data: unknown }) {
@@ -29,7 +29,9 @@ function ZingMP3NewReleaseItem({ data }: { data: unknown }) {
   }
 
   async function song(id: string) {
-    const res = await fetch(`${location.origin}/api/music/zingMP3/song/${id}`);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/music/zingMP3/song/${id}`
+    );
 
     const data: ZingMP3SongDetailResponse = await res.json();
     if (data.err != 0 || !id) console.error(data.msg);

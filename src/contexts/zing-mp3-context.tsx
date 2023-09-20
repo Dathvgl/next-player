@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Dispatch,
-  createContext,
-  useContext,
-  useReducer,
-  useState,
-} from "react";
+import { Dispatch, createContext, useContext, useReducer } from "react";
 import { ChildReact } from "~/types/type";
 
 interface ZingMP3State {
@@ -21,14 +15,6 @@ interface ZingMP3State {
 interface ZingMP3Action {
   type: "init" | "played" | "volumed" | "empty";
   payload: ZingMP3State;
-}
-
-interface ZingMP3ContextProps {
-  music: ZingMP3State;
-  init: (id: string, src: string) => void;
-  played: (state: boolean) => void;
-  volumed: (volume: number) => void;
-  empty: () => void;
 }
 
 const ZingMP3Context = createContext<ZingMP3State | null>(null);
@@ -59,30 +45,7 @@ const musicReducer = (state: ZingMP3State, action: ZingMP3Action) => {
 };
 
 export const ZingMP3ContextProvider = ({ children }: ChildReact) => {
-  // const [music, setMusic] = useState<ZingMP3State>({ volume: 0.1 });
   const [reducer, dispatch] = useReducer(musicReducer, { volume: 0.1 });
-
-  // const init = (id: string, src: string) => {
-  //   setMusic({ ...music, id, src, played: false, error: undefined });
-  // };
-
-  // const played = (state: boolean) => {
-  //   setMusic({ ...music, played: state });
-  // };
-
-  // const volumed = (volume: number) => {
-  //   setMusic({ ...music, volume: volume });
-  // };
-
-  // const empty = () => {
-  //   setMusic({ volume: music.volume });
-  // };
-
-  // return (
-  //   <ZingMP3Context.Provider value={{ music, init, played, volumed, empty }}>
-  //     {children}
-  //   </ZingMP3Context.Provider>
-  // );
 
   return (
     <ZingMP3Context.Provider value={reducer}>

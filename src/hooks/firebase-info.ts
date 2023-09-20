@@ -17,9 +17,12 @@ export function useFirebaseInfo(uid: string) {
   useEffect(() => {
     async function init() {
       const token = await authContext?.idToken();
-      await fetch(`api/user/firebaseUser/${uid}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then(async (res) => {
+      await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/firebaseUser/${uid}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      ).then(async (res) => {
         setData(await res.json());
       });
     }
@@ -52,7 +55,7 @@ export function useFirebaseInfos(uids: string[], list?: PersonType[]) {
           const item = filter[index];
 
           const res = await fetch(
-            `${location.origin}/api/user/firebaseUser/${item}`,
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/firebaseUser/${item}`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }

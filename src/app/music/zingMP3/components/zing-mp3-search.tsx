@@ -51,7 +51,7 @@ function ZingMP3SearchList({ name }: { name: string }) {
     async function init() {
       if (name) {
         await fetch(
-          `${location.origin}/api/music/zingMP3/search?q=${name}`
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/music/zingMP3/search?q=${name}`
         ).then(async (res) => {
           setData(await res.json());
         });
@@ -62,7 +62,9 @@ function ZingMP3SearchList({ name }: { name: string }) {
   }, [name]);
 
   async function song(id: string) {
-    const res = await fetch(`${location.origin}/api/music/zingMP3/song/${id}`);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/music/zingMP3/song/${id}`
+    );
 
     const data: ZingMP3SongDetailResponse = await res.json();
     if (data.err != 0 || !id) console.error(data.msg);

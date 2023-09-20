@@ -13,7 +13,7 @@ export default function PlayerInfo() {
     async function init() {
       if (musicContext?.id) {
         const res = await fetch(
-          `${location.origin}/api/music/zingMP3/infoSong/${musicContext.id}`
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/music/zingMP3/infoSong/${musicContext.id}`
         );
         setData(await res.json());
       }

@@ -56,8 +56,8 @@ export default function Intro() {
         }}
       >
         <p className="font-bold text-black text-md text-justify italic">
-          "Clone website? Xem những video build website hàng tiếng? Không ta sẽ
-          xây trang web mô phỏng vô số website khác!"
+          &quot;Clone website? Xem những video build website hàng tiếng? Không ta sẽ
+          xây trang web mô phỏng vô số website khác!&quot;
         </p>
       </MotionDiv>
       <div className="w-10 h-10 rounded-full bg-green-300" />

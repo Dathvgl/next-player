@@ -70,7 +70,7 @@ export default function ChatMessengerDetail(props: ChatMessengerDetailProps) {
     );
 
     return () => unsubscribe();
-  }, [messageId]);
+  }, [pathRef]);
 
   async function onSubmit({ message }: z.infer<typeof formSchema>) {
     form.reset();

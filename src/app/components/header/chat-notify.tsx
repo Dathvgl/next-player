@@ -25,11 +25,10 @@ interface ChatNotifyType {
 
 export default function ChatNotify() {
   const uid = useAuth()?.user?.uid ?? "";
-  const pathRef = `/chatNotify/${uid}`;
   const [chatNotifies, setChatNotifies] = useState<ChatNotifyType[]>([]);
 
   useEffect(() => {
-    const unsubscribe = listenRealtime(pathRef, (snapshot) => {
+    const unsubscribe = listenRealtime(`/chatNotify/${uid}`, (snapshot) => {
       const list: ChatNotifyType[] = [];
 
       snapshot.forEach((item) => {

@@ -29,7 +29,7 @@ export default function AudioTimeline(props: {
       musicDispatch?.({ type: "played", payload: { played: false } });
       audioRef.current!.currentTime = 0;
     };
-  }, [musicContext?.id]);
+  }, [musicContext?.id, audioRef, musicDispatch]);
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {
     if (!audioRef.current) return;

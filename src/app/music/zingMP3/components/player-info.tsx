@@ -10,6 +10,15 @@ export default function PlayerInfo() {
   const [data, setData] = useState<ZingMP3SongResponse>();
 
   useEffect(() => {
+    async function init() {
+      if (musicContext?.id) {
+        const res = await fetch(
+          `${location.origin}/api/music/zingMP3/infoSong/${musicContext.id}`
+        );
+        setData(await res.json());
+      }
+    }
+
     try {
       init();
     } catch (error) {
@@ -17,26 +26,13 @@ export default function PlayerInfo() {
     }
   }, [musicContext?.id]);
 
-  async function init() {
-    if (musicContext?.id) {
-      const res = await fetch(
-        `${location.origin}/api/music/zingMP3/infoSong/${musicContext.id}`
-      );
-      setData(await res.json());
-    }
-  }
-
   if (!data) return <></>;
   const song = data.data;
 
   return (
     <div className="flex items-center gap-2">
       <div className="w-12 h-12 rounded overflow-hidden">
-        <CustomImage
-          className="h-full"
-          src={song.thumbnail}
-          alt={song.title}
-        />
+        <CustomImage className="h-full" src={song.thumbnail} alt={song.title} />
       </div>
       <div className="font-bold text-base">{song.title}</div>
     </div>

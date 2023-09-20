@@ -2,7 +2,7 @@
 
 import { IteratedDataSnapshot } from "firebase/database";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "~/contexts/auth-context";
 import { onceRealtime, pushRealTime } from "~/firebase/firebase";
 import ChatMessengerDetail from "./chat-messenger-detail";
@@ -13,11 +13,7 @@ export default function ChatMessenger() {
   const [messageId, setMessageId] = useState<string>();
   const [members, setMembers] = useState<string[]>([]);
 
-  useEffect(() => {
-    handleChat();
-  }, [currentUid]);
-
-  async function handleChat() {
+  const handleChat = useCallback(async () => {
     const pathRef = "/messageMember";
     const record = await onceRealtime(pathRef);
 
@@ -25,9 +21,6 @@ export default function ChatMessenger() {
       const group = record.child(currentUid);
 
       if (group.exists()) {
-        // group
-        // group
-        // group
       } else {
         const list: IteratedDataSnapshot[] = [];
 
@@ -60,7 +53,11 @@ export default function ChatMessenger() {
         }
       }
     }
-  }
+  }, [currentUid, uid]);
+
+  useEffect(() => {
+    handleChat();
+  }, [handleChat]);
 
   if (!messageId || !uid) return <></>;
   return (

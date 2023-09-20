@@ -16,7 +16,10 @@ export default function ZingMP3NewRelease(props: {
 }) {
   const { data } = props;
   if (!data) return <></>;
+  else return <ZingMP3NewReleaseItem data={data} />
+}
 
+function ZingMP3NewReleaseItem({ data }: { data: unknown }) {
   const { title, items } = data as ZingMP3ReleaseSection;
   const [filter, setFilter] = useState<FilterType>("all");
   const musicDispatch = useZingMP3Dispatch();

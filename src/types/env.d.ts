@@ -1,8 +1,5 @@
 namespace NodeJS {
   interface ProcessEnv {
-    EXTERNAL_API_CRAWL?: string;
-    EXTERNAL_API_FSFSSFSSFSFSFS?: string;
-    NEXT_PUBLIC_BASE_URL?: string;
     NEXT_PUBLIC_EXTERNAL_API_CRAWL?: string;
     NEXT_PUBLIC_EXTERNAL_API_FSFSSFSSFSFSFS?: string;
     NEXT_PUBLIC_FIREBASE_API_KEY?: string;

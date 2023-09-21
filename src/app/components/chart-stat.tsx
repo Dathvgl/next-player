@@ -80,8 +80,6 @@ function CustomTooltip(props: any) {
     return <></>;
   }
 
-  console.log(payload);
-
   const data = payload[0].payload;
 
   return (

@@ -7,7 +7,10 @@ import ZingMP3Player from "./components/zing-mp3-player";
 import RTChart from "./components/rt-chart";
 
 export default async function Page() {
-  const res = await fetch(`${externalApi.musicZingMP3}/home`);
+  const res = await fetch(`${externalApi.musicZingMP3}/home`, {
+    next: { revalidate: 60 },
+  });
+
   const data: ZingMP3Home = await res.json();
   const { items } = data.data;
 

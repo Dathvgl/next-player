@@ -1,7 +1,6 @@
-import { strToHex } from "~/lib/convert";
-import { Button } from "./ui/button";
 import Link from "next/link";
 import tinycolor from "tinycolor2";
+import { strToHex } from "~/lib/convert";
 
 export default function Chip({ href, text }: { href?: string; text: string }) {
   const color = strToHex(text);

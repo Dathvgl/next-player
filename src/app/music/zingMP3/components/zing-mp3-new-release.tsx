@@ -5,6 +5,7 @@ import { useState } from "react";
 import { CustomImage } from "~/components/custom-image";
 import LIcon from "~/components/lucide-icon";
 import { useZingMP3Dispatch } from "~/contexts/zing-mp3-context";
+import { externalApi } from "~/lib/api";
 import { timeFromNow } from "~/lib/convert";
 import { ZingMP3ReleaseSection } from "~/types/music/zingMP3/release";
 import { ZingMP3SongDetailResponse } from "~/types/music/zingMP3/song";
@@ -29,9 +30,7 @@ function ZingMP3NewReleaseItem({ data }: { data: unknown }) {
   }
 
   async function song(id: string) {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/music/zingMP3/song/${id}`
-    );
+    const res = await fetch(`${externalApi.musicZingMP3}/song/${id}`);
 
     const data: ZingMP3SongDetailResponse = await res.json();
     if (data.err != 0 || !id) console.error(data.msg);

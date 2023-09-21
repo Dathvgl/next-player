@@ -3,7 +3,7 @@ import { CustomImage } from "~/components/custom-image";
 import PageTransition from "~/components/page-transition";
 import { MotionLi, MotionUl } from "~/lib/motion";
 
-const mangaTypes = [
+export const mangaTypes = [
   {
     type: "blogtruyen",
     icon: "/manga/blogtruyen-favicon.png",

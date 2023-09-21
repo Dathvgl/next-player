@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { CustomImage } from "~/components/custom-image";
 import { useZingMP3 } from "~/contexts/zing-mp3-context";
+import { externalApi } from "~/lib/api";
 import { ZingMP3SongResponse } from "~/types/music/zingMP3/song";
 
 export default function PlayerInfo() {
@@ -13,8 +14,9 @@ export default function PlayerInfo() {
     async function init() {
       if (musicContext?.id) {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/music/zingMP3/infoSong/${musicContext.id}`
+          `${externalApi.musicZingMP3}/infoSong/${musicContext.id}`
         );
+
         setData(await res.json());
       }
     }

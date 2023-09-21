@@ -9,6 +9,7 @@ import { Input } from "~/components/ui/input";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { Skeleton } from "~/components/ui/skeleton";
 import { useZingMP3Dispatch } from "~/contexts/zing-mp3-context";
+import { externalApi } from "~/lib/api";
 import { durationUTC } from "~/lib/convert";
 import { ZingMP3SongDetailResponse } from "~/types/music/zingMP3/song";
 import { ZingMP3Search } from "~/types/music/zingMP3/zingMP3";
@@ -50,11 +51,11 @@ function ZingMP3SearchList({ name }: { name: string }) {
   useEffect(() => {
     async function init() {
       if (name) {
-        await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/music/zingMP3/search?q=${name}`
-        ).then(async (res) => {
-          setData(await res.json());
-        });
+        await fetch(`${externalApi.musicZingMP3}/search/${name}`).then(
+          async (res) => {
+            setData(await res.json());
+          }
+        );
       }
     }
 
@@ -62,9 +63,7 @@ function ZingMP3SearchList({ name }: { name: string }) {
   }, [name]);
 
   async function song(id: string) {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/music/zingMP3/song/${id}`
-    );
+    const res = await fetch(`${externalApi.musicZingMP3}/song/${id}`);
 
     const data: ZingMP3SongDetailResponse = await res.json();
     if (data.err != 0 || !id) console.error(data.msg);

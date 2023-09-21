@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Fragment } from "react";
 import MangaThumnail from "~/components/manga-thumnail";
 import Pagination from "~/components/pagination";
 import { externalApi } from "~/lib/api";
@@ -8,7 +9,8 @@ import { MangaList } from "~/types/manga";
 
 export default async function MangaList({ type }: { type: string }) {
   const res = await fetch(
-    `${externalApi.manga}/list?type=${type}&sort=desc&order=lastest`
+    `${externalApi.manga}/list?type=${type}&sort=desc&order=lastest`,
+    { next: { revalidate: 3600 } }
   );
 
   const data: MangaList = await res.json();
@@ -71,10 +73,7 @@ export default async function MangaList({ type }: { type: string }) {
                   <ul>
                     {item.chapters.map((child, index, { length }) => {
                       const el = (
-                        <li
-                          key={child._id}
-                          className="flex justify-between gap-4"
-                        >
+                        <li className="flex justify-between gap-4">
                           <Link
                             href={`/truyen-tranh/${type}/chapter/${item._id}/${child._id}`}
                           >
@@ -88,7 +87,7 @@ export default async function MangaList({ type }: { type: string }) {
 
                       if (index == length - 1 && length < 3) {
                         return (
-                          <>
+                          <Fragment key={`fill-${child._id}-${length - index}`}>
                             {el}
                             {Array(3 - length)
                               .fill(0)
@@ -100,9 +99,14 @@ export default async function MangaList({ type }: { type: string }) {
                                   line
                                 </li>
                               ))}
-                          </>
+                          </Fragment>
                         );
-                      } else return <>{el}</>;
+                      } else
+                        return (
+                          <Fragment key={`full-${child._id}-${index}`}>
+                            {el}
+                          </Fragment>
+                        );
                     })}
                   </ul>
                 )}

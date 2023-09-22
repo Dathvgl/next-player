@@ -1,10 +1,15 @@
+import { Metadata } from "next";
 import { externalApi } from "~/lib/api";
 import { ZingMP3Home } from "~/types/music/zingMP3/zingMP3";
 import FourItemHome from "./components/four-item-home";
-import ZingMP3NewRelease from "./components/zing-mp3-new-release";
-import ZingMP3Search from "./components/zing-mp3-search";
-import ZingMP3Player from "./components/zing-mp3-player";
 import RTChart from "./components/rt-chart";
+import ZingMP3NewRelease from "./components/zing-mp3-new-release";
+import ZingMP3Player from "./components/zing-mp3-player";
+import ZingMP3Search from "./components/zing-mp3-search";
+
+export const metadata: Metadata = {
+  title: "Zing MP3",
+};
 
 export default async function Page() {
   const res = await fetch(`${externalApi.musicZingMP3}/home`, {

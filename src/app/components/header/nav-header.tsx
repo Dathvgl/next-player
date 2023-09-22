@@ -1,4 +1,4 @@
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react";
 import Link from "next/link";
 import { CustomIcons } from "~/components/custom-icons";
 import CustomInput from "~/components/custom-input";
@@ -12,7 +12,6 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { dropLinks, siteConfig } from "~/config/site";
-import { MotionDiv, MotionLi } from "~/lib/motion";
 
 export default function NavHeader() {
   return (

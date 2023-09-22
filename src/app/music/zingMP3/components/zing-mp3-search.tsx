@@ -1,6 +1,8 @@
 "use client";
 
 import { Search, X } from "lucide-react";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "usehooks-ts";
 import { CustomImage } from "~/components/custom-image";
@@ -8,16 +10,20 @@ import LIcon from "~/components/lucide-icon";
 import { Input } from "~/components/ui/input";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { Skeleton } from "~/components/ui/skeleton";
-import { useZingMP3Dispatch } from "~/contexts/zing-mp3-context";
 import { externalApi } from "~/lib/api";
 import { durationUTC } from "~/lib/convert";
-import { ZingMP3SongDetailResponse } from "~/types/music/zingMP3/song";
 import { ZingMP3Search } from "~/types/music/zingMP3/zingMP3";
 
 export default function ZingMP3Search() {
+  const router = useRouter();
+
   const [inputName, setInputName] = useState<string>("");
   const name = useDebounce(inputName);
-  const cachedList = useMemo(() => <ZingMP3SearchList name={name} />, [name]);
+
+  const cachedList = useMemo(
+    () => <ZingMP3SearchList router={router} name={name} />,
+    [name]
+  );
 
   function clearSearch() {
     setInputName(() => "");
@@ -44,9 +50,14 @@ export default function ZingMP3Search() {
   );
 }
 
-function ZingMP3SearchList({ name }: { name: string }) {
+function ZingMP3SearchList({
+  router,
+  name,
+}: {
+  router: AppRouterInstance;
+  name: string;
+}) {
   const [data, setData] = useState<ZingMP3Search>();
-  const musicDispatch = useZingMP3Dispatch();
 
   useEffect(() => {
     async function init() {
@@ -62,15 +73,10 @@ function ZingMP3SearchList({ name }: { name: string }) {
     init();
   }, [name]);
 
-  async function song(id: string) {
-    const res = await fetch(`${externalApi.musicZingMP3}/song/${id}`);
-
-    const data: ZingMP3SongDetailResponse = await res.json();
-    if (data.err != 0 || !id) console.error(data.msg);
-    else {
-      const { "128": src } = data.data;
-      musicDispatch?.({ type: "init", payload: { id, src } });
-    }
+  function song(id: string) {
+    const url = new URL(location.href);
+    url.searchParams.set("id", id);
+    router.push(url.href);
   }
 
   return (
@@ -95,12 +101,12 @@ function ZingMP3SearchList({ name }: { name: string }) {
       ) : !data.data.songs || data.data.songs?.length == 0 ? (
         "No results"
       ) : (
-        <ScrollArea className="absolute top-full left-0 w-full h-64 z-[21] rounded-lg bg-white overflow-y-auto">
+        <ScrollArea className="absolute top-full left-0 w-full h-64 z-[21] rounded-lg overflow-y-auto">
           {data.data.songs.map((item, index) => (
             <div
               key={index}
               className="px-2 py-1.5 cursor-pointer gap-2 flex justify-between items-center hover:bg-black hover:bg-opacity-20 group group/icon"
-              onClick={async () => await song(item.encodeId)}
+              onClick={() => song(item.encodeId)}
             >
               <div className="w-12 h-12 rounded overflow-hidden">
                 <CustomImage

@@ -1,14 +1,12 @@
 "use client";
 
 import { ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { CustomImage } from "~/components/custom-image";
 import LIcon from "~/components/lucide-icon";
-import { useZingMP3Dispatch } from "~/contexts/zing-mp3-context";
-import { externalApi } from "~/lib/api";
 import { timeFromNow } from "~/lib/convert";
 import { ZingMP3ReleaseSection } from "~/types/music/zingMP3/release";
-import { ZingMP3SongDetailResponse } from "~/types/music/zingMP3/song";
 
 type FilterType = "all" | "vPop" | "others";
 
@@ -23,21 +21,16 @@ export default function ZingMP3NewRelease(props: {
 function ZingMP3NewReleaseItem({ data }: { data: unknown }) {
   const { title, items } = data as ZingMP3ReleaseSection;
   const [filter, setFilter] = useState<FilterType>("all");
-  const musicDispatch = useZingMP3Dispatch();
+  const router = useRouter();
 
   function onFilter(str: FilterType) {
     setFilter(() => str);
   }
 
-  async function song(id: string) {
-    const res = await fetch(`${externalApi.musicZingMP3}/song/${id}`);
-
-    const data: ZingMP3SongDetailResponse = await res.json();
-    if (data.err != 0 || !id) console.error(data.msg);
-    else {
-      const { "128": src } = data.data;
-      musicDispatch?.({ type: "init", payload: { id, src } });
-    }
+  function song(id: string) {
+    const url = new URL(location.href);
+    url.searchParams.set("id", id);
+    router.push(url.href);
   }
 
   return (
@@ -82,7 +75,7 @@ function ZingMP3NewReleaseItem({ data }: { data: unknown }) {
           <div
             key={index}
             className="px-2 py-1 cursor-pointer gap-2 flex justify-between items-center hover:bg-black hover:bg-opacity-20 rounded-md  group group/icon"
-            onClick={async () => await song(item.encodeId)}
+            onClick={() => song(item.encodeId)}
           >
             <div className="w-12 h-12 rounded overflow-hidden">
               <CustomImage

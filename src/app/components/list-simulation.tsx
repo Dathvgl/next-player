@@ -1,3 +1,4 @@
+import Link from "next/link";
 import tinycolor from "tinycolor2";
 import { capitalize, strToHex } from "~/lib/convert";
 import { MotionDiv, MotionLi, MotionSpan } from "~/lib/motion";
@@ -21,7 +22,7 @@ const list: {
   },
   {
     name: "music",
-    path: "/",
+    path: "/music",
   },
 ];
 
@@ -33,53 +34,55 @@ export default function ListSimulation() {
           const fill = strToHex(item.name);
 
           return (
-            <MotionLi
-              key={item.name}
-              className="font-bold px-2 py-1 cursor-pointer relative [--text-theme: black] dark:[--text-theme: white]"
-              initial="init"
-              whileHover="hover"
-              variants={{
-                init: { color: "var(--text-theme)" },
-                hover: {
-                  color: tinycolor(fill).isDark() ? "white" : "black",
-                },
-              }}
-            >
-              <MotionSpan
-                className="z-10 relative"
-                variants={{ hover: { marginLeft: 15 } }}
-              >
-                {capitalize(item.name)}
-              </MotionSpan>
-              <MotionDiv
-                className="absolute z-10 top-1/2 -translate-y-1/2"
+            <Link href={item.path}>
+              <MotionLi
+                key={item.name}
+                className="font-bold px-2 py-1 cursor-pointer relative [--text-theme: black] dark:[--text-theme: white]"
+                initial="init"
+                whileHover="hover"
                 variants={{
-                  init: {
-                    opacity: 0,
-                    transition: {
-                      ease: "easeOut",
-                      duration: 0.2,
-                      type: "tween",
-                    },
-                  },
+                  init: { color: "var(--text-theme)" },
                   hover: {
-                    opacity: 1,
-                    transition: {
-                      duration: 0.4,
-                      type: "tween",
-                      ease: "easeIn",
-                    },
+                    color: tinycolor(fill).isDark() ? "white" : "black",
                   },
                 }}
               >
-                /
-              </MotionDiv>
-              <MotionDiv
-                style={{ backgroundColor: fill }}
-                className="h-full absolute top-0 left-0 bg-gradient-to-r from-transparent to-white dark:to-black"
-                variants={{ hover: { width: "100%" } }}
-              />
-            </MotionLi>
+                <MotionSpan
+                  className="z-10 relative"
+                  variants={{ hover: { marginLeft: 15 } }}
+                >
+                  {capitalize(item.name)}
+                </MotionSpan>
+                <MotionDiv
+                  className="absolute z-10 top-1/2 -translate-y-1/2"
+                  variants={{
+                    init: {
+                      opacity: 0,
+                      transition: {
+                        ease: "easeOut",
+                        duration: 0.2,
+                        type: "tween",
+                      },
+                    },
+                    hover: {
+                      opacity: 1,
+                      transition: {
+                        duration: 0.4,
+                        type: "tween",
+                        ease: "easeIn",
+                      },
+                    },
+                  }}
+                >
+                  /
+                </MotionDiv>
+                <MotionDiv
+                  style={{ backgroundColor: fill }}
+                  className="h-full absolute top-0 left-0 bg-gradient-to-r from-transparent to-white dark:to-black"
+                  variants={{ hover: { width: "100%" } }}
+                />
+              </MotionLi>
+            </Link>
           );
         })}
       </ul>

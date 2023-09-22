@@ -1,6 +1,15 @@
 "use client";
 
-import { Dispatch, createContext, useContext, useReducer } from "react";
+import { useSearchParams } from "next/navigation";
+import {
+  Dispatch,
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+} from "react";
+import { externalApi } from "~/lib/api";
+import { ZingMP3SongDetailResponse } from "~/types/music/zingMP3/song";
 import { ChildReact } from "~/types/type";
 
 interface ZingMP3State {
@@ -46,6 +55,22 @@ const musicReducer = (state: ZingMP3State, action: ZingMP3Action) => {
 
 export const ZingMP3ContextProvider = ({ children }: ChildReact) => {
   const [reducer, dispatch] = useReducer(musicReducer, { volume: 0.1 });
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+
+  useEffect(() => {
+    async function init() {
+      const res = await fetch(`${externalApi.musicZingMP3}/song/${id}`);
+      const data: ZingMP3SongDetailResponse = await res.json();
+      if (data.err != 0 || !id) console.error(data.msg);
+      else {
+        const { "128": src } = data.data;
+        dispatch({ type: "init", payload: { id, src } });
+      }
+    }
+
+    if (id) init();
+  }, [id]);
 
   return (
     <ZingMP3Context.Provider value={reducer}>

@@ -1,4 +1,4 @@
-import { BookIcon, HomeIcon, LucideIcon, MessageCircle } from "lucide-react";
+import { BookIcon, HomeIcon, LucideIcon, MessageCircle, Music4Icon } from "lucide-react";
 import { WebLinkType } from "~/types/type";
 
 export type SiteConfig = typeof siteConfig;
@@ -39,5 +39,11 @@ export const dropLinks: DropLinkProps[] = [
     path: "/messenger",
     alt: "message",
     icon: MessageCircle,
+  },
+  {
+    name: "Nghe nhạc",
+    path: "/music",
+    alt: "music",
+    icon: Music4Icon,
   },
 ];

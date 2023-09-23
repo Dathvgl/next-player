@@ -34,9 +34,8 @@ export default function ListSimulation() {
           const fill = strToHex(item.name);
 
           return (
-            <Link href={item.path}>
+            <Link key={item.name} href={item.path}>
               <MotionLi
-                key={item.name}
                 className="font-bold px-2 py-1 cursor-pointer relative [--text-theme: black] dark:[--text-theme: white]"
                 initial="init"
                 whileHover="hover"

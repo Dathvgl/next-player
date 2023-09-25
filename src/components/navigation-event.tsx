@@ -17,6 +17,8 @@ export function NavigationEvents() {
       music: 0,
       manga: 0,
       message: 0,
+      ecommerce: 0,
+      code: 0,
     },
   };
 
@@ -30,6 +32,12 @@ export function NavigationEvents() {
         handleStatWrite("manga");
       } else if (str.includes("/messenger")) {
         handleStatWrite("message");
+      } else if (str.includes("/music")) {
+        handleStatWrite("music");
+      } else if (str.includes("/ecommerce")) {
+        handleStatWrite("ecommerce");
+      } else if (str.includes("/code")) {
+        handleStatWrite("code");
       }
     }
 

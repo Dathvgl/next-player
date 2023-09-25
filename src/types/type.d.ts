@@ -18,6 +18,8 @@ export interface WebStat {
     music: number;
     manga: number;
     message: number;
+    ecommerce: number;
+    code: number;
   };
 }
 

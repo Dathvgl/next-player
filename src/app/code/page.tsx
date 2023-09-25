@@ -33,9 +33,9 @@ export default function Page() {
       }}
     >
       {codeList.map((item) => (
-        <HoverCard>
+        <HoverCard key={item.type}>
           <HoverCardTrigger asChild>
-            <Link key={item.type} href={`/code/${item.type}`}>
+            <Link href={`/code/${item.type}`}>
               <MotionLi
                 className="bg-white dark:bg-black flex justify-center items-center rounded-lg border-2 p-2 overflow-hidden"
                 variants={{

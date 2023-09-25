@@ -37,9 +37,9 @@ export default function Page() {
         }}
       >
         {mangaTypes.map((item) => (
-          <HoverCard>
+          <HoverCard key={item.type}>
             <HoverCardTrigger asChild>
-              <Link key={item.type} href={`/truyen-tranh/${item.type}`}>
+              <Link href={`/truyen-tranh/${item.type}`}>
                 <MotionLi
                   className="bg-white dark:bg-black flex justify-center items-center rounded-lg border-2 p-2 overflow-hidden"
                   variants={{

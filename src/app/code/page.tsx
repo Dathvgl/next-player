@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { CustomImage } from "~/components/custom-image";
 import {
   HoverCard,
   HoverCardContent,
@@ -9,21 +8,20 @@ import {
 import { capitalize } from "~/lib/convert";
 import { MotionLi, MotionUl } from "~/lib/motion";
 
-const musicList = [
+const codeList = [
   {
-    type: "zingMP3",
-    icon: "/music/zing-mp3-favicon.png",
+    type: "evervault",
   },
 ];
 
 export const metadata: Metadata = {
-  title: "Nghe nhạc",
+  title: "Chỉ một vài code thú vị 🐧",
 };
 
 export default function Page() {
   return (
     <MotionUl
-      className="flex justify-center items-center gap-4 h-[calc(100vh-65px)]"
+      className="flex p-6"
       initial={{ opacity: 1, scale: 0 }}
       animate={{
         opacity: 1,
@@ -34,10 +32,10 @@ export default function Page() {
         },
       }}
     >
-      {musicList.map((item) => (
+      {codeList.map((item) => (
         <HoverCard>
           <HoverCardTrigger asChild>
-            <Link key={item.type} href={`/music/${item.type}`}>
+            <Link key={item.type} href={`/code/${item.type}`}>
               <MotionLi
                 className="bg-white dark:bg-black flex justify-center items-center rounded-lg border-2 p-2 overflow-hidden"
                 variants={{
@@ -51,13 +49,7 @@ export default function Page() {
                   transition: { duration: 0.2 },
                 }}
               >
-                <CustomImage
-                  className="w-12 h-12"
-                  fill
-                  src={item.icon}
-                  alt={item.type}
-                  objectFit="cover"
-                />
+                {capitalize(item.type)}
               </MotionLi>
             </Link>
           </HoverCardTrigger>

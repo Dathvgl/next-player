@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import SiteHeader from "~/app/components/header/site-header";
 import { NavigationEvents } from "~/components/navigation-event";
 import { ScrollArea } from "~/components/ui/scroll-area";
+import { Toaster } from "~/components/ui/toaster";
 import { siteConfig } from "~/config/site";
 import { AuthContextProvider } from "~/contexts/auth-context";
 import { fontDancingScript, fontSans } from "~/lib/fonts";
@@ -55,6 +56,7 @@ export default function RootLayout({ children }: ChildReact) {
         <Suspense fallback={null}>
           <NavigationEvents />
         </Suspense>
+        <Toaster />
       </body>
     </html>
   );

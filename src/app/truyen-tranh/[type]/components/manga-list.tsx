@@ -115,7 +115,7 @@ export default async function MangaList({ type }: { type: string }) {
           </MotionLi>
         ))}
       </MotionUl>
-      <Pagination total={20} />
+      <Pagination total={data.totalPage} />
     </div>
   );
 }

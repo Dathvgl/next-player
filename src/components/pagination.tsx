@@ -15,6 +15,8 @@ export default function Pagination({ total }: PaginationProps) {
   const pathname = usePathname();
   const pages: number[] = [1];
 
+  if (total == 1) return <></>;
+
   if (total != 1) {
     const result = total - 1;
 

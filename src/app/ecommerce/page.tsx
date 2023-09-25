@@ -7,17 +7,17 @@ import {
   HoverCardTrigger,
 } from "~/components/ui/hover-card";
 import { capitalize } from "~/lib/convert";
-import { MotionLi, MotionUl } from "~/lib/motion";
+import { MotionUl, MotionLi } from "~/lib/motion";
 
-const musicList = [
+const ecommerceList = [
   {
-    type: "zingMP3",
-    icon: "/music/zing-mp3-favicon.png",
+    type: "fake-store-api",
+    icon: "/ecommerce/zing-mp3-favicon.png",
   },
 ];
 
 export const metadata: Metadata = {
-  title: "Nghe nhạc",
+  title: "Ecommerce mãi mãi là gian nan",
 };
 
 export default function Page() {
@@ -34,10 +34,10 @@ export default function Page() {
         },
       }}
     >
-      {musicList.map((item) => (
+      {ecommerceList.map((item) => (
         <HoverCard>
           <HoverCardTrigger asChild>
-            <Link key={item.type} href={`/music/${item.type}`}>
+            <Link key={item.type} href={`/ecommerce/${item.type}`}>
               <MotionLi
                 className="bg-white dark:bg-black flex justify-center items-center rounded-lg border-2 p-2 overflow-hidden"
                 variants={{

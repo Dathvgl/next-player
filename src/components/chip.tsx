@@ -1,6 +1,6 @@
 import Link from "next/link";
 import tinycolor from "tinycolor2";
-import { strToHex } from "~/lib/convert";
+import { capitalize, strToHex } from "~/lib/convert";
 
 export default function Chip({ href, text }: { href?: string; text: string }) {
   const color = strToHex(text);
@@ -15,7 +15,7 @@ export default function Chip({ href, text }: { href?: string; text: string }) {
         }}
         className="text-sm h-auto px-3 py-1 font-medium"
       >
-        {text}
+        {capitalize(text)}
       </div>
     </div>
   );

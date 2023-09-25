@@ -2,7 +2,13 @@ export interface ChildReact {
   children: React.ReactNode;
 }
 
-export type WebLinkType = "home" | "music" | "manga" | "message";
+export type WebLinkType =
+  | "home"
+  | "music"
+  | "manga"
+  | "message"
+  | "ecommerce"
+  | "code";
 
 export interface WebStat {
   date: string;

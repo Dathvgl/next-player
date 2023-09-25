@@ -46,4 +46,16 @@ export const dropLinks: DropLinkProps[] = [
     alt: "music",
     icon: Music4Icon,
   },
+  {
+    name: "Ecommerce",
+    path: "/ecommerce",
+    alt: "ecommerce",
+    icon: Music4Icon,
+  },
+  {
+    name: "Code",
+    path: "/code",
+    alt: "code",
+    icon: Music4Icon,
+  },
 ];

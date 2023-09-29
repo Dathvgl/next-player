@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, Heart, ZoomIn, ZoomOut } from "lucide-react";
+import { ArrowLeft, ArrowRight, ZoomIn, ZoomOut } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import LIcon from "~/components/lucide-icon";
@@ -17,6 +17,7 @@ import useGridBreak from "~/hooks/grid-break";
 import { numChapter } from "~/lib/convert";
 import { MotionSection } from "~/lib/motion";
 import { MangaChapterDetail } from "~/types/manga";
+import FollowButton from "./follow-button";
 
 interface StickySelectProps extends Omit<MangaChapterDetail, "current"> {
   id: string;
@@ -61,9 +62,7 @@ export default function StickySelect(props: StickySelectProps) {
 
   return (
     <MotionSection className="sticky top-0 py-2 bg-white dark:bg-black gap-2 flex justify-center">
-      <Button className="rounded-3xl" variant="outline" size="icon">
-        <LIcon icon={Heart} />
-      </Button>
+      <FollowButton id={currentId} />
       {canPrev ? (
         <Link href={`/truyen-tranh/${type}/chapter/${id}/${canPrev._id}`}>
           {prevBtn}

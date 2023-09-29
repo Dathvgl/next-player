@@ -4,16 +4,17 @@ import MangaThumnail from "~/components/manga-thumnail";
 import Pagination from "~/components/pagination";
 import { externalApi } from "~/lib/api";
 import { numChapter, timeFromNow } from "~/lib/convert";
+import handleFetch from "~/lib/fetch";
 import { MotionLi, MotionUl } from "~/lib/motion";
 import { MangaList } from "~/types/manga";
 
 export default async function MangaList({ type }: { type: string }) {
-  const res = await fetch(
+  const data = await handleFetch<MangaList>(
     `${externalApi.manga}/list?type=${type}&sort=desc&order=lastest`,
     { next: { revalidate: 3600 } }
   );
 
-  const data: MangaList = await res.json();
+  if (!data) return <></>;
 
   return (
     <div className="flex flex-col gap-4">

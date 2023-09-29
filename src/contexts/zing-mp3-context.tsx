@@ -10,6 +10,7 @@ import {
 } from "react";
 import { toast } from "~/components/ui/use-toast";
 import { externalApi } from "~/lib/api";
+import handleFetch from "~/lib/fetch";
 import { ZingMP3SongDetailResponse } from "~/types/music/zingMP3/song";
 import { ChildReact } from "~/types/type";
 
@@ -61,10 +62,12 @@ export const ZingMP3ContextProvider = ({ children }: ChildReact) => {
 
   useEffect(() => {
     async function init() {
-      const res = await fetch(`${externalApi.musicZingMP3}/song/${id}`);
-      const data: ZingMP3SongDetailResponse = await res.json();
-      if (data.err != 0 || !id) {
-        toast({ title: "Zing MP3 Error", description: data.msg });
+      const data = await handleFetch<ZingMP3SongDetailResponse>(
+        `${externalApi.musicZingMP3}/song/${id}`
+      );
+
+      if (!data || data.err != 0 || !id) {
+        toast({ title: "Zing MP3 Error", description: data?.msg });
       } else {
         const { "128": src } = data.data;
         dispatch({ type: "init", payload: { id, src } });

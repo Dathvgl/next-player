@@ -6,17 +6,21 @@ import RTChart from "./components/rt-chart";
 import ZingMP3NewRelease from "./components/zing-mp3-new-release";
 import ZingMP3Player from "./components/zing-mp3-player";
 import ZingMP3Search from "./components/zing-mp3-search";
+import handleFetch from "~/lib/fetch";
 
 export const metadata: Metadata = {
   title: "Zing MP3",
 };
 
 export default async function Page() {
-  const res = await fetch(`${externalApi.musicZingMP3}/home`, {
-    next: { revalidate: 60 },
-  });
+  const data = await handleFetch<ZingMP3Home>(
+    `${externalApi.musicZingMP3}/home`,
+    {
+      next: { revalidate: 60 },
+    }
+  );
 
-  const data: ZingMP3Home = await res.json();
+  if (!data) return <></>;
   const { items } = data.data;
 
   return (

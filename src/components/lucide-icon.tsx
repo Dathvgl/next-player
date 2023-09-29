@@ -6,6 +6,7 @@ interface IconProps {
   icon: React.FC<LucideProps>;
   className?: string;
   color?: string;
+  fill?: string;
   size?: number;
   button?: boolean;
 }
@@ -14,10 +15,15 @@ export default function LIcon({
   icon: Icon,
   className,
   color,
+  fill,
   size,
   button,
 }: IconProps) {
-  const child = <Icon className={className} color={color} size={size} />;
+  const child = fill ? (
+    <Icon className={className} color={color} size={size} fill={fill} />
+  ) : (
+    <Icon className={className} color={color} size={size} />
+  );
 
   if (!button) return child;
   else {

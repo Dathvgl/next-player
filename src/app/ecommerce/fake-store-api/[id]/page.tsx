@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CustomImage } from "~/components/custom-image";
 import LIcon from "~/components/lucide-icon";
 import { capitalize } from "~/lib/convert";
+import handleFetch from "~/lib/fetch";
 import { MotionUl, MotionLi, MotionDiv } from "~/lib/motion";
 import { FakeProduct } from "~/types/ecommerce/fake-store-api";
 
@@ -11,20 +12,22 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params: { id } }: PageProps) {
-  const res = await fetch(`https://fakestoreapi.com/products/${id}`);
-  const data: FakeProduct = await res.json();
-  return { title: data.title };
+  const data = await handleFetch<FakeProduct>(
+    `https://fakestoreapi.com/products/${id}`
+  );
+  return { title: data?.title };
 }
 
 export default async function Page({ params: { id } }: PageProps) {
-  const detailRes = await fetch(`https://fakestoreapi.com/products/${id}`);
-  const detailData: FakeProduct = await detailRes.json();
+  const product = await handleFetch<FakeProduct>(
+    `https://fakestoreapi.com/products/${id}`
+  );
 
-  const sameRes = await fetch(
+  const same = await handleFetch<FakeProduct[]>(
     "https://fakestoreapi.com/products/category/jewelery?limit=4"
   );
 
-  const sameData: FakeProduct[] = await sameRes.json();
+  if (!product || !same) return <></>;
 
   return (
     <div className="p-8 flex flex-col gap-4">
@@ -33,18 +36,18 @@ export default async function Page({ params: { id } }: PageProps) {
           className="w-[300px] h-[300px] rounded overflow-hidden"
           fill
           objectFit="cover"
-          src={detailData.image}
-          alt={detailData.title}
+          src={product.image}
+          alt={product.title}
         />
         <div className="flex-1 flex flex-col gap-2 pl-2">
-          <b className="text-lg">{detailData.title}</b>
+          <b className="text-lg">{product.title}</b>
           <i className="text-stone-700 dark:text-stone-400">
-            {capitalize(detailData.category)}
+            {capitalize(product.category)}
           </i>
-          <b className="text-red-700">${detailData.price}</b>
+          <b className="text-red-700">${product.price}</b>
         </div>
       </div>
-      <div>{detailData.description}</div>
+      <div>{product.description}</div>
       <div className="flex flex-col gap-4 pt-2">
         <strong className="text-xl">CÁC SẢN PHẨM TƯƠNG TỰ</strong>
         <MotionUl
@@ -59,7 +62,7 @@ export default async function Page({ params: { id } }: PageProps) {
             },
           }}
         >
-          {sameData.map((item, index) => (
+          {same.map((item, index) => (
             <Link key={item.id} href={`/ecommerce/fake-store-api/${item.id}`}>
               <MotionLi
                 className="!relative bg-stone-300 dark:bg-stone-700 bg-opacity-50 p-2 rounded overflow-hidden"

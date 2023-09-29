@@ -1,37 +1,15 @@
 import Link from "next/link";
 import tinycolor from "tinycolor2";
+import { navLinks } from "~/config/site";
 import { capitalize, strToHex } from "~/lib/convert";
 import { MotionDiv, MotionLi, MotionSpan } from "~/lib/motion";
-import { WebLinkType } from "~/types/type";
-
-const list: {
-  name: WebLinkType;
-  path: string;
-}[] = [
-  {
-    name: "home",
-    path: "/",
-  },
-  {
-    name: "manga",
-    path: "/truyen-tranh",
-  },
-  {
-    name: "message",
-    path: "/messenger",
-  },
-  {
-    name: "music",
-    path: "/music",
-  },
-];
 
 export default function ListSimulation() {
   return (
     <div className="flex-1 max-md:w-full">
       <ul className="border divide-y rounded overflow-hidden">
-        {list.map((item) => {
-          const fill = strToHex(item.name);
+        {navLinks.map((item) => {
+          const fill = strToHex(item.alt);
 
           return (
             <Link key={item.name} href={item.path}>
@@ -50,7 +28,7 @@ export default function ListSimulation() {
                   className="z-10 relative"
                   variants={{ hover: { marginLeft: 15 } }}
                 >
-                  {capitalize(item.name)}
+                  {capitalize(item.alt)}
                 </MotionSpan>
                 <MotionDiv
                   className="absolute z-10 top-1/2 -translate-y-1/2"

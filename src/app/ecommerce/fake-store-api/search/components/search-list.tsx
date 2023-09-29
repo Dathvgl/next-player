@@ -2,15 +2,16 @@ import { Star } from "lucide-react";
 import Link from "next/link";
 import { CustomImage } from "~/components/custom-image";
 import LIcon from "~/components/lucide-icon";
+import handleFetch from "~/lib/fetch";
 import { MotionDiv, MotionLi, MotionUl } from "~/lib/motion";
 import { FakeProduct } from "~/types/ecommerce/fake-store-api";
 
 export default async function SearchList({ filter }: { filter: string }) {
-  const res = await fetch(
+  const data = await handleFetch<FakeProduct[]>(
     `https://fakestoreapi.com/products/category/${filter}`
   );
 
-  const data: FakeProduct[] = await res.json();
+  if (!data) return <></>;
 
   return (
     <div className="p-8">

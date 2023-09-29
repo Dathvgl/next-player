@@ -10,6 +10,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import { Skeleton } from "~/components/ui/skeleton";
 import { useAuth } from "~/contexts/auth-context";
 import { listenRealtime } from "~/firebase/firebase";
 import { useFirebaseInfos } from "~/hooks/firebase-info";
@@ -68,37 +69,56 @@ function ChatNotifyDetail({ chatNotifies }: ChatNotifyDetailProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-80">
         <ul className="p-2">
-          {chatNotifies.map((item, index) => {
-            const info = infos?.find(({ uid }) => uid == item.sender);
-            if (!info) return <Fragment key={index} />;
+          {infos ? (
+            chatNotifies.map((item, index) => {
+              const info = infos?.find(({ uid }) => uid == item.sender);
+              if (!info) return <Fragment key={index} />;
 
-            return (
-              <li
-                key={item.messageId}
-                className="rounded overflow-hidden p-2 hover:bg-black/20 dark:hover:bg-white/20"
-              >
-                <Link
-                  className="flex items-center gap-4"
-                  href={`/messenger?uid=${item.messageId}`}
+              return (
+                <li
+                  key={item.messageId}
+                  className="rounded overflow-hidden p-2 hover:bg-black/20 dark:hover:bg-white/20"
                 >
-                  <CustomImage
-                    className="w-12 h-12 rounded-full overflow-hidden"
-                    src={info.photoURL ?? ""}
-                    alt={info.displayName ?? "Người lạ"}
-                  />
-                  <div className="flex-1">
-                    <b>{info.displayName}</b>
-                    <div className="flex justify-between gap-2">
-                      <p className="flex-1 line-clamp-1">{item.content}</p>
-                      <i className="text-gray-500 dark:text-gray-400">
-                        {timeFromNow(item.timestamp / 1000)}
-                      </i>
+                  <Link
+                    className="flex items-center gap-4"
+                    href={`/messenger?uid=${item.messageId}`}
+                  >
+                    <CustomImage
+                      className="w-12 h-12 rounded-full overflow-hidden"
+                      src={info.photoURL ?? ""}
+                      alt={info.displayName ?? "Người lạ"}
+                    />
+                    <div className="flex-1">
+                      <b>{info.displayName}</b>
+                      <div className="flex justify-between gap-2">
+                        <p className="flex-1 line-clamp-1">{item.content}</p>
+                        <i className="text-gray-500 dark:text-gray-400">
+                          {timeFromNow(item.timestamp / 1000)}
+                        </i>
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+              );
+            })
+          ) : (
+            <>
+              {Array(5)
+                .fill(0)
+                .map((_, index) => (
+                  <div
+                    key={index}
+                    className="px-2 py-1.5 h-[60px] gap-2 flex justify-between items-center"
+                  >
+                    <Skeleton className="w-12 h-full rounded-full bg-stone-300" />
+                    <div className="flex-1 flex flex-col gap-2 h-full">
+                      <Skeleton className="w-full flex-1 bg-stone-300" />
+                      <Skeleton className="w-full flex-1 bg-stone-300" />
                     </div>
                   </div>
-                </Link>
-              </li>
-            );
-          })}
+                ))}
+            </>
+          )}
         </ul>
       </DropdownMenuContent>
     </DropdownMenu>

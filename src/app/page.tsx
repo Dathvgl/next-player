@@ -1,8 +1,8 @@
+import { Metadata } from "next";
 import dynamic from "next/dynamic";
 import PageTransition from "~/components/page-transition";
 import Intro from "./components/intro";
 import ListSimulation from "./components/list-simulation";
-import { Metadata } from "next";
 
 const ChartStat = dynamic(() => import("./components/chart-stat"), {
   ssr: false,

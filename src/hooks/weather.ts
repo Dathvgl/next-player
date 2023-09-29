@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import handleFetch from "~/lib/fetch";
 import { CurrentWeatherData } from "~/types/weather";
 
 interface UseWeatherProps {
@@ -10,14 +11,13 @@ interface UseWeatherProps {
 
 export default function useWeather(props: UseWeatherProps) {
   const { coords } = props;
-  
+
   const [data, setData] = useState<CurrentWeatherData>();
-  
+
   useEffect(() => {
     async function init() {
       const link = `https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lon}&units=metric&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`;
-      const res = await fetch(link);
-      const data = await res.json();
+      const data = await handleFetch<CurrentWeatherData>(link);
       setData(data);
     }
 

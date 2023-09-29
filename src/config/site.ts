@@ -14,14 +14,14 @@ export const siteConfig = {
   },
 };
 
-interface DropLinkProps {
+interface NavLinkProps {
   name: string;
   path: string;
   alt: WebLinkType;
   icon: LucideIcon;
 }
 
-export const dropLinks: DropLinkProps[] = [
+export const navLinks: NavLinkProps[] = [
   {
     name: "Trang chủ",
     path: "/",

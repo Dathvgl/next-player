@@ -1,6 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   staticPageGenerationTimeout: 1000,
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [{ key: "Cross-Origin-Opener-Policy", value: "same-origin" }],
+      },
+    ];
+  },
   images: {
     minimumCacheTTL: 60,
     remotePatterns: [

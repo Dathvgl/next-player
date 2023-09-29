@@ -2,6 +2,8 @@ export interface ChildReact {
   children: React.ReactNode;
 }
 
+export type FetchMethod = "GET" | "POST" | "PUT" | "DELETE";
+
 export type WebLinkType =
   | "home"
   | "music"

@@ -7,7 +7,7 @@ import { useOnClickOutside } from "usehooks-ts";
 import { CustomIcons } from "~/components/custom-icons";
 import CustomInput from "~/components/custom-input";
 import LIcon from "~/components/lucide-icon";
-import { dropLinks, siteConfig } from "~/config/site";
+import { navLinks, siteConfig } from "~/config/site";
 import useGridBreak from "~/hooks/grid-break";
 import { MotionDiv, MotionLi } from "~/lib/motion";
 
@@ -54,7 +54,7 @@ export default function NavSide() {
         </div>
         <nav className="select-none">
           <ul>
-            {dropLinks.map((item, index) => (
+            {navLinks.map((item, index) => (
               <MotionLi
                 key={item.path}
                 initial={{ opacity: 0 }}

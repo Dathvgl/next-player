@@ -1,6 +1,8 @@
+import { MangaFollowStateContextProvider } from "~/contexts/manga-follow-state";
 import { externalApi } from "~/lib/api";
 import { MangaChapterDetail } from "~/types/manga";
 import BodyPage from "./components/body-page";
+import handleFetch from "~/lib/fetch";
 
 interface PageProps {
   params: {
@@ -13,10 +15,15 @@ interface PageProps {
 export default async function Page(props: PageProps) {
   const { type, mangaId, chapterId } = props.params;
 
-  const res = await fetch(
+  const data = await handleFetch<MangaChapterDetail>(
     `${externalApi.manga}/chapter/${mangaId}/${chapterId}?type=${type}`
   );
 
-  const data: MangaChapterDetail = await res.json();
-  return <BodyPage {...props.params} data={data} />;
+  if (!data) return <></>;
+
+  return (
+    <MangaFollowStateContextProvider id={mangaId} type={type}>
+      <BodyPage {...props.params} data={data} />;
+    </MangaFollowStateContextProvider>
+  );
 }

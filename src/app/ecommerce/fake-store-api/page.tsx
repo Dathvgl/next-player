@@ -4,6 +4,7 @@ import Link from "next/link";
 import Chip from "~/components/chip";
 import { CustomImage } from "~/components/custom-image";
 import LIcon from "~/components/lucide-icon";
+import handleFetch from "~/lib/fetch";
 import { MotionDiv, MotionLi, MotionUl } from "~/lib/motion";
 import { FakeProduct } from "~/types/ecommerce/fake-store-api";
 
@@ -12,19 +13,21 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const categoryRes = await fetch(
+  const categories = await handleFetch<string[]>(
     "https://fakestoreapi.com/products/categories",
     {
       next: { revalidate: 60 },
     }
   );
 
-  const productRes = await fetch("https://fakestoreapi.com/products?limit=10", {
-    next: { revalidate: 60 },
-  });
+  const products = await handleFetch<FakeProduct[]>(
+    "https://fakestoreapi.com/products?limit=10",
+    {
+      next: { revalidate: 60 },
+    }
+  );
 
-  const categorytData: string[] = await categoryRes.json();
-  const productData: FakeProduct[] = await productRes.json();
+  if (!categories || !products) return <></>;
 
   return (
     <div className="p-8 flex flex-col gap-4 divide-y divide-black dark:divide-white">
@@ -33,8 +36,11 @@ export default async function Page() {
           <strong className="text-xl">TẤT CẢ DANH MỤC</strong>
         </div>
         <div className="flex gap-4 justify-center">
-          {categorytData.map((item) => (
-            <Link key={item} href={`/ecommerce/fake-store-api/search?filter=${item}`}>
+          {categories.map((item) => (
+            <Link
+              key={item}
+              href={`/ecommerce/fake-store-api/search?filter=${item}`}
+            >
               <Chip text={item} />
             </Link>
           ))}
@@ -56,7 +62,7 @@ export default async function Page() {
             },
           }}
         >
-          {productData.map((item, index) => (
+          {products.map((item, index) => (
             <Link key={item.id} href={`/ecommerce/fake-store-api/${item.id}`}>
               <MotionLi
                 className="!relative bg-stone-300 dark:bg-stone-700 bg-opacity-50 p-2 rounded overflow-hidden"

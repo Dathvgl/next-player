@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "~/contexts/auth-context";
 import { externalApi } from "~/lib/api";
+import handleFetch from "~/lib/fetch";
 
 interface PersonType {
   uid: string;
@@ -18,11 +19,15 @@ export function useFirebaseInfo(uid: string) {
   useEffect(() => {
     async function init() {
       const token = await authContext?.idToken();
-      await fetch(`${externalApi.user}/firebaseUser/${uid}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then(async (res) => {
-        setData(await res.json());
-      });
+
+      const data = await handleFetch<PersonType>(
+        `${externalApi.user}/firebaseUser/${uid}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (data) setData(data);
     }
 
     init();
@@ -52,25 +57,21 @@ export function useFirebaseInfos(uids: string[], list?: PersonType[]) {
         for (let index = 0; index < length; index++) {
           const item = filter[index];
 
-          const res = await fetch(
-            `${process.env.NEXT_PUBLIC_EXTERNAL_API_FSFSSFSSFSFSFS}/api/user/firebaseUser/${item}`,
+          const data = await handleFetch<PersonType>(
+            `${externalApi.user}/firebaseUser/${item}`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
           );
 
-          list.push(await res.json());
+          if (data) list.push(data);
         }
 
         setData(list);
       }
     }
 
-    try {
-      init();
-    } catch (error) {
-      console.error(error);
-    }
+    init();
   }, [uids.sort().toString(), authContext]);
 
   if (!authContext) return;

@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLocalStorage } from "usehooks-ts";
 import { CustomImage } from "~/components/custom-image";
+import { useMangaFollowState } from "~/contexts/manga-follow-state";
 import useGridBreak from "~/hooks/grid-break";
 import { MotionLi, MotionUl } from "~/lib/motion";
 import { MangaChapterDetail, MangaLocal } from "~/types/manga";
 import StickySelect from "./sticky-select";
-import { useLocalStorage } from "usehooks-ts";
 
 interface BodyPageProps {
   type: string;
@@ -18,6 +19,7 @@ interface BodyPageProps {
 export default function BodyPage(props: BodyPageProps) {
   const { type, mangaId, chapterId, data } = props;
   const { current, ...rest } = data;
+  const mangaFollowStateContext = useMangaFollowState();
 
   const [mangaLocal, setMangaLocal] = useLocalStorage<MangaLocal[]>(
     "mangaHistory",
@@ -36,7 +38,6 @@ export default function BodyPage(props: BodyPageProps) {
   const [zoom, setZoom] = useState(50);
 
   useEffect(() => {
-    // useLocal
     const local: MangaLocal = {
       type: type,
       mangaId: mangaId,
@@ -58,6 +59,13 @@ export default function BodyPage(props: BodyPageProps) {
     } else {
       setMangaLocal([...mangaLocal, local]);
     }
+
+    async function init() {
+      if (!mangaFollowStateContext) return;
+      await mangaFollowStateContext.putFollow(chapterId);
+    }
+
+    init();
   }, [chapterId]);
 
   useEffect(() => {

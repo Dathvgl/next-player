@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Fragment } from "react";
-import MangaThumnail from "~/components/manga-thumnail";
+import MangaThumnail from "~/app/truyen-tranh/components/manga-thumnail";
 import Pagination from "~/components/pagination";
 import { externalApi } from "~/lib/api";
 import { numChapter, timeFromNow } from "~/lib/convert";

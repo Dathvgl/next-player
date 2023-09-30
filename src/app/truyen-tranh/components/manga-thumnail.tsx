@@ -1,6 +1,6 @@
 import React from "react";
 import { externalApi } from "~/lib/api";
-import { CustomImage } from "./custom-image";
+import { CustomImage } from "../../../components/custom-image";
 import { MangaThumnail } from "~/types/manga";
 import handleFetch from "~/lib/fetch";
 

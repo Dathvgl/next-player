@@ -1,5 +1,5 @@
 import Chip from "~/components/chip";
-import MangaThumnail from "~/components/manga-thumnail";
+import MangaThumnail from "~/app/truyen-tranh/components/manga-thumnail";
 import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
 import {
   Table,

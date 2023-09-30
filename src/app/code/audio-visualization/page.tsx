@@ -1,14 +1,14 @@
 import { Metadata } from "next";
-import Evervault from "~/app/code/components/evervault";
+import AudioVisualization from "../components/audio-visualization";
 
 export const metadata: Metadata = {
-  title: "Evervault là gì thế... 🤣",
+  title: "Audio visualization 🤡",
 };
 
 export default function Page() {
   return (
     <div className="h-[calc(100vh-65px)]">
-      <Evervault />
+      <AudioVisualization />
     </div>
   );
 }

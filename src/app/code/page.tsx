@@ -12,6 +12,9 @@ const codeList = [
   {
     type: "evervault",
   },
+  {
+    type: "audio-visualization",
+  },
 ];
 
 export const metadata: Metadata = {

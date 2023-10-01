@@ -11,7 +11,9 @@ import { createContext, useContext, useEffect, useState } from "react";
 import {
   auth,
   onceRealtime,
+  setStore,
   updateRealTime,
+  updateStore,
   writeRealTime,
 } from "~/firebase/firebase";
 import { timestampNow } from "~/lib/convert";
@@ -29,29 +31,15 @@ const AuthContext = createContext<AuthContextProps | null>(null);
 export const AuthContextProvider = ({ children }: ChildReact) => {
   const [user, setUser] = useState<User | null>(null);
 
-  const handleSign = async (
-    status: "online" | "offline",
-    handleUser?: User | null
-  ) => {
-    if (handleUser || user) {
-      const statusPath = `/status/${handleUser?.uid ?? user?.uid}`;
-      const record = await onceRealtime(statusPath);
+  const handleSign = async (status: "online" | "offline") => {
+    if (user) {
+      const obj: Record<string, any> = { status };
 
-      if (record.exists()) {
-        if (status == "offline") {
-          updateRealTime(statusPath, {
-            status,
-            lastTimeOnline: timestampNow(),
-          });
-        } else {
-          updateRealTime(statusPath, { status });
-        }
-      } else {
-        writeRealTime(statusPath, {
-          status,
-          lastTimeOnline: timestampNow(),
-        });
+      if (status == "offline") {
+        obj.lastOnline = timestampNow();
       }
+
+      await updateStore("users", user.uid, obj);
     }
   };
 
@@ -76,7 +64,23 @@ export const AuthContextProvider = ({ children }: ChildReact) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
-      if (currentUser) await handleSign("online", currentUser);
+      if (currentUser) {
+        await handleSign("online");
+
+        const metadata = currentUser.metadata;
+        if (metadata.creationTime == metadata.lastSignInTime) {
+          await setStore("users", currentUser.uid, {
+            uid: currentUser.uid,
+            email: currentUser.email,
+            displayName: currentUser.displayName,
+            photoURL: currentUser.photoURL,
+            status: "online",
+            lastOnline: 0,
+          });
+
+          await setStore("chatFriends", currentUser.uid, {});
+        }
+      }
     });
 
     return () => {

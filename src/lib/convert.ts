@@ -12,11 +12,11 @@ export function timestampNow() {
   return new Date().getTime();
 }
 
-export function compactNumber(num:number) {
+export function compactNumber(num: number) {
   return Intl.NumberFormat("en-US", {
     notation: "compact",
     maximumFractionDigits: 1,
-  }).format(num)
+  }).format(num);
 }
 
 export function strToHex(str: string) {
@@ -44,3 +44,14 @@ export const durationUTC = (duration: number, format: string = "mm:ss") =>
   moment
     .utc(moment.duration(duration, "seconds").asMilliseconds())
     .format(format);
+
+export const strArray = (str: string) => {
+  const arr: string[] = [];
+  const string = str.trim().replace(/ +(?= )/g, "");
+
+  for (let i = 0; i < string.trim().length; i++) {
+    arr.push(string.substr(0, i + 1).toLowerCase());
+  }
+
+  return arr;
+};

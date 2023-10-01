@@ -1,18 +1,10 @@
-"use client";
-
 import Link from "next/link";
 import { CustomImage } from "~/components/custom-image";
-import { useFirebaseInfo } from "~/hooks/firebase-info";
 import { timeFromNow } from "~/lib/convert";
-
-interface PeopleType {
-  uid: string;
-  status: "online" | "offline";
-  lastTimeOnline: number;
-}
+import { ChatPeopleType } from "~/types/messenger";
 
 interface ListMessengerDetailProps {
-  person: PeopleType;
+  person: ChatPeopleType;
   currentUid: string | null;
 }
 
@@ -20,9 +12,7 @@ export default function ListMessengerDetail({
   person,
   currentUid,
 }: ListMessengerDetailProps) {
-  const data = useFirebaseInfo(person.uid);
-  if (!data) return <></>;
-  const isFocused = currentUid == data.uid;
+  const isFocused = currentUid == person.uid;
 
   return (
     <li
@@ -34,19 +24,23 @@ export default function ListMessengerDetail({
     >
       <CustomImage
         className="w-14 h-14 rounded-full overflow-hidden"
-        src={data?.photoURL ?? ""}
-        alt={data?.displayName ?? "Người lạ"}
+        src={person.photoURL ?? ""}
+        alt={person.displayName ?? "Người lạ"}
       />
       <Link
-        href={isFocused ? "" : `/messenger?uid=${data.uid}`}
+        href={isFocused ? "" : `/messenger?uid=${person.uid}`}
         className="flex-1"
       >
-        <b>{data?.displayName}</b>
+        <b>{person.displayName}</b>
         <div className="flex justify-between gap-2">
           <p>Message</p>
-          <i className="text-gray-500 dark:text-gray-400">
-            {timeFromNow(person.lastTimeOnline / 1000)}
-          </i>
+          {person.status == "online" ? (
+            <i className="text-green-500">Online</i>
+          ) : (
+            <i className="text-gray-500 dark:text-gray-400">
+              {timeFromNow(person.lastOnline / 1000)}
+            </i>
+          )}
         </div>
       </Link>
     </li>

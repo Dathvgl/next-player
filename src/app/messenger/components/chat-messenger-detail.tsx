@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { orderByChild } from "firebase/database";
 import { AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { Button } from "~/components/ui/button";
@@ -48,11 +48,31 @@ export default function ChatMessengerDetail(props: ChatMessengerDetailProps) {
   const { uid, messageId, members } = props;
   const pathRef = `/messageLog/${messageId}`;
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const chatRef = useRef<HTMLUListElement>(null);
+
   const [chats, setChats] = useState<MessageLogType[]>([]);
+  const [chatHeight, setChatHeight] = useState<number>(0);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
+
+  useEffect(() => {
+    if (!chatRef.current) return;
+
+    const resizeObserver = new ResizeObserver((event) => {
+      setChatHeight(event[0].contentRect.height);
+    });
+
+    resizeObserver.observe(chatRef.current);
+    return () => resizeObserver.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const scroll = scrollRef.current?.children[1];
+    scroll?.scrollTo({ top: scroll?.scrollHeight, behavior: "smooth" });
+  }, [chatHeight]);
 
   useEffect(() => {
     const unsubscribe = listenRealtime(
@@ -116,9 +136,12 @@ export default function ChatMessengerDetail(props: ChatMessengerDetailProps) {
 
   return (
     <div className="flex-1 h-full flex flex-col [&>div>div>div]:h-full">
-      <ScrollArea className="flex-1">
+      <ScrollArea ref={scrollRef} className="flex-1">
         <AnimatePresence initial={false}>
-          <ul className="flex flex-col gap-4 p-4 justify-end h-full">
+          <ul
+            ref={chatRef}
+            className="flex flex-col gap-4 p-4 justify-end h-full"
+          >
             {chats.map((item) => {
               const receive = item.uid == uid;
               return (
@@ -157,7 +180,7 @@ export default function ChatMessengerDetail(props: ChatMessengerDetailProps) {
               <FormItem className="flex-1 flex items-center gap-4 ">
                 <FormLabel>Message</FormLabel>
                 <FormControl className="flex-1 !m-0 no-focus-tw-ring">
-                  <Input placeholder="Tin nhắn" {...field} />
+                  <Input autoComplete="off" placeholder="Tin nhắn" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

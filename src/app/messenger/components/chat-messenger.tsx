@@ -4,7 +4,7 @@ import { IteratedDataSnapshot } from "firebase/database";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "~/contexts/auth-context";
-import { onceRealtime, pushRealTime } from "~/firebase/firebase";
+import { onceRealtime, pushRealTime, setStore } from "~/firebase/firebase";
 import ChatMessengerDetail from "./chat-messenger-detail";
 
 export default function ChatMessenger() {
@@ -46,8 +46,31 @@ export default function ChatMessenger() {
           });
 
           if (uid != currentUid) {
+            await setStore(
+              "chatFriends",
+              uid,
+              { [currentUid]: true },
+              { merge: true }
+            );
+
+            await setStore(
+              "chatFriends",
+              currentUid,
+              { [uid]: true },
+              { merge: true }
+            );
+
             setMembers([uid, currentUid]);
-          } else setMembers([currentUid]);
+          } else {
+            await setStore(
+              "chatFriends",
+              uid,
+              { [currentUid]: true },
+              { merge: true }
+            );
+
+            setMembers([currentUid]);
+          }
 
           setMessageId(push.key ?? undefined);
         }

@@ -67,7 +67,8 @@ export const MangaFollowStateContextProvider = ({
       {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
-      }
+      },
+      true
     );
 
     await getFollow();
@@ -77,25 +78,33 @@ export const MangaFollowStateContextProvider = ({
     if (!authContext?.user?.uid) return;
     const token = await authContext.idToken();
 
-    await handleFetch(`${externalApi.user}/followManga/${id}`, {
-      method: "PUT",
-      headers: { Authorization: `Bearer ${token}` },
-      body: JSON.stringify({
-        type,
-        replace: stateFollow?.lastestChapterId == chapter,
-        currentChapter: chapter,
-      }),
-    });
+    await handleFetch(
+      `${externalApi.user}/followManga/${id}`,
+      {
+        method: "PUT",
+        headers: { Authorization: `Bearer ${token}` },
+        body: JSON.stringify({
+          type,
+          replace: stateFollow?.lastestChapterId == chapter,
+          currentChapter: chapter,
+        }),
+      },
+      true
+    );
   };
 
   const deleteFollow = async () => {
     if (!authContext?.user?.uid) return;
     const token = await authContext.idToken();
 
-    await handleFetch(`${externalApi.user}/followManga/${id}?type=${type}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    await handleFetch(
+      `${externalApi.user}/followManga/${id}?type=${type}`,
+      {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      },
+      true
+    );
 
     setStateFollow(undefined);
   };

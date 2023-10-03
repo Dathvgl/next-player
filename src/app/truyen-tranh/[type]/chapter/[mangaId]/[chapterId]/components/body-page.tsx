@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { CustomImage } from "~/components/custom-image";
-import { useMangaFollowState } from "~/contexts/manga-follow-state";
+import { useMangaFollowState } from "~/contexts/manga-follow-state-context";
 import useGridBreak from "~/hooks/grid-break";
 import { MotionLi, MotionUl } from "~/lib/motion";
 import { MangaChapterDetail, MangaLocal } from "~/types/manga";

@@ -14,14 +14,16 @@ const MangaFollowContext = createContext<MangaFollowContextProps | null>(null);
 
 export const MangaFollowContextProvider = ({
   id,
+  type,
   followed,
   children,
-}: ChildReact & { id: string; followed: number }) => {
+}: ChildReact & { id: string; type: string; followed: number }) => {
   const [follow, setFollow] = useState(followed);
 
   const altFollow = async () => {
     const data = await handleFetch<{ watched: number } | null>(
-      `${externalApi.manga}/detailFollow/${id}`
+      `${externalApi.manga}/detailFollow/${id}?type=${type}`,
+      { cache: "no-store", next: { revalidate: 0 } }
     );
 
     if (data) setFollow(data.watched);

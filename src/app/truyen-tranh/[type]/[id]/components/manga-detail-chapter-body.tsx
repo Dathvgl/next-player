@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import { useMangaFollowState } from "~/contexts/manga-follow-state";
+import { useMangaFollowState } from "~/contexts/manga-follow-state-context";
 import { numChapter, timeFromNow } from "~/lib/convert";
 import { MangaChapter } from "~/types/manga";
 

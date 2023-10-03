@@ -1,4 +1,4 @@
-import { MangaFollowStateContextProvider } from "~/contexts/manga-follow-state";
+import { MangaFollowStateContextProvider } from "~/contexts/manga-follow-state-context";
 import { externalApi } from "~/lib/api";
 import { MangaChapterDetail } from "~/types/manga";
 import BodyPage from "./components/body-page";

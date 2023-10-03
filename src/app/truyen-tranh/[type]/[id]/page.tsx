@@ -1,5 +1,5 @@
-import Chip from "~/components/chip";
 import MangaThumnail from "~/app/truyen-tranh/components/manga-thumnail";
+import Chip from "~/components/chip";
 import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
 import {
   Table,
@@ -10,13 +10,13 @@ import {
   TableRow,
 } from "~/components/ui/table";
 import { MangaFollowContextProvider } from "~/contexts/manga-follow-context";
+import { MangaFollowStateContextProvider } from "~/contexts/manga-follow-state-context";
 import { externalApi } from "~/lib/api";
 import { compactNumber } from "~/lib/convert";
+import handleFetch from "~/lib/fetch";
 import { MangaDetail } from "~/types/manga";
 import MangaDetailChapter from "./components/manga-detail-chapter";
 import { MangaFollow, MangaFollowCeil } from "./components/manga-follow";
-import { MangaFollowStateContextProvider } from "~/contexts/manga-follow-state";
-import handleFetch from "~/lib/fetch";
 
 interface PageProps {
   params: { type: string; id: string };
@@ -26,7 +26,8 @@ export default async function Page(props: PageProps) {
   const { type, id } = props.params;
 
   const data = await handleFetch<MangaDetail>(
-    `${externalApi.manga}/detail/${id}?type=${type}`
+    `${externalApi.manga}/detail/${id}?type=${type}`,
+    { next: { revalidate: 60 } }
   );
 
   if (!data) return <></>;
@@ -67,6 +68,7 @@ export default async function Page(props: PageProps) {
               </b>
               <MangaFollowContextProvider
                 id={data._id}
+                type={type}
                 followed={data.followed}
               >
                 <div className="pt-2 flex flex-col gap-4">

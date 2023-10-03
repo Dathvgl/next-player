@@ -3,7 +3,7 @@
 import { Button } from "~/components/ui/button";
 import { TableCell } from "~/components/ui/table";
 import { useMangaFollow } from "~/contexts/manga-follow-context";
-import { useMangaFollowState } from "~/contexts/manga-follow-state";
+import { useMangaFollowState } from "~/contexts/manga-follow-state-context";
 import { compactNumber } from "~/lib/convert";
 
 export function MangaFollow() {

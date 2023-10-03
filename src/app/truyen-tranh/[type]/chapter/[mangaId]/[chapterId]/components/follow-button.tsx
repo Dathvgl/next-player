@@ -1,7 +1,7 @@
 import { Heart } from "lucide-react";
 import LIcon from "~/components/lucide-icon";
 import { Button } from "~/components/ui/button";
-import { useMangaFollowState } from "~/contexts/manga-follow-state";
+import { useMangaFollowState } from "~/contexts/manga-follow-state-context";
 
 export default function FollowButton({ id }: { id: string }) {
   const mangaFollowStateContext = useMangaFollowState();

@@ -82,7 +82,11 @@ export const MangaFollowStateContextProvider = ({
       `${externalApi.user}/followManga/${id}`,
       {
         method: "PUT",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           type,
           replace: stateFollow?.lastestChapterId == chapter,

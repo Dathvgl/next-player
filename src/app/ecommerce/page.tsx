@@ -12,7 +12,7 @@ import { MotionUl, MotionLi } from "~/lib/motion";
 const ecommerceList = [
   {
     type: "fake-store-api",
-    icon: "/ecommerce/zing-mp3-favicon.png",
+    icon: "/ecommerce/fake-store-api-favicon.png",
   },
 ];
 

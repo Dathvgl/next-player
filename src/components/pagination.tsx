@@ -9,12 +9,22 @@ interface PaginationProps {
 }
 
 export default function Pagination({ total }: PaginationProps) {
+  const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  const params = new URLSearchParams(searchParams);
   const page = Number(searchParams.get("page") ?? 1);
 
-  const pathname = usePathname();
-  const pages: number[] = [1];
+  function handlePage(num: number) {
+    if (num == 1) params.delete("page");
+    else params.set("page", num.toString());
 
+    const result = params.toString();
+    if (!result || result == "") return pathname;
+    else return `${pathname}?${params.toString()}`;
+  }
+
+  const pages: number[] = [1];
   if (total == 1) return <></>;
 
   if (total != 1) {
@@ -63,7 +73,7 @@ export default function Pagination({ total }: PaginationProps) {
       <ul className="flex gap-1">
         <li className="rounded-full overflow-hidden">
           <LinkLIcon
-            href={page == 1 ? "" : `${pathname}?page=${page - 1}`}
+            href={page == 1 ? "" : handlePage(page - 1)}
             icon={ArrowLeft}
           />
         </li>
@@ -85,7 +95,7 @@ export default function Pagination({ total }: PaginationProps) {
               className="rounded-full overflow-hidden"
             >
               <LinkLIcon
-                href={item == page ? "" : `${pathname}?page=${item}`}
+                href={item == page ? "" : handlePage(item)}
                 active={item == page}
               >
                 {item}
@@ -95,7 +105,7 @@ export default function Pagination({ total }: PaginationProps) {
         })}
         <li className="rounded-full overflow-hidden">
           <LinkLIcon
-            href={page == total ? "" : `${pathname}?page=${page + 1}`}
+            href={page == total ? "" : handlePage(page + 1)}
             icon={ArrowRight}
           />
         </li>

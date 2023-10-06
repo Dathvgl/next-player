@@ -61,7 +61,7 @@ export default function Page() {
               </MotionLi>
             </Link>
           </HoverCardTrigger>
-          <HoverCardContent className="w-min whitespace-nowrap">
+          <HoverCardContent className="w-min whitespace-nowrap px-2 py-1">
             {capitalize(item.type)}
           </HoverCardContent>
         </HoverCard>

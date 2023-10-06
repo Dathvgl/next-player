@@ -15,7 +15,7 @@ export default function Page() {
   return (
     <PageTransition>
       <main className="px-6 py-4 flex flex-col gap-8">
-        <section className="flex max-md:flex-col gap-8 items-center">
+        <section className="flex md:items-stretch max-md:flex-col gap-8 items-center">
           <ListSimulation />
           <DailyWork />
         </section>

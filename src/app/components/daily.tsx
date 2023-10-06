@@ -11,7 +11,7 @@ import { capitalize } from "~/lib/convert";
 
 export default function DailyWork() {
   return (
-    <div className="flex-1 flex flex-col max-md:w-full items-center gap-4 p-2 border shadow-custom rounded bg-gradient-to-b from-cyan-300 to-blue-300 dark:from-cyan-600 dark:to-blue-600">
+    <div className="flex-1 flex flex-col justify-center max-md:w-full items-center gap-4 p-2 border shadow-custom rounded bg-gradient-to-b from-cyan-300 to-blue-300 dark:from-cyan-600 dark:to-blue-600">
       <TimeWork />
       <WeatherWork />
     </div>

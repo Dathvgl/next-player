@@ -7,10 +7,9 @@ import { MotionDiv, MotionLi, MotionSpan } from "~/lib/motion";
 export default function ListSimulation() {
   return (
     <div className="flex-1 max-md:w-full">
-      <ul className="border divide-y rounded overflow-hidden">
+      <ul className="border divide-y rounded overflow-hidden grid grid-cols-2">
         {navLinks.map((item) => {
           const fill = strToHex(item.alt);
-
           return (
             <Link key={item.name} href={item.path}>
               <MotionLi

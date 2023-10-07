@@ -13,7 +13,7 @@ export default function Chip({ href, text }: { href?: string; text: string }) {
           color: tinycolor(color).isDark() ? "white" : "black",
           backgroundColor: color,
         }}
-        className="text-sm h-auto px-3 py-1 font-medium"
+        className="text-sm h-auto px-3 py-1 font-medium whitespace-nowrap"
       >
         {capitalize(text)}
       </div>

@@ -18,7 +18,7 @@ export interface MangaFollowStateContextProps {
   stateFollow?: StateFollow;
   getFollow: () => Promise<void>;
   postFollow: (chapter?: string) => Promise<void>;
-  putFollow: (chapter: string) => Promise<void>;
+  putFollow: (chapter: string, list: string[]) => Promise<void>;
   deleteFollow: () => Promise<void>;
 }
 
@@ -34,7 +34,11 @@ export const MangaFollowStateContextProvider = ({
   const [stateFollow, setStateFollow] = useState<StateFollow>();
 
   const getFollow = async () => {
-    if (!authContext?.user?.uid) return;
+    if (!authContext?.user?.uid) {
+      setStateFollow(undefined);
+      return;
+    }
+
     const token = await authContext.idToken();
 
     const data = await handleFetch<StateFollow | null>(
@@ -74,8 +78,8 @@ export const MangaFollowStateContextProvider = ({
     await getFollow();
   };
 
-  const putFollow = async (chapter: string) => {
-    if (!authContext?.user?.uid) return;
+  const putFollow = async (chapter: string, list: string[]) => {
+    if (!authContext?.user?.uid || !stateFollow) return;
     const token = await authContext.idToken();
 
     await handleFetch(
@@ -89,7 +93,9 @@ export const MangaFollowStateContextProvider = ({
         },
         body: JSON.stringify({
           type,
-          replace: stateFollow?.lastestChapterId == chapter,
+          replace: list.includes(stateFollow.lastestChapterId)
+            ? stateFollow.lastestChapterId == chapter
+            : true,
           currentChapter: chapter,
         }),
       },

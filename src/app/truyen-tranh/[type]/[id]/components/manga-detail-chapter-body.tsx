@@ -1,6 +1,8 @@
 "use client";
 
+import { Star } from "lucide-react";
 import Link from "next/link";
+import LIcon from "~/components/lucide-icon";
 import {
   Table,
   TableBody,
@@ -36,26 +38,29 @@ export default function MangaDetailChapterBody({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data.map((item) => (
-          <TableRow key={item._id}>
-            <TableCell
-              style={{
-                color:
-                  stateFollow?.lastestChapterId == item._id
-                    ? "red"
-                    : stateFollow?.currentChapterId == item._id
-                    ? "yellow"
-                    : undefined,
-              }}
-            >
-              <Link href={`/truyen-tranh/${type}/chapter/${id}/${item._id}`}>
-                {numChapter(item.chapter, true)}
-              </Link>
-            </TableCell>
-            <TableCell>{item.watched}</TableCell>
-            <TableCell>{timeFromNow(item.time)}</TableCell>
-          </TableRow>
-        ))}
+        {data.map((item) => {
+          const check =
+            stateFollow?.lastestChapterId == item._id
+              ? "red"
+              : stateFollow?.currentChapterId == item._id
+              ? "yellow"
+              : undefined;
+
+          return (
+            <TableRow key={item._id}>
+              <TableCell
+                className={!check ? undefined : "flex items-center gap-2"}
+              >
+                <Link href={`/truyen-tranh/${type}/chapter/${id}/${item._id}`}>
+                  {numChapter(item.chapter, true)}
+                </Link>
+                {check && <LIcon icon={Star} color={check} fill={check} />}
+              </TableCell>
+              <TableCell>{item.watched}</TableCell>
+              <TableCell>{timeFromNow(item.time)}</TableCell>
+            </TableRow>
+          );
+        })}
       </TableBody>
     </Table>
   );

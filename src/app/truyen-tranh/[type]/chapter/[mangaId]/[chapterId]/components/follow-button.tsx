@@ -3,7 +3,12 @@ import LIcon from "~/components/lucide-icon";
 import { Button } from "~/components/ui/button";
 import { useMangaFollowState } from "~/contexts/manga-follow-state-context";
 
-export default function FollowButton({ id }: { id: string }) {
+interface FollowButtonProps {
+  id: string;
+  chapters: string[];
+}
+
+export default function FollowButton({ id, chapters }: FollowButtonProps) {
   const mangaFollowStateContext = useMangaFollowState();
   const isFollow = mangaFollowStateContext?.stateFollow ? true : false;
 
@@ -14,7 +19,7 @@ export default function FollowButton({ id }: { id: string }) {
       await mangaFollowStateContext.deleteFollow();
     } else {
       await mangaFollowStateContext.postFollow();
-      await mangaFollowStateContext.putFollow(id);
+      await mangaFollowStateContext.putFollow(id, chapters);
     }
   }
 

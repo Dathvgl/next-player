@@ -62,7 +62,7 @@ export default function StickySelect(props: StickySelectProps) {
 
   return (
     <MotionSection className="sticky top-0 py-2 bg-white dark:bg-black gap-2 flex justify-center">
-      <FollowButton id={currentId} />
+      <FollowButton id={currentId} chapters={chapters.map(({ _id }) => _id)} />
       {canPrev ? (
         <Link href={`/truyen-tranh/${type}/chapter/${id}/${canPrev._id}`}>
           {prevBtn}

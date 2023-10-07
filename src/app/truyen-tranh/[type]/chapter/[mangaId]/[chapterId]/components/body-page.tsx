@@ -1,12 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useLocalStorage } from "usehooks-ts";
 import { CustomImage } from "~/components/custom-image";
-import { useMangaFollowState } from "~/contexts/manga-follow-state-context";
 import useGridBreak from "~/hooks/grid-break";
 import { MotionLi, MotionUl } from "~/lib/motion";
-import { MangaChapterDetail, MangaLocal } from "~/types/manga";
+import { MangaChapterDetail } from "~/types/manga";
+import BodyHandle from "./body-handle";
 import StickySelect from "./sticky-select";
 
 interface BodyPageProps {
@@ -19,54 +18,9 @@ interface BodyPageProps {
 export default function BodyPage(props: BodyPageProps) {
   const { type, mangaId, chapterId, data } = props;
   const { current, ...rest } = data;
-  const mangaFollowStateContext = useMangaFollowState();
-
-  const [mangaLocal, setMangaLocal] = useLocalStorage<MangaLocal[]>(
-    "mangaHistory",
-    [
-      {
-        type: type,
-        mangaId: mangaId,
-        chapterId: chapterId,
-        chapterNum: current?.chapter ?? 0,
-        timestamp: 0,
-      },
-    ]
-  );
 
   const gridBreak = useGridBreak(["xs", "lg", "xl"]);
   const [zoom, setZoom] = useState(50);
-
-  useEffect(() => {
-    const local: MangaLocal = {
-      type: type,
-      mangaId: mangaId,
-      chapterId: chapterId,
-      chapterNum: current?.chapter ?? 0,
-      timestamp: 0,
-    };
-
-    const result = mangaLocal.find((item) => {
-      return item.type == local.type && item.mangaId == local.mangaId;
-    });
-
-    if (result) {
-      const list = mangaLocal.filter((item) => {
-        return item.type != local.type && item.mangaId != local.mangaId;
-      });
-
-      setMangaLocal([...list, local]);
-    } else {
-      setMangaLocal([...mangaLocal, local]);
-    }
-
-    async function init() {
-      if (!mangaFollowStateContext) return;
-      await mangaFollowStateContext.putFollow(chapterId);
-    }
-
-    init();
-  }, [chapterId]);
 
   useEffect(() => {
     if (gridBreak == "sm") {
@@ -90,6 +44,7 @@ export default function BodyPage(props: BodyPageProps) {
 
   return (
     <article className="select-none">
+      <BodyHandle {...props} />
       <StickySelect
         {...rest}
         id={mangaId}

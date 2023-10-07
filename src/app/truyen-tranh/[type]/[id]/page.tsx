@@ -14,7 +14,8 @@ import { MangaFollowStateContextProvider } from "~/contexts/manga-follow-state-c
 import { externalApi } from "~/lib/api";
 import { compactNumber } from "~/lib/convert";
 import handleFetch from "~/lib/fetch";
-import { MangaDetail } from "~/types/manga";
+import { MangaChapter, MangaDetail } from "~/types/manga";
+import MangaButton from "./components/manga-button";
 import MangaDetailChapter from "./components/manga-detail-chapter";
 import { MangaFollow, MangaFollowCeil } from "./components/manga-follow";
 
@@ -32,12 +33,16 @@ export async function generateMetadata({ params: { type, id } }: PageProps) {
 export default async function Page(props: PageProps) {
   const { type, id } = props.params;
 
-  const data = await handleFetch<MangaDetail>(
+  const detail = await handleFetch<MangaDetail>(
     `${externalApi.manga}/detail/${id}?type=${type}`,
     { next: { revalidate: 60 } }
   );
 
-  if (!data) return <></>;
+  const chapters = await handleFetch<MangaChapter[]>(
+    `${externalApi.manga}/chapter/${id}?type=${type}`
+  );
+
+  if (!detail) return <></>;
 
   return (
     <MangaFollowStateContextProvider id={id} type={type}>
@@ -48,7 +53,7 @@ export default async function Page(props: PageProps) {
             fill
             type={type}
             id={id}
-            title={data.title}
+            title={detail.title}
           />
         </section>
         <section className="px-10 py-10 relative z-20 flex flex-col gap-4">
@@ -61,25 +66,25 @@ export default async function Page(props: PageProps) {
                     className="rounded-lg overflow-hidden"
                     type={type}
                     id={id}
-                    title={data.title}
+                    title={detail.title}
                   />
                 </button>
               </DialogTrigger>
               <DialogContent className="p-0 [&>button]:hidden">
-                <MangaThumnail type={type} id={id} title={data.title} />
+                <MangaThumnail type={type} id={id} title={detail.title} />
               </DialogContent>
             </Dialog>
             <div className="flex-1 flex flex-col gap-2">
               <b className="text-3xl line-clamp-2 text-white md:h-[160px]">
-                {data.title}
+                {detail.title}
               </b>
               <MangaFollowContextProvider
-                id={data._id}
+                id={detail._id}
                 type={type}
-                followed={data.followed}
+                followed={detail.followed}
               >
                 <div className="pt-2 flex flex-col gap-4">
-                  {data.altTitle && <div>Tên khác: {data.altTitle}</div>}
+                  {detail.altTitle && <div>Tên khác: {detail.altTitle}</div>}
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -90,27 +95,28 @@ export default async function Page(props: PageProps) {
                     <TableBody>
                       <TableRow>
                         <TableCell>Lượt xem</TableCell>
-                        <TableCell>{compactNumber(data.watched)}</TableCell>
+                        <TableCell>{compactNumber(detail.watched)}</TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell>Lượt theo dõi</TableCell>
-                        <MangaFollowCeil followed={data.followed} />
+                        <MangaFollowCeil followed={detail.followed} />
                       </TableRow>
                     </TableBody>
                   </Table>
+                  <MangaButton type={type} id={id} chapters={chapters} />
                   <MangaFollow />
                 </div>
               </MangaFollowContextProvider>
             </div>
           </div>
-          <section className="flex gap-4">
-            {data.tags.map((item) => (
+          <section className="flex gap-4 flex-wrap">
+            {detail.tags.map((item) => (
               <Chip key={item._id} text={item.name} />
             ))}
           </section>
-          {data.description && <section>{data.description}</section>}
+          {detail.description && <section>{detail.description}</section>}
           <section>
-            <MangaDetailChapter type={type} id={data._id} />
+            <MangaDetailChapter type={type} id={detail._id} data={chapters} />
           </section>
         </section>
       </article>

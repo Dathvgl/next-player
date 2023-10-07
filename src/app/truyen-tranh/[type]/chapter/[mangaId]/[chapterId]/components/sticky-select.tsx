@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, ZoomIn, ZoomOut } from "lucide-react";
+import { ArrowLeft, ArrowRight, List, ZoomIn, ZoomOut } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import LIcon from "~/components/lucide-icon";
@@ -62,6 +62,9 @@ export default function StickySelect(props: StickySelectProps) {
 
   return (
     <MotionSection className="sticky top-0 py-2 bg-white dark:bg-black gap-2 flex justify-center">
+      <Link href={`/truyen-tranh/${type}/${id}`}>
+        <LIcon icon={List} button />
+      </Link>
       <FollowButton id={currentId} chapters={chapters.map(({ _id }) => _id)} />
       {canPrev ? (
         <Link href={`/truyen-tranh/${type}/chapter/${id}/${canPrev._id}`}>

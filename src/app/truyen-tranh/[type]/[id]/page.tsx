@@ -22,6 +22,13 @@ interface PageProps {
   params: { type: string; id: string };
 }
 
+export async function generateMetadata({ params: { type, id } }: PageProps) {
+  const data = await handleFetch<MangaDetail>(
+    `${externalApi.manga}/detail/${id}?type=${type}`
+  );
+  return { title: data?.title, description: data?.description };
+}
+
 export default async function Page(props: PageProps) {
   const { type, id } = props.params;
 

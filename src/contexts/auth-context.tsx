@@ -58,8 +58,6 @@ export const AuthContextProvider = ({ children }: ChildReact) => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
-        await handleSign("online");
-
         const metadata = currentUser.metadata;
         if (metadata.creationTime == metadata.lastSignInTime) {
           await setStore("users", currentUser.uid, {
@@ -76,6 +74,15 @@ export const AuthContextProvider = ({ children }: ChildReact) => {
       }
     });
 
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!user) return;
+    handleSign("online");
+
     const cleanup = () => {
       handleSign("offline");
     };
@@ -83,10 +90,9 @@ export const AuthContextProvider = ({ children }: ChildReact) => {
     window.addEventListener("beforeunload", cleanup);
 
     return () => {
-      unsubscribe();
       window.removeEventListener("beforeunload", cleanup);
     };
-  }, []);
+  }, [user]);
 
   return (
     <AuthContext.Provider

@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: false,
   staticPageGenerationTimeout: 1000,
   async headers() {
     return [

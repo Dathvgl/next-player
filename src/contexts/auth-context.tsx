@@ -76,9 +76,15 @@ export const AuthContextProvider = ({ children }: ChildReact) => {
       }
     });
 
+    const cleanup = () => {
+      handleSign("offline");
+    };
+
+    window.addEventListener("beforeunload", cleanup);
+
     return () => {
       unsubscribe();
-      handleSign("offline");
+      window.removeEventListener("beforeunload", cleanup);
     };
   }, []);
 

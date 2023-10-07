@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { MangaChapter } from "~/types/manga";
+import MangaButtonContinue from "./manga-button-continue";
 
 interface MangaButtonProps {
   id: string;
@@ -25,9 +26,11 @@ export default function MangaButton({ type, id, chapters }: MangaButtonProps) {
       >
         <Button className="flex-1">Đọc mới nhất</Button>
       </Link>
-      <Link href={``}>
-        <Button className="flex-1">Đọc tiếp</Button>
-      </Link>
+      <MangaButtonContinue
+        type={type}
+        id={id}
+        chapters={sort.map(({ _id }) => _id)}
+      />
     </div>
   );
 }

@@ -62,8 +62,8 @@ function ListMessengerPass({
   }, [uids.length]);
 
   return (
-    <ScrollArea className="w-[25%] h-full">
-      <div className="flex flex-col divide-y divide-black dark:divide-white">
+    <ScrollArea className="h-full max-md:h-36">
+      <div className="flex flex-col w-[320px] max-md:w-full divide-y divide-black dark:divide-white">
         <FindMessenger uid={uid} />
         {people.length != 0 && (
           <ul className="p-2">

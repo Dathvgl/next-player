@@ -6,9 +6,10 @@ import { LinkLIcon } from "./lucide-icon";
 
 interface PaginationProps {
   total: number;
+  disabled?: boolean;
 }
 
-export default function Pagination({ total }: PaginationProps) {
+export default function Pagination({ total, disabled }: PaginationProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -16,6 +17,7 @@ export default function Pagination({ total }: PaginationProps) {
   const page = Number(searchParams.get("page") ?? 1);
 
   function handlePage(num: number) {
+    if (disabled) return "";
     if (num == 1) params.delete("page");
     else params.set("page", num.toString());
 

@@ -1,20 +1,57 @@
+"use client";
+
 import Link from "next/link";
-import { Fragment } from "react";
-import MangaThumnail from "~/app/truyen-tranh/components/manga-thumnail";
+import { Fragment, useEffect, useState } from "react";
 import Pagination from "~/components/pagination";
 import { externalApi } from "~/lib/api";
 import { numChapter, timeFromNow } from "~/lib/convert";
 import handleFetch from "~/lib/fetch";
 import { MotionLi, MotionUl } from "~/lib/motion";
+import { useAppSelector } from "~/redux/hook";
 import { MangaList } from "~/types/manga";
+import MangaThumnailClient from "../../components/manga-thumnail-client";
+import MangaListLoading from "./manga-list-loading";
 
-export default async function MangaList({ type }: { type: string }) {
-  const data = await handleFetch<MangaList>(
-    `${externalApi.manga}/list?type=${type}&sort=desc&order=lastest`,
-    { next: { revalidate: 3600 } }
-  );
+export default function MangaList({ type }: { type: string }) {
+  const filter = useAppSelector((state) => state.manga.filter);
+  const [data, setData] = useState<MangaList>();
+  const search = handleUrl();
 
-  if (!data) return <></>;
+  useEffect(() => {
+    async function init() {
+      const data = await handleFetch<MangaList>(
+        `${externalApi.manga}/list?${search}`,
+        { next: { revalidate: 3600 } }
+      );
+
+      setData(data);
+    }
+
+    init();
+  }, [search]);
+
+  function handleUrl() {
+    let str = `type=${type}`;
+
+    for (const [key, value] of Object.entries(filter)) {
+      if (typeof value == "string") {
+        if (!value || value == "") continue;
+      }
+
+      if (Array.isArray(value)) {
+        const length = value.length;
+        for (let index = 0; index < length; index++) {
+          str += `&${key}=${value[index]}`;
+        }
+      } else {
+        str += `&${key}=${value}`;
+      }
+    }
+
+    return str;
+  }
+
+  if (!data) return <MangaListLoading />;
 
   return (
     <div className="flex flex-col gap-4">
@@ -47,7 +84,7 @@ export default async function MangaList({ type }: { type: string }) {
           >
             <figure className="w-full rounded-lg border-2 overflow-hidden">
               <Link href={`/truyen-tranh/${type}/${item._id}`}>
-                <MangaThumnail
+                <MangaThumnailClient
                   className="h-[200px]"
                   fill
                   type={type}

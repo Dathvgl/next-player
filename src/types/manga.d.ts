@@ -1,5 +1,8 @@
 import { FetchList } from "./type";
 
+export type MangaSort = "lastest" | "chapter" | "name";
+export type MangaOrder = "asc" | "desc";
+
 export interface MangaLocal {
   type: string;
   mangaId: string;
@@ -42,7 +45,7 @@ export interface MangaChapter {
   time: number;
 }
 
-export type MangaChapterDetail = {
+export interface MangaChapterDetail {
   canPrev: { _id: string; chapter: number } | null;
   canNext: { _id: string; chapter: number } | null;
   current: {
@@ -56,4 +59,10 @@ export type MangaChapterDetail = {
     }[];
   } | null;
   chapters: { _id: string; chapter: number }[];
-};
+}
+
+export interface MangaTag {
+  _id: string;
+  name: string;
+  description: string;
+}

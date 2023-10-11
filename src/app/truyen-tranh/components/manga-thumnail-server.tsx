@@ -12,7 +12,7 @@ interface MangaThumnailProps {
   fill?: boolean;
 }
 
-export default async function MangaThumnail(props: MangaThumnailProps) {
+export default async function MangaThumnailServer(props: MangaThumnailProps) {
   const { className, type, id, title, fill } = props;
 
   const data = await handleFetch<MangaThumnail>(

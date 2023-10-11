@@ -10,6 +10,7 @@ import { siteConfig } from "~/config/site";
 import { AuthContextProvider } from "~/contexts/auth-context";
 import { fontDancingScript, fontSans } from "~/lib/fonts";
 import { cn } from "~/lib/utils";
+import { ReduxProvider } from "~/redux/provider";
 import { ChildReact } from "~/types/type";
 import NavSide from "./components/header/nav-side";
 import ThemeProvider from "./components/theme-provider";
@@ -43,15 +44,17 @@ export default function RootLayout({ children }: ChildReact) {
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <AuthContextProvider>
-            <div className="flex relative">
-              <NavSide />
-              <ScrollArea className="flex-1 relative h-screen flex flex-col">
-                <SiteHeader />
-                <div className="flex-1">{children}</div>
-              </ScrollArea>
-            </div>
-          </AuthContextProvider>
+          <ReduxProvider>
+            <AuthContextProvider>
+              <div className="flex relative">
+                <NavSide />
+                <ScrollArea className="flex-1 relative h-screen flex flex-col">
+                  <SiteHeader />
+                  <div className="flex-1">{children}</div>
+                </ScrollArea>
+              </div>
+            </AuthContextProvider>
+          </ReduxProvider>
         </ThemeProvider>
         <Suspense fallback={null}>
           <NavigationEvents />

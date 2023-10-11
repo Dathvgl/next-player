@@ -1,4 +1,4 @@
-import MangaThumnail from "~/app/truyen-tranh/components/manga-thumnail";
+import MangaThumnailServer from "~/app/truyen-tranh/components/manga-thumnail-server";
 import Chip from "~/components/chip";
 import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
 import {
@@ -48,7 +48,7 @@ export default async function Page(props: PageProps) {
     <MangaFollowStateContextProvider id={id} type={type}>
       <article className="relative">
         <section className="w-full absolute blur-[6px] z-0">
-          <MangaThumnail
+          <MangaThumnailServer
             className="w-full h-[200px]"
             fill
             type={type}
@@ -62,7 +62,7 @@ export default async function Page(props: PageProps) {
               <DialogTrigger asChild>
                 <button className="md:w-[40%] rounded-lg overflow-hidden group relative">
                   <div className="absolute hidden w-full h-full group-hover:block group-hover:bg-black group-hover:bg-opacity-30" />
-                  <MangaThumnail
+                  <MangaThumnailServer
                     className="rounded-lg overflow-hidden"
                     type={type}
                     id={id}
@@ -71,7 +71,7 @@ export default async function Page(props: PageProps) {
                 </button>
               </DialogTrigger>
               <DialogContent className="p-0 [&>button]:hidden">
-                <MangaThumnail type={type} id={id} title={detail.title} />
+                <MangaThumnailServer type={type} id={id} title={detail.title} />
               </DialogContent>
             </Dialog>
             <div className="flex-1 flex flex-col gap-2">

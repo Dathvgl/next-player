@@ -1,15 +1,15 @@
 "use client";
 
 import { ChangeEvent, RefObject, useEffect, useState } from "react";
-import { useZingMP3, useZingMP3Dispatch } from "~/contexts/zing-mp3-context";
 import { durationUTC } from "~/lib/convert";
+import { zingMP3Play } from "~/redux/features/music-slice";
+import { useAppDispatch } from "~/redux/hook";
 
 export default function AudioTimeline(props: {
   audioRef: RefObject<HTMLAudioElement>;
 }) {
   const { audioRef } = props;
-  const musicContext = useZingMP3();
-  const musicDispatch = useZingMP3Dispatch();
+  const dispatch = useAppDispatch();
 
   const [time, setTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -26,16 +26,17 @@ export default function AudioTimeline(props: {
     };
 
     audioRef.current.onended = () => {
-      musicDispatch?.({ type: "played", payload: { played: false } });
+      dispatch(zingMP3Play(false));
       audioRef.current!.currentTime = 0;
     };
-  }, [musicContext?.id, audioRef, musicDispatch]);
+  }, [audioRef]);
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {
     if (!audioRef.current) return;
     const range = Number.parseFloat(event.target.value);
     audioRef.current.currentTime = range;
   }
+
   return (
     <div className="flex items-center gap-4">
       <div>{durationUTC(time)}</div>

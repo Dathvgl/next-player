@@ -2,32 +2,28 @@
 
 import { useEffect, useState } from "react";
 import { CustomImage } from "~/components/custom-image";
-import { useZingMP3 } from "~/contexts/zing-mp3-context";
 import { externalApi } from "~/lib/api";
 import handleFetch from "~/lib/fetch";
+import { useAppSelector } from "~/redux/hook";
 import { ZingMP3SongResponse } from "~/types/music/zingMP3/song";
 
 export default function PlayerInfo() {
-  const musicContext = useZingMP3();
+  const id = useAppSelector((state) => state.music.zingMP3.id);
   const [data, setData] = useState<ZingMP3SongResponse>();
 
   useEffect(() => {
     async function init() {
-      if (musicContext?.id) {
+      if (id) {
         const data = await handleFetch<ZingMP3SongResponse>(
-          `${externalApi.musicZingMP3}/infoSong/${musicContext.id}`
+          `${externalApi.musicZingMP3}/infoSong/${id}`
         );
 
         setData(data);
       }
     }
 
-    try {
-      init();
-    } catch (error) {
-      console.error(error);
-    }
-  }, [musicContext?.id]);
+    init();
+  }, [id]);
 
   if (!data) return <></>;
   const song = data.data;

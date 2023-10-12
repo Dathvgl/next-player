@@ -1,9 +1,9 @@
 "use client";
 
-import { useZingMP3 } from "~/contexts/zing-mp3-context";
+import { useAppSelector } from "~/redux/hook";
 
 export default function ZingMP3Empty() {
-  const musicContext = useZingMP3();
-  if (!musicContext?.id) return <></>;
+  const id = useAppSelector((state) => state.music.zingMP3.id);
+  if (!id) return <></>;
   else return <div className="h-24" />;
 }

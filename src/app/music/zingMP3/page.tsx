@@ -1,16 +1,27 @@
-import { Metadata } from "next";
 import { externalApi } from "~/lib/api";
+import handleFetch from "~/lib/fetch";
+import { ZingMP3SongResponse } from "~/types/music/zingMP3/song";
 import { ZingMP3Home } from "~/types/music/zingMP3/zingMP3";
 import FourItemHome from "./components/four-item-home";
 import RTChart from "./components/rt-chart";
 import ZingMP3NewRelease from "./components/zing-mp3-new-release";
 import ZingMP3Player from "./components/zing-mp3-player";
 import ZingMP3Search from "./components/zing-mp3-search";
-import handleFetch from "~/lib/fetch";
 
-export const metadata: Metadata = {
-  title: "Zing MP3",
-};
+export async function generateMetadata({
+  searchParams: { id },
+}: {
+  searchParams: { id?: string };
+}) {
+  if (!id) return { title: "Zing MP3" };
+
+  const data = await handleFetch<ZingMP3SongResponse>(
+    `${externalApi.musicZingMP3}/infoSong/${id}`
+  );
+
+  if (!data || data.err != 0) return { title: "Zing MP3" };
+  return { title: `Zing MP3 - ${data.data.title}` };
+}
 
 export default async function Page() {
   const data = await handleFetch<ZingMP3Home>(

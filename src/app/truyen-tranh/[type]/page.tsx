@@ -7,10 +7,67 @@ import { MangaTag } from "~/types/manga";
 
 interface PageProps {
   params: { type: string };
+  searchParams: Record<string, unknown>;
 }
 
-export function generateMetadata({ params: { type } }: PageProps) {
-  return { title: capitalize(type) };
+export async function generateMetadata({
+  params: { type },
+  searchParams,
+}: PageProps) {
+  const keys = Object.keys(searchParams);
+  if (keys.length == 0) {
+    return { title: `${capitalize(type)} | Descending | Lastest` };
+  } else {
+    const data = await handleFetch<{ data: MangaTag[] }>(
+      `${externalApi.manga}/tag?type=${type}`
+    );
+
+    let str = "";
+
+    for (const [key, value] of Object.entries(searchParams)) {
+      if (typeof value == "string") {
+        if (!value || value == "") continue;
+      }
+
+      if (Array.isArray(value)) {
+        const length = value.length;
+        if (!data) continue;
+        str += ` | ${capitalize(key)} `;
+
+        for (let index = 0; index < length; index++) {
+          const result = data.data.find(({ _id }) => _id == value[index]);
+          if (!result) continue;
+          str += `${index == 0 ? "" : "-"}${result.name}`;
+        }
+      } else {
+        if (key == "order") {
+          str += ` | ${value == "asc" ? "Ascending" : "Descending"}`;
+        } else if (key == "sort") {
+          str += ` | ${capitalize(value as string)}`;
+        } else if (key == "includes" || key == "excludes") {
+          if (!data) continue;
+          const result = data.data.find(({ _id }) => _id == value);
+          if (!result) continue;
+          str += ` | ${capitalize(key)}: ${result.name}`;
+        } else if (key == "page") continue;
+        else str += ` | ${value}`;
+      }
+    }
+
+    if (!Object.hasOwn(searchParams, "order")) {
+      str += " | Descending";
+    }
+
+    if (!Object.hasOwn(searchParams, "sort")) {
+      str += " | Lastest";
+    }
+
+    if (Object.hasOwn(searchParams, "page")) {
+      str += ` | Page ${searchParams.page}`;
+    }
+
+    return { title: `${capitalize(type)}${str}` };
+  }
 }
 
 export default async function Page({ params }: { params: { type: string } }) {

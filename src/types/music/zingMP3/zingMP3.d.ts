@@ -5,6 +5,8 @@ import { ZingMP3ReleaseSection } from "./release";
 import { ZingMP3SongObject } from "./song";
 import { ZingMP3VideoObject } from "./video";
 
+export type ZingMP3Loop = "loop-all" | "loop-one" | "all" | "one";
+
 export type ZingMP3SectionType =
   | "song"
   | "playlist"

@@ -6,7 +6,7 @@ import LIcon from "~/components/lucide-icon";
 import { zingMP3Volume } from "~/redux/features/music-slice";
 import { useAppDispatch, useAppSelector } from "~/redux/hook";
 
-export default function PlayerVolume() {
+export default function PlayerLastVolume() {
   const volume = useAppSelector((state) => state.music.zingMP3.volume);
   const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -41,7 +41,7 @@ export default function PlayerVolume() {
   }
 
   return (
-    <div className="flex items-center justify-end gap-2">
+    <div className="flex items-center gap-2">
       {volume ? (
         volume < 0.5 ? (
           <LIcon icon={Volume1} button />

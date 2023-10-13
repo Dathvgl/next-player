@@ -8,7 +8,7 @@ import { useAppSelector } from "~/redux/hook";
 import { ZingMP3SongResponse } from "~/types/music/zingMP3/song";
 
 export default function PlayerInfo() {
-  const id = useAppSelector((state) => state.music.zingMP3.id);
+  const id = useAppSelector((state) => state.music.zingMP3.current.id);
   const [data, setData] = useState<ZingMP3SongResponse>();
 
   useEffect(() => {

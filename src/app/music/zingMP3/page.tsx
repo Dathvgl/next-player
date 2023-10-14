@@ -23,7 +23,6 @@ export async function generateMetadata({
   return {
     title: `Zing MP3 - ${data.data.title}`,
     description: data.data.title,
-    openGraph: { images: data.data.thumbnail },
   };
 }
 

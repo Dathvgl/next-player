@@ -1,7 +1,6 @@
 "use client";
 
 import { Search, X } from "lucide-react";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "usehooks-ts";
@@ -15,15 +14,10 @@ import { durationUTC } from "~/lib/convert";
 import { ZingMP3Search } from "~/types/music/zingMP3/zingMP3";
 
 export default function ZingMP3Search() {
-  const router = useRouter();
-
   const [inputName, setInputName] = useState<string>("");
   const name = useDebounce(inputName);
 
-  const cachedList = useMemo(
-    () => <ZingMP3SearchList router={router} name={name} />,
-    [name]
-  );
+  const cachedList = useMemo(() => <ZingMP3SearchList name={name} />, [name]);
 
   function clearSearch() {
     setInputName(() => "");
@@ -50,13 +44,8 @@ export default function ZingMP3Search() {
   );
 }
 
-function ZingMP3SearchList({
-  router,
-  name,
-}: {
-  router: AppRouterInstance;
-  name: string;
-}) {
+function ZingMP3SearchList({ name }: { name: string }) {
+  const router = useRouter();
   const [data, setData] = useState<ZingMP3Search>();
 
   useEffect(() => {

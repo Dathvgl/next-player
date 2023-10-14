@@ -3,6 +3,7 @@ import LIcon from "~/components/lucide-icon";
 import AudioTimeline from "./audio-timeline";
 import PlayerAudioLoop from "./player-audio-loop";
 import PlayerAudioPlay from "./player-audio-play";
+import PlayerAudioButton from "./player-audio-button";
 
 export default function PlayerAudio() {
   return (
@@ -11,13 +12,13 @@ export default function PlayerAudio() {
         <button>
           <LIcon icon={Shuffle} button />
         </button>
-        <button>
+        <PlayerAudioButton increment={-1}>
           <LIcon icon={SkipBack} button />
-        </button>
+        </PlayerAudioButton>
         <PlayerAudioPlay />
-        <button>
+        <PlayerAudioButton increment={1}>
           <LIcon icon={SkipForward} button />
-        </button>
+        </PlayerAudioButton>
         <PlayerAudioLoop />
       </div>
       <AudioTimeline />

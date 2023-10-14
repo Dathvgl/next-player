@@ -29,11 +29,11 @@ export default function PlayerInfo() {
   const song = data.data;
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 lg:basis-1/4 lg:flex-1">
       <div className="w-12 h-12 rounded overflow-hidden">
-        <CustomImage className="h-full" src={song.thumbnail} alt={song.title} />
+        <CustomImage src={song.thumbnail} alt={song.title} />
       </div>
-      <div className="font-bold text-base">{song.title}</div>
+      <div className="font-bold text-base line-clamp-2 flex-1">{song.title}</div>
     </div>
   );
 }

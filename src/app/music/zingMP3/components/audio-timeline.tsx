@@ -99,13 +99,13 @@ export default function AudioTimeline() {
   }
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-4 max-md:w-full">
       <audio ref={audioRef} onEnded={onEnded}>
         <source src={current.src} type="audio/mp3" />
       </audio>
       <div>{durationUTC(time)}</div>
       <input
-        className="w-96"
+        className="lg:w-96 max-lg:w-full"
         type="range"
         value={time}
         min={0}

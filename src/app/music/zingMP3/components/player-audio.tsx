@@ -6,8 +6,8 @@ import PlayerAudioPlay from "./player-audio-play";
 
 export default function PlayerAudio() {
   return (
-    <div className="flex-1 flex flex-col items-center justify-center">
-      <div className="flex items-center">
+    <div className="flex-1 flex flex-col items-center justify-center max-md:w-full max-md:gap-2">
+      <div className="flex items-center max-md:w-full max-md:justify-evenly">
         <button>
           <LIcon icon={Shuffle} button />
         </button>

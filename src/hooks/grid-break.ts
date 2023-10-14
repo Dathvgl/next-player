@@ -13,16 +13,16 @@ export default function useGridBreak(
     function handleResize() {
       const main = window.innerWidth;
 
-      if (main >= 1280) {
-        if (!except.includes("xl")) setGridBreak("xl");
-      } else if (main >= 1024) {
-        if (!except.includes("lg")) setGridBreak("lg");
-      } else if (main >= 768) {
-        if (!except.includes("md")) setGridBreak("md");
-      } else if (main >= 640) {
-        if (!except.includes("sm")) setGridBreak("sm");
-      } else {
-        if (!except.includes("xs")) setGridBreak("xs");
+      if (main >= 1280 && !except.includes("xl")) {
+        setGridBreak("xl");
+      } else if (main >= 1024 && !except.includes("lg")) {
+        setGridBreak("lg");
+      } else if (main >= 768 && !except.includes("md")) {
+        setGridBreak("md");
+      } else if (main >= 640 && !except.includes("sm")) {
+        setGridBreak("sm");
+      } else if (!except.includes("xs")) {
+        setGridBreak("xs");
       }
     }
 

@@ -20,7 +20,11 @@ export async function generateMetadata({
   );
 
   if (!data || data.err != 0) return { title: "Zing MP3" };
-  return { title: `Zing MP3 - ${data.data.title}` };
+  return {
+    title: `Zing MP3 - ${data.data.title}`,
+    description: data.data.title,
+    openGraph: { images: data.data.thumbnail },
+  };
 }
 
 export default async function Page() {

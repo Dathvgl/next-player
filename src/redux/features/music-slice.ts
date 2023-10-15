@@ -47,6 +47,14 @@ export const musicSlice = createSlice({
       state.zingMP3.current.id = id;
       state.zingMP3.current.src = src;
     },
+    zingMP3Alt(state, action: PayloadAction<string>) {
+      const list = state.zingMP3.list.filter((item) => item != action.payload);
+      state.zingMP3.list = list;
+
+      if (list.length == 0) {
+        state.zingMP3.current = { id: "", src: "" };
+      }
+    },
     zingMP3Play(state, action: PayloadAction<boolean>) {
       state.zingMP3.play = action.payload;
     },
@@ -99,5 +107,6 @@ export const zingMP3Init = createAsyncThunk(
   }
 );
 
-export const { zingMP3Play, zingMP3Volume, zingMP3Loop } = musicSlice.actions;
+export const { zingMP3Alt, zingMP3Play, zingMP3Volume, zingMP3Loop } =
+  musicSlice.actions;
 export default musicSlice.reducer;

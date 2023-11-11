@@ -31,9 +31,9 @@ export default async function Page({ params: { id } }: PageProps) {
 
   return (
     <div className="p-8 flex flex-col gap-4">
-      <div className="flex gap-4 divide-x divide-black dark:divide-white">
+      <div className="flex max-sm:flex-col gap-4 divide-x divide-black dark:divide-white">
         <CustomImage
-          className="w-[300px] h-[300px] rounded overflow-hidden"
+          className="w-[300px] max-sm:w-full h-[300px] rounded overflow-hidden"
           fill
           objectFit="cover"
           src={product.image}
@@ -50,22 +50,11 @@ export default async function Page({ params: { id } }: PageProps) {
       <div>{product.description}</div>
       <div className="flex flex-col gap-4 pt-2">
         <strong className="text-xl">CÁC SẢN PHẨM TƯƠNG TỰ</strong>
-        <MotionUl
-          className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-8"
-          initial={{ opacity: 1, scale: 0 }}
-          whileInView={{
-            opacity: 1,
-            scale: 1,
-            transition: {
-              delayChildren: 0.3,
-              staggerChildren: 0.2,
-            },
-          }}
-        >
+        <MotionUl className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-8">
           {same.map((item, index) => (
             <Link key={item.id} href={`/ecommerce/fake-store-api/${item.id}`}>
               <MotionLi
-                className="!relative bg-stone-300 dark:bg-stone-700 bg-opacity-50 p-2 rounded overflow-hidden"
+                className="!relative bg-stone-500/50 dark:bg-stone-700/50 bg-opacity-50 p-2 rounded overflow-hidden"
                 initial="init"
                 animate="animate"
                 whileHover="hover"
@@ -97,7 +86,7 @@ export default async function Page({ params: { id } }: PageProps) {
                   </div>
                 </MotionDiv>
                 <CustomImage
-                  className="h-[200px] max-md:h-[400px] rounded overflow-hidden"
+                  className="h-[200px] max-md:h-[400px] max-sm:h-[200px] rounded overflow-hidden"
                   fill
                   objectFit="cover"
                   src={item.image}

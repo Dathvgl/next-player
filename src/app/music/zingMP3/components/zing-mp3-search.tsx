@@ -25,7 +25,7 @@ export default function ZingMP3Search() {
 
   return (
     <div className="flex justify-center">
-      <div className="flex items-center px-2 gap-1 w-1/3 relative border rounded">
+      <div className="flex items-center px-2 gap-1 w-1/3 max-md:w-full relative border rounded">
         <LIcon icon={Search} />
         <Input
           className="flex-1 border-0 no-focus-tw-ring"

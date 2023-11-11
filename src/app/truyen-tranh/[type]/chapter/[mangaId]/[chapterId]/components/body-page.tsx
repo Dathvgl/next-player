@@ -23,7 +23,7 @@ export default function BodyPage(props: BodyPageProps) {
   const [zoom, setZoom] = useState(50);
 
   useEffect(() => {
-    if (gridBreak == "sm") {
+    if (!gridBreak || gridBreak == "sm") {
       setZoom(100);
     } else {
       setZoom(50);

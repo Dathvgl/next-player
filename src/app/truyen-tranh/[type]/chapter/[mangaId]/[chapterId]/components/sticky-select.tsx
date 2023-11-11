@@ -61,11 +61,16 @@ export default function StickySelect(props: StickySelectProps) {
   }
 
   return (
-    <MotionSection className="sticky top-0 py-2 bg-white dark:bg-black gap-2 flex justify-center">
+    <MotionSection className="sticky top-0 py-2 bg-white dark:bg-black gap-2 max-sm:gap-0 flex justify-center">
       <Link href={`/truyen-tranh/${type}/${id}`}>
         <LIcon icon={List} button />
       </Link>
-      <FollowButton id={currentId} chapters={chapters.map(({ _id }) => _id)} />
+      {gridBreak && (
+        <FollowButton
+          id={currentId}
+          chapters={chapters.map(({ _id }) => _id)}
+        />
+      )}
       {canPrev ? (
         <Link href={`/truyen-tranh/${type}/chapter/${id}/${canPrev._id}`}>
           {prevBtn}
@@ -94,7 +99,13 @@ export default function StickySelect(props: StickySelectProps) {
       ) : (
         <>{nextBtn}</>
       )}
-      {gridBreak != "sm" && (
+      {!gridBreak && (
+        <FollowButton
+          id={currentId}
+          chapters={chapters.map(({ _id }) => _id)}
+        />
+      )}
+      {gridBreak && gridBreak != "sm" && (
         <>
           <Button
             className="rounded-3xl"

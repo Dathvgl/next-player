@@ -1,4 +1,12 @@
-import { BookIcon, HomeIcon, LucideIcon, MessageCircle, Music4Icon } from "lucide-react";
+import {
+  BookIcon,
+  Code2,
+  HomeIcon,
+  LucideIcon,
+  MessageCircle,
+  Music4Icon,
+  ShoppingBag,
+} from "lucide-react";
 import { WebLinkType } from "~/types/type";
 
 export type SiteConfig = typeof siteConfig;
@@ -50,12 +58,12 @@ export const navLinks: NavLinkProps[] = [
     name: "Ecommerce",
     path: "/ecommerce",
     alt: "ecommerce",
-    icon: Music4Icon,
+    icon: ShoppingBag,
   },
   {
     name: "Code",
     path: "/code",
     alt: "code",
-    icon: Music4Icon,
+    icon: Code2,
   },
 ];

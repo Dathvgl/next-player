@@ -19,8 +19,10 @@ export default function MangaButtonContinue(props: MangaButtonContinueProps) {
   if (!result) return <></>;
 
   return (
-    <Link href={`/truyen-tranh/${type}/chapter/${id}/${result}`}>
-      <Button className="flex-1">Đọc tiếp</Button>
+    <Link href={`/truyen-tranh/${type}/chapter/${id}/${result}`} className="flex-1">
+      <Button className="w-full bg-yellow-500 text-black hover:bg-yellow-600">
+        Đọc tiếp
+      </Button>
     </Link>
   );
 }

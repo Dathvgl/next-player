@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <MotionUl
-      className="flex p-6"
+      className="flex gap-2 p-6"
       initial={{ opacity: 1, scale: 0 }}
       animate={{
         opacity: 1,

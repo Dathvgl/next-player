@@ -77,20 +77,17 @@
 
 #root-menu-outside {
   @apply flex flex-col divide-y relative z-20;
-  @apply transition-[width] ease-linear duration-1000;
-  @apply w-64 block bg-black dark:bg-white;
-  @apply text-white dark:text-black;
-  @apply max-md:absolute max-md:w-[60vw] max-md:h-screen;
+  @apply transition-transform ease-linear translate-x-0;
+  @apply w-64 bg-white dark:bg-black;
+  @apply absolute max-md:w-[60vw] h-screen;
 }
 
 #root-menu-outside li > * {
-  @apply p-4 w-full flex items-center font-bold before:content-['\00a0'];
-  @apply hover:bg-indigo-700 dark:hover:bg-sky-400;
+  @apply px-4 py-3 w-full flex items-center font-bold before:content-['\00a0'];
+  @apply hover:bg-green-500/10 dark:hover:bg-sky-500/30;
 }
 
-#root:has(
-    input[type="radio"][name="root-menu-header"][value="close"]:checked
-  )
+#root:has(input[type="radio"][name="root-menu-header"][value="close"]:checked)
   #root-menu-click-outside {
   @apply hidden;
 }
@@ -106,7 +103,7 @@
     input[type="radio"][name="root-menu-header"][value="open"]:not(:checked)
   )
   #root-menu-outside {
-  @apply hidden;
+  @apply -translate-x-full;
 }
 
 .root-menu-header {
@@ -122,7 +119,7 @@
     input[type="radio"][name="root-menu-header"][value="open"]:not(:checked)
   )
   #root-container {
-  padding-inline: 15%;
+  @apply md:px-[15%] max-md:px-[10%];
 }
 
 .no-focus-tw-ring:focus {

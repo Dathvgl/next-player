@@ -37,7 +37,7 @@ function WeatherWork() {
   if (!weather) return <></>;
 
   return (
-    <div className="flex items-center justify-center max-md:gap-28 max-lg:gap-10 gap-28">
+    <div className="flex items-center justify-center max-lg:gap-10 gap-28">
       <div className="flex flex-col">
         <div>{weather.sys.country}</div>
         <div>{capitalize(weather.weather[0].description)}</div>

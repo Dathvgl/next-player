@@ -38,29 +38,33 @@ export default function MangaDetailChapterBody({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data.map((item) => {
-          const check =
-            stateFollow?.lastestChapterId == item._id
-              ? "red"
-              : stateFollow?.currentChapterId == item._id
-              ? "yellow"
-              : undefined;
+        {data
+          .sort((a, b) => b.chapter - a.chapter)
+          .map((item) => {
+            const check =
+              stateFollow?.lastestChapterId == item._id
+                ? "red"
+                : stateFollow?.currentChapterId == item._id
+                ? "yellow"
+                : undefined;
 
-          return (
-            <TableRow key={item._id}>
-              <TableCell
-                className={!check ? undefined : "flex items-center gap-2"}
-              >
-                <Link href={`/truyen-tranh/${type}/chapter/${id}/${item._id}`}>
-                  {numChapter(item.chapter, true)}
-                </Link>
-                {check && <LIcon icon={Star} color={check} fill={check} />}
-              </TableCell>
-              <TableCell>{item.watched}</TableCell>
-              <TableCell>{timeFromNow(item.time)}</TableCell>
-            </TableRow>
-          );
-        })}
+            return (
+              <TableRow key={item._id}>
+                <TableCell
+                  className={!check ? undefined : "flex items-center gap-2"}
+                >
+                  <Link
+                    href={`/truyen-tranh/${type}/chapter/${id}/${item._id}`}
+                  >
+                    {numChapter(item.chapter, true)}
+                  </Link>
+                  {check && <LIcon icon={Star} color={check} fill={check} />}
+                </TableCell>
+                <TableCell>{item.watched}</TableCell>
+                <TableCell>{timeFromNow(item.time)}</TableCell>
+              </TableRow>
+            );
+          })}
       </TableBody>
     </Table>
   );

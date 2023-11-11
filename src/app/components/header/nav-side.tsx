@@ -19,13 +19,13 @@ export default function NavSide() {
   useOnClickOutside(ref, handleClickOutside);
 
   function handleClickOutside() {
-    if (gridBreak == "sm") {
+    if (!gridBreak || gridBreak == "sm") {
       setState(true);
     }
   }
 
   function handleCallback() {
-    if (gridBreak == "sm") {
+    if (!gridBreak || gridBreak == "sm") {
       setState(false);
     }
   }

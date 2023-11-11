@@ -23,7 +23,7 @@ export default function ChartStat() {
 
   return (
     <section className="flex max-md:flex-col items-center md:h-[250px] gap-8">
-      <div className="relative flex-1 max-md:w-full max-md:h-[250px] md:h-full border rounded-md shadow-custom bg-gradient-to-r from-cyan-500 to-blue-500">
+      <div className="relative flex-1 max-sm:hidden max-md:w-full max-md:h-[250px] md:h-full border rounded-md shadow-custom bg-gradient-to-r from-cyan-500 to-blue-500">
         <p className="absolute font-bold top-2 left-6 text-lg">
           Hoạt động lướt website
         </p>

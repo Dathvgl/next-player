@@ -15,16 +15,12 @@ export const metadata: Metadata = {
 export default async function Page() {
   const categories = await handleFetch<string[]>(
     "https://fakestoreapi.com/products/categories",
-    {
-      next: { revalidate: 60 },
-    }
+    { next: { revalidate: 60 } }
   );
 
   const products = await handleFetch<FakeProduct[]>(
     "https://fakestoreapi.com/products?limit=10",
-    {
-      next: { revalidate: 60 },
-    }
+    { next: { revalidate: 60 } }
   );
 
   if (!categories || !products) return <></>;
@@ -35,7 +31,7 @@ export default async function Page() {
         <div className="text-center">
           <strong className="text-xl">TẤT CẢ DANH MỤC</strong>
         </div>
-        <div className="flex gap-4 justify-center">
+        <div className="flex gap-4 justify-center flex-wrap">
           {categories.map((item) => (
             <Link
               key={item}
@@ -65,7 +61,7 @@ export default async function Page() {
           {products.map((item, index) => (
             <Link key={item.id} href={`/ecommerce/fake-store-api/${item.id}`}>
               <MotionLi
-                className="!relative bg-stone-300 dark:bg-stone-700 bg-opacity-50 p-2 rounded overflow-hidden"
+                className="!relative bg-stone-500/50 dark:bg-stone-700/50 bg-opacity-50 p-2 rounded overflow-hidden"
                 initial="init"
                 animate="animate"
                 whileHover="hover"

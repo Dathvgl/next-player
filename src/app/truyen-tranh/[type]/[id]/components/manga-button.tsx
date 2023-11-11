@@ -16,15 +16,23 @@ export default function MangaButton({ type, id, chapters }: MangaButtonProps) {
 
   return (
     <div className="flex gap-4">
-      <Link href={`/truyen-tranh/${type}/chapter/${id}/${sort[0]._id}`}>
-        <Button className="flex-1">Đọc từ đầu</Button>
+      <Link
+        href={`/truyen-tranh/${type}/chapter/${id}/${sort[0]._id}`}
+        className="flex-1"
+      >
+        <Button className="w-full bg-yellow-500 text-black hover:bg-yellow-600">
+          Đọc từ đầu
+        </Button>
       </Link>
       <Link
         href={`/truyen-tranh/${type}/chapter/${id}/${
           sort[sort.length - 1]._id
         }`}
+        className="flex-1"
       >
-        <Button className="flex-1">Đọc mới nhất</Button>
+        <Button className="w-full bg-yellow-500 text-black hover:bg-yellow-600">
+          Đọc mới nhất
+        </Button>
       </Link>
       <MangaButtonContinue
         type={type}

@@ -37,7 +37,11 @@ export default function Intro() {
           },
         }}
       >
-        <p className="font-dancing-script font-bold text-black text-2xl text-justify">
+        <p
+          className={`font-dancing-script font-bold text-black text-justify ${
+            gridBreak ? "text-2xl" : ""
+          }`}
+        >
           TA CÓ MỘT WEBSITE MÔ PHỎNG VÔ HẠN LẦN
         </p>
       </MotionDiv>
@@ -56,8 +60,16 @@ export default function Intro() {
         }}
       >
         <p className="font-bold text-black text-md text-justify italic">
-          &quot;Clone website? Xem những video build website hàng tiếng? Không ta sẽ
-          xây trang web mô phỏng vô số website khác!&quot;
+          {gridBreak ? (
+            <>
+              &quot;Clone website? Xem những video build website hàng tiếng?
+              Không ta sẽ xây trang web mô phỏng vô số website khác!&quot;
+            </>
+          ) : (
+            <>
+              &quot;Clone website? Trang web mô phỏng vô số website khác!&quot;
+            </>
+          )}
         </p>
       </MotionDiv>
       <div className="w-10 h-10 rounded-full bg-green-300" />

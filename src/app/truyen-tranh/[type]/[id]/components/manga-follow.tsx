@@ -25,7 +25,12 @@ export function MangaFollow() {
   }
 
   return (
-    <Button onClick={onClick}>{isFollow ? "Hủy theo dõi" : "Theo dõi"}</Button>
+    <Button
+      className="bg-yellow-500 text-black hover:bg-yellow-600"
+      onClick={onClick}
+    >
+      {isFollow ? "Hủy theo dõi" : "Theo dõi"}
+    </Button>
   );
 }
 

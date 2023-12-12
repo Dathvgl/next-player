@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import useGridBreak from "~/hooks/grid-break";
+import useGridBreak from "~/hooks/use-grid-break";
 import { numChapter } from "~/lib/convert";
 import { MotionSection } from "~/lib/motion";
 import { MangaChapterDetail } from "~/types/manga";

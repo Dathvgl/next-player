@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import useGridBreak from "~/hooks/grid-break";
+import useGridBreak from "~/hooks/use-grid-break";
 import { MotionDiv } from "~/lib/motion";
 
 export default function Intro() {

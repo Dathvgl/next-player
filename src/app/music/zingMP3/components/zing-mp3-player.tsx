@@ -4,7 +4,7 @@ import { useAppSelector } from "~/redux/hook";
 import PlayerAudio from "./player-audio";
 import PlayerInfo from "./player-info";
 import PlayerLast from "./player-last";
-import useGridBreak from "~/hooks/grid-break";
+import useGridBreak from "~/hooks/use-grid-break";
 
 export default function ZingMP3Player() {
   const src = useAppSelector((state) => state.music.zingMP3.current.src);

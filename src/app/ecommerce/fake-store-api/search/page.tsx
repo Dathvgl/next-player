@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import SearchList from "./components/search-list";
 
 interface PageProps {
@@ -6,7 +7,7 @@ interface PageProps {
 
 export async function generateMetadata({
   searchParams: { filter },
-}: PageProps) {
+}: PageProps): Promise<Metadata> {
   return { title: `Searching ${filter}` };
 }
 

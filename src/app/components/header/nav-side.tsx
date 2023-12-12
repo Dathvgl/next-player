@@ -8,7 +8,7 @@ import { CustomIcons } from "~/components/custom-icons";
 import CustomInput from "~/components/custom-input";
 import LIcon from "~/components/lucide-icon";
 import { navLinks, siteConfig } from "~/config/site";
-import useGridBreak from "~/hooks/grid-break";
+import useGridBreak from "~/hooks/use-grid-break";
 import { MotionDiv, MotionLi } from "~/lib/motion";
 
 export default function NavSide() {

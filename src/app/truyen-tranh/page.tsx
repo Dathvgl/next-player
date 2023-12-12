@@ -15,6 +15,10 @@ const mangaTypes = [
     type: "blogtruyen",
     icon: "/manga/blogtruyen-favicon.png",
   },
+  {
+    type: "nettruyen",
+    icon: "/manga/nettruyen-favicon.png",
+  },
 ];
 
 export const metadata: Metadata = {

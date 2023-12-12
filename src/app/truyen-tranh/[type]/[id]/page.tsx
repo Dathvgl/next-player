@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import MangaThumnailServer from "~/app/truyen-tranh/components/manga-thumnail-server";
 import Chip from "~/components/chip";
 import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
@@ -23,7 +24,9 @@ interface PageProps {
   params: { type: string; id: string };
 }
 
-export async function generateMetadata({ params: { type, id } }: PageProps) {
+export async function generateMetadata({
+  params: { type, id },
+}: PageProps): Promise<Metadata> {
   const data = await handleFetch<MangaDetail>(
     `${externalApi.manga}/detail/${id}?type=${type}`
   );

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { CustomImage } from "~/components/custom-image";
-import useGridBreak from "~/hooks/grid-break";
+import useGridBreak from "~/hooks/use-grid-break";
 import { MotionLi, MotionUl } from "~/lib/motion";
 import { MangaChapterDetail } from "~/types/manga";
 import BodyHandle from "./body-handle";

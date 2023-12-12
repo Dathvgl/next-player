@@ -1,17 +1,20 @@
 import { Star } from "lucide-react";
+import { Metadata } from "next";
 import Link from "next/link";
 import { CustomImage } from "~/components/custom-image";
 import LIcon from "~/components/lucide-icon";
 import { capitalize } from "~/lib/convert";
 import handleFetch from "~/lib/fetch";
-import { MotionUl, MotionLi, MotionDiv } from "~/lib/motion";
+import { MotionDiv, MotionLi, MotionUl } from "~/lib/motion";
 import { FakeProduct } from "~/types/ecommerce/fake-store-api";
 
 interface PageProps {
   params: { id: string };
 }
 
-export async function generateMetadata({ params: { id } }: PageProps) {
+export async function generateMetadata({
+  params: { id },
+}: PageProps): Promise<Metadata> {
   const data = await handleFetch<FakeProduct>(
     `https://fakestoreapi.com/products/${id}`
   );

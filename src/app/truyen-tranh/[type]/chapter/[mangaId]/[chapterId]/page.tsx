@@ -1,8 +1,9 @@
+import { Metadata } from "next";
 import { MangaFollowStateContextProvider } from "~/contexts/manga-follow-state-context";
 import { externalApi } from "~/lib/api";
+import handleFetch from "~/lib/fetch";
 import { MangaChapterDetail, MangaDetail } from "~/types/manga";
 import BodyPage from "./components/body-page";
-import handleFetch from "~/lib/fetch";
 
 interface PageProps {
   params: {
@@ -14,7 +15,7 @@ interface PageProps {
 
 export async function generateMetadata({
   params: { type, mangaId, chapterId },
-}: PageProps) {
+}: PageProps): Promise<Metadata> {
   const detail = await handleFetch<MangaDetail>(
     `${externalApi.manga}/detail/${mangaId}?type=${type}`
   );

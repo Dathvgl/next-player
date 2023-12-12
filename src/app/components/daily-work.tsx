@@ -5,8 +5,8 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { CustomImage } from "~/components/custom-image";
 import LIcon from "~/components/lucide-icon";
-import useGeolocation from "~/hooks/geolocation";
-import useWeather, { WeatherIcon } from "~/hooks/weather";
+import useGeolocation from "~/hooks/use-geolocation";
+import useWeather, { WeatherIcon } from "~/hooks/use-weather";
 import { capitalize } from "~/lib/convert";
 
 export default function DailyWork() {

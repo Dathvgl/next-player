@@ -1,9 +1,10 @@
-import { capitalize } from "~/lib/convert";
-import MangaList from "./components/manga-list";
-import MangaFilter from "./components/manga-filter";
-import handleFetch from "~/lib/fetch";
+import { Metadata } from "next";
 import { externalApi } from "~/lib/api";
+import { capitalize } from "~/lib/convert";
+import handleFetch from "~/lib/fetch";
 import { MangaTag } from "~/types/manga";
+import MangaFilter from "./components/manga-filter";
+import MangaList from "./components/manga-list";
 
 interface PageProps {
   params: { type: string };
@@ -13,7 +14,7 @@ interface PageProps {
 export async function generateMetadata({
   params: { type },
   searchParams,
-}: PageProps) {
+}: PageProps): Promise<Metadata> {
   const keys = Object.keys(searchParams);
   if (keys.length == 0) {
     return { title: `${capitalize(type)} | Descending | Lastest` };

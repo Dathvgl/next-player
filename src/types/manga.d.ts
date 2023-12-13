@@ -1,5 +1,6 @@
 import { FetchList } from "./type";
 
+export type MangaType = "nettruyen" | "blogtruyen";
 export type MangaSort = "lastest" | "chapter" | "name";
 export type MangaOrder = "asc" | "desc";
 

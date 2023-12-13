@@ -50,13 +50,13 @@ export default function RootLayout({ children }: ChildReact) {
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ReduxProvider>
             <AuthContextProvider>
-              <div className="flex relative">
+              <main className="flex relative">
                 <NavSide />
                 <ScrollArea className="flex-1 relative h-screen flex flex-col">
                   <SiteHeader />
                   <div className="flex-1">{children}</div>
                 </ScrollArea>
-              </div>
+              </main>
             </AuthContextProvider>
           </ReduxProvider>
         </ThemeProvider>

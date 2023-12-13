@@ -14,7 +14,7 @@ export const metadata: Metadata = { title: "Trang chủ" };
 export default function Page() {
   return (
     <PageTransition>
-      <main className="px-6 py-4 flex flex-col gap-8">
+      <section className="px-6 py-4 flex flex-col gap-8">
         <section className="flex md:items-stretch max-md:flex-col gap-8 items-center">
           <ListSimulation />
           <DailyWork />
@@ -23,7 +23,7 @@ export default function Page() {
           <Intro />
         </section>
         <ChartStat />
-      </main>
+      </section>
     </PageTransition>
   );
 }

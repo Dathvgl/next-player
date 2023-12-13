@@ -8,9 +8,9 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <div className="flex divide-x h-[calc(100vh-65px)] max-md:flex-col">
+    <section className="flex divide-x h-[calc(100vh-var(--height-header-body))] max-md:flex-col">
       <ListMessenger />
       <ChatMessenger />
-    </div>
+    </section>
   );
 }

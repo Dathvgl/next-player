@@ -79,13 +79,13 @@ export default async function Page({ params }: { params: { type: string } }) {
   );
 
   return (
-    <div className="flex flex-col gap-4 mt-4">
+    <section className="flex flex-col gap-4 mt-4">
       <MangaFilter list={data?.data} />
-      <div className="flex gap-4">
+      <section className="flex gap-4">
         <div className="flex-1">
           <MangaList type={type} />
         </div>
-      </div>
-    </div>
+      </section>
+    </section>
   );
 }

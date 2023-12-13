@@ -135,7 +135,7 @@ export default function ChatMessengerDetail(props: ChatMessengerDetailProps) {
   }
 
   return (
-    <div className="flex-1 h-full flex flex-col [&>div>div>div]:h-full">
+    <section className="flex-1 h-full flex flex-col [&>div>div>div]:h-full">
       <ScrollArea ref={scrollRef} className="flex-1">
         <AnimatePresence initial={false}>
           <ul
@@ -189,6 +189,6 @@ export default function ChatMessengerDetail(props: ChatMessengerDetailProps) {
           <Button type="submit">Submit</Button>
         </form>
       </Form>
-    </div>
+    </section>
   );
 }

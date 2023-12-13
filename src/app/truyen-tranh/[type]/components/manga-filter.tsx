@@ -47,7 +47,7 @@ export default function MangaFilter({ list }: { list?: MangaTag[] }) {
   if (!list) return <></>;
 
   return (
-    <div className="flex items-center gap-2">
+    <section className="flex items-center gap-2">
       <div className="flex flex-1 items-center px-2 gap-1 relative border rounded">
         <LIcon icon={Search} />
         <Input
@@ -71,6 +71,6 @@ export default function MangaFilter({ list }: { list?: MangaTag[] }) {
         </DialogTrigger>
         <MangaFilterDetail list={list} />
       </Dialog>
-    </div>
+    </section>
   );
 }

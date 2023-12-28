@@ -1,6 +1,6 @@
-export interface ChildReact {
+export type ChildReact = {
   children: React.ReactNode;
-}
+};
 
 export type FetchMethod = "GET" | "POST" | "PUT" | "DELETE";
 
@@ -12,7 +12,7 @@ export type WebLinkType =
   | "ecommerce"
   | "code";
 
-export interface WebStat {
+export type WebStat = {
   date: string;
   total: number;
   stats: {
@@ -23,9 +23,9 @@ export interface WebStat {
     ecommerce: number;
     code: number;
   };
-}
+};
 
-export interface RechartsToolTip<T> {
+export type RechartsToolTip<T> = {
   active: boolean;
   label: number;
   payload: {
@@ -35,13 +35,13 @@ export interface RechartsToolTip<T> {
     fill?: string;
     payload: T;
   }[];
-}
+};
 
-export interface FetchList<T> {
+export type FetchList<T> = {
   totalData: number;
   totalPage: number;
   currentPage: number;
   canPrev: boolean;
   canNext: boolean;
   data: T[];
-}
+};

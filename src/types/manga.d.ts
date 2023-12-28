@@ -4,28 +4,29 @@ export type MangaType = "nettruyen" | "blogtruyen";
 export type MangaSort = "lastest" | "chapter" | "name";
 export type MangaOrder = "asc" | "desc";
 
-export interface MangaLocal {
+export type MangaLocal = {
   type: string;
   mangaId: string;
   chapterId: string;
   chapterNum: number;
   timestamp: number;
-}
+};
 
-export interface MangaList
-  extends FetchList<
-    Omit<MangaDetail, "altTitle"> & {
-      chapters: { _id: string; chapter: number; time: number }[];
-    }
-  > {}
+export type MangaList = FetchList<
+  Omit<MangaDetail, "altTitle"> & {
+    chapters: { _id: string; chapter: number; time: number }[];
+  }
+>;
 
-export interface MangaThumnail {
+export type MangaListAdmin = ListResult<MangaDetailAmin>;
+
+export type MangaThumnail = {
   _id: string;
   detailId: string;
   src: string;
-}
+};
 
-export interface MangaDetail {
+export type MangaDetail = {
   _id: string;
   title: string;
   altTitle?: string;
@@ -36,17 +37,22 @@ export interface MangaDetail {
   followed: number;
   description: string;
   lastestUpdated: number;
-}
+};
 
-export interface MangaChapter {
+export type MangaDetailAdmin = Omit<
+  MangaDetail,
+  "altTitle" | "description" | "authors"
+> & { href: string };
+
+export type MangaChapter = {
   _id: string;
   detailId: string;
   chapter: number;
   watched: number;
   time: number;
-}
+};
 
-export interface MangaChapterDetail {
+export type MangaChapterDetail = {
   canPrev: { _id: string; chapter: number } | null;
   canNext: { _id: string; chapter: number } | null;
   current: {
@@ -60,10 +66,10 @@ export interface MangaChapterDetail {
     }[];
   } | null;
   chapters: { _id: string; chapter: number }[];
-}
+};
 
-export interface MangaTag {
+export type MangaTag = {
   _id: string;
   name: string;
   description: string;
-}
+};

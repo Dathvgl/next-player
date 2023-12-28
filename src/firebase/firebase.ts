@@ -15,8 +15,6 @@ import {
 import {
   DocumentData,
   DocumentSnapshot,
-  FieldPath,
-  QueryCompositeFilterConstraint,
   QueryFieldFilterConstraint,
   QuerySnapshot,
   SetOptions,
@@ -31,7 +29,6 @@ import {
   query as queryStore,
   setDoc,
   updateDoc,
-  where,
 } from "firebase/firestore";
 
 const config = {

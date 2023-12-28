@@ -1,4 +1,4 @@
-export interface CurrentWeatherData {
+export type CurrentWeatherData = {
   id: number;
   base: string;
   clouds: { all: number };
@@ -30,4 +30,4 @@ export interface CurrentWeatherData {
     description: string;
   }[];
   wind: { deg: number; speed: number };
-}
+};

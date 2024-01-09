@@ -1,3 +1,5 @@
+import PageTransition from "~/components/page-transition";
+
 export default function Page() {
-  return <div>Admin???</div>;
+  return <PageTransition>Admin???</PageTransition>;
 }

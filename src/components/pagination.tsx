@@ -77,7 +77,11 @@ export default function Pagination({ totalPage, disabled }: PaginationProps) {
         </li>
         {pages.map((item, index) => {
           if (isNaN(item)) {
-            return <PaginationEllipsis />;
+            return (
+              <PaginationEllipsis
+                key={`${item}-${index}-${pathname}-${searchParams}`}
+              />
+            );
           }
 
           return (

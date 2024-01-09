@@ -4,6 +4,7 @@ import Link from "next/link";
 import Chip from "~/components/chip";
 import { CustomImage } from "~/components/custom-image";
 import LIcon from "~/components/lucide-icon";
+import { site } from "~/configs/site";
 import handleFetch from "~/lib/fetch";
 import { MotionDiv, MotionLi, MotionUl } from "~/lib/motion";
 import { FakeProduct } from "~/types/ecommerce/fake-store-api";
@@ -35,7 +36,7 @@ export default async function Page() {
           {categories.map((item) => (
             <Link
               key={item}
-              href={`/ecommerce/fake-store-api/search?filter=${item}`}
+              href={`${site.ecommerce}/fake-store-api/search?filter=${item}`}
             >
               <Chip text={item} />
             </Link>
@@ -59,7 +60,10 @@ export default async function Page() {
           }}
         >
           {products.map((item, index) => (
-            <Link key={item.id} href={`/ecommerce/fake-store-api/${item.id}`}>
+            <Link
+              key={item.id}
+              href={`${site.ecommerce}/fake-store-api/${item.id}`}
+            >
               <MotionLi
                 className="!relative bg-stone-500/50 dark:bg-stone-700/50 bg-opacity-50 p-2 rounded overflow-hidden"
                 initial="init"

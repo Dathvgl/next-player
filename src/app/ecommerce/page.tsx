@@ -6,15 +6,10 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "~/components/ui/hover-card";
+import { site } from "~/configs/site";
+import { ecommerceListType } from "~/configs/site-nested";
 import { capitalize } from "~/lib/convert";
-import { MotionUl, MotionLi } from "~/lib/motion";
-
-const ecommerceList = [
-  {
-    type: "fake-store-api",
-    icon: "/ecommerce/fake-store-api-favicon.png",
-  },
-];
+import { MotionLi, MotionUl } from "~/lib/motion";
 
 export const metadata: Metadata = {
   title: "Ecommerce mãi mãi là gian nan",
@@ -34,10 +29,10 @@ export default function Page() {
         },
       }}
     >
-      {ecommerceList.map((item) => (
+      {ecommerceListType.map((item) => (
         <HoverCard key={item.type}>
           <HoverCardTrigger asChild>
-            <Link href={`/ecommerce/${item.type}`}>
+            <Link href={`${site.ecommerce}/${item.type}`}>
               <MotionLi
                 className="bg-white dark:bg-black flex justify-center items-center rounded-lg border-2 p-2 overflow-hidden"
                 variants={{

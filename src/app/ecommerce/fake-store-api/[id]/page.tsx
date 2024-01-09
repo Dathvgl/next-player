@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { CustomImage } from "~/components/custom-image";
 import LIcon from "~/components/lucide-icon";
+import { site } from "~/configs/site";
 import { capitalize } from "~/lib/convert";
 import handleFetch from "~/lib/fetch";
 import { MotionDiv, MotionLi, MotionUl } from "~/lib/motion";
@@ -55,7 +56,10 @@ export default async function Page({ params: { id } }: PageProps) {
         <strong className="text-xl">CÁC SẢN PHẨM TƯƠNG TỰ</strong>
         <MotionUl className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-8">
           {same.map((item, index) => (
-            <Link key={item.id} href={`/ecommerce/fake-store-api/${item.id}`}>
+            <Link
+              key={item.id}
+              href={`${site.ecommerce}/fake-store-api/${item.id}`}
+            >
               <MotionLi
                 className="!relative bg-stone-500/50 dark:bg-stone-700/50 bg-opacity-50 p-2 rounded overflow-hidden"
                 initial="init"

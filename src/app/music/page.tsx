@@ -6,15 +6,10 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "~/components/ui/hover-card";
+import { site } from "~/configs/site";
+import { musicListType } from "~/configs/site-nested";
 import { capitalize } from "~/lib/convert";
 import { MotionLi, MotionUl } from "~/lib/motion";
-
-const musicList = [
-  {
-    type: "zingMP3",
-    icon: "/music/zing-mp3-favicon.png",
-  },
-];
 
 export const metadata: Metadata = {
   title: "Nghe nhạc",
@@ -34,10 +29,10 @@ export default function Page() {
         },
       }}
     >
-      {musicList.map((item) => (
+      {musicListType.map((item) => (
         <HoverCard key={item.type}>
           <HoverCardTrigger asChild>
-            <Link href={`/music/${item.type}`}>
+            <Link href={`${site.music}/${item.type}`}>
               <MotionLi
                 className="bg-white dark:bg-black flex justify-center items-center rounded-lg border-2 p-2 overflow-hidden"
                 variants={{

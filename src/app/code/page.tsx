@@ -5,6 +5,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "~/components/ui/hover-card";
+import { site } from "~/configs/site";
 import { capitalize } from "~/lib/convert";
 import { MotionLi, MotionUl } from "~/lib/motion";
 
@@ -38,7 +39,7 @@ export default function Page() {
       {codeList.map((item) => (
         <HoverCard key={item.type}>
           <HoverCardTrigger asChild>
-            <Link href={`/code/${item.type}`}>
+            <Link href={`${site.code}/${item.type}`}>
               <MotionLi
                 className="bg-white dark:bg-black flex justify-center items-center rounded-lg border-2 p-2 overflow-hidden"
                 variants={{

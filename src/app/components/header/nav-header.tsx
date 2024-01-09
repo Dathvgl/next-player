@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { navLinks, siteConfig } from "~/config/site";
+import { siteConfig, siteList } from "~/configs/site";
 
 export default function NavHeader() {
   return (
@@ -33,7 +33,7 @@ export default function NavHeader() {
           <DropdownMenuContent className="w-56">
             <DropdownMenuLabel>Navigation apps</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            {navLinks.map((item) => (
+            {siteList.map((item) => (
               <DropdownMenuItem key={item.path} asChild>
                 <Link className="cursor-pointer" href={item.path}>
                   <LIcon icon={item.icon} className="mr-2 h-4 w-4" />

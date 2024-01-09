@@ -1,6 +1,6 @@
 import Link from "next/link";
 import tinycolor from "tinycolor2";
-import { navLinks } from "~/config/site";
+import { siteList } from "~/configs/site";
 import { capitalize, strToHex } from "~/lib/convert";
 import { MotionDiv, MotionLi, MotionSpan } from "~/lib/motion";
 
@@ -8,8 +8,9 @@ export default function ListSimulation() {
   return (
     <div className="flex-1 max-md:w-full">
       <ul className="border divide-y rounded overflow-hidden grid grid-cols-2">
-        {navLinks.map((item) => {
+        {siteList.map((item) => {
           const fill = strToHex(item.alt);
+
           return (
             <Link key={item.name} href={item.path}>
               <MotionLi

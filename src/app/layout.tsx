@@ -6,7 +6,7 @@ import SiteHeader from "~/app/components/header/site-header";
 import { NavigationEvents } from "~/components/navigation-event";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { Toaster } from "~/components/ui/toaster";
-import { siteConfig } from "~/config/site";
+import { siteConfig } from "~/configs/site";
 import { AuthContextProvider } from "~/contexts/auth-context";
 import { fontDancingScript, fontSans } from "~/lib/fonts";
 import { cn } from "~/lib/utils";

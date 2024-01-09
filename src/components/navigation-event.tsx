@@ -3,7 +3,8 @@
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import { WebStat, WebLinkType } from "~/types/type";
+import { site } from "~/configs/site";
+import { WebLink, WebStat } from "~/types/type";
 
 export function NavigationEvents() {
   const pathname = usePathname();
@@ -12,14 +13,10 @@ export function NavigationEvents() {
   const initStat: WebStat = {
     date: new Date().toDateString(),
     total: 0,
-    stats: {
-      home: 0,
-      music: 0,
-      manga: 0,
-      message: 0,
-      ecommerce: 0,
-      code: 0,
-    },
+    stats: Object.keys(site).reduce(
+      (prev, curr) => ({ ...prev, [curr]: 0 }),
+      {}
+    ) as Record<WebLink, number>,
   };
 
   const [stat, setStat] = useLocalStorage<WebStat>("web-stats", initStat);
@@ -28,15 +25,15 @@ export function NavigationEvents() {
     function handleStat(str: string) {
       if (str == "/") {
         handleStatWrite("home");
-      } else if (str.includes("/truyen-tranh")) {
-        handleStatWrite("manga");
-      } else if (str.includes("/messenger")) {
+      } else if (str.includes(site.story)) {
+        handleStatWrite("story");
+      } else if (str.includes(site.message)) {
         handleStatWrite("message");
-      } else if (str.includes("/music")) {
+      } else if (str.includes(site.music)) {
         handleStatWrite("music");
-      } else if (str.includes("/ecommerce")) {
+      } else if (str.includes(site.ecommerce)) {
         handleStatWrite("ecommerce");
-      } else if (str.includes("/code")) {
+      } else if (str.includes(site.code)) {
         handleStatWrite("code");
       }
     }
@@ -44,22 +41,16 @@ export function NavigationEvents() {
     handleStat(pathname);
   }, [pathname, searchParams]);
 
-  function handleStatWrite(key: WebLinkType) {
+  function handleStatWrite(key: WebLink) {
     const today = stat.date == new Date().toDateString();
 
-    if (today) {
-      setStat({
-        date: initStat.date,
-        total: stat.total + 1,
-        stats: { ...stat.stats, [key]: stat.stats[key] + 1 },
-      });
-    } else {
-      setStat({
-        date: initStat.date,
-        total: 1,
-        stats: { ...initStat.stats, [key]: 1 },
-      });
-    }
+    setStat({
+      date: initStat.date,
+      total: today ? stat.total + 1 : 1,
+      stats: today
+        ? { ...stat.stats, [key]: stat.stats[key] + 1 }
+        : { ...initStat.stats, [key]: 1 },
+    });
   }
 
   return null;

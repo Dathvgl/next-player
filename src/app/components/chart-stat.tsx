@@ -10,14 +10,14 @@ import {
 import tinycolor from "tinycolor2";
 import { useReadLocalStorage } from "usehooks-ts";
 import { capitalize, strToHex } from "~/lib/convert";
-import { RechartsToolTip, WebLinkType, WebStat } from "~/types/type";
+import { RechartsToolTip, WebLink, WebStat } from "~/types/type";
 
 export default function ChartStat() {
   const stat = useReadLocalStorage<WebStat>("web-stats");
 
   const data = Object.keys(stat?.stats ?? {}).map((key) => ({
     name: capitalize(key),
-    value: stat?.stats[key as WebLinkType] ?? 0,
+    value: stat?.stats[key as WebLink] ?? 0,
     fill: strToHex(key),
   }));
 

@@ -1,15 +1,16 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, MoreHorizontal } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { LinkLIcon } from "./lucide-icon";
+import { PaginationEllipsis } from "./ui/pagination";
 
 interface PaginationProps {
-  total: number;
+  totalPage: number;
   disabled?: boolean;
 }
 
-export default function Pagination({ total, disabled }: PaginationProps) {
+export default function Pagination({ totalPage, disabled }: PaginationProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -27,17 +28,12 @@ export default function Pagination({ total, disabled }: PaginationProps) {
   }
 
   const pages: number[] = [1];
-  if (total == 1) return <></>;
+  if (totalPage <= 1) return null;
 
-  if (total != 1) {
-    const result = total - 1;
-
-    if (result == 1) {
-      // only one
-      pages.push(total);
-    } else if (result < 5) {
+  if (totalPage != 1) {
+    if (totalPage < 5) {
       // not enough to hide
-      for (let index = 1; index < result; index++) {
+      for (let index = 1; index < totalPage; index++) {
         pages.push(index + 1);
       }
     } else {
@@ -48,12 +44,12 @@ export default function Pagination({ total, disabled }: PaginationProps) {
         }
 
         pages.push(NaN);
-        pages.push(total);
-      } else if (page >= total - 2) {
+        pages.push(totalPage);
+      } else if (page >= totalPage - 2) {
         // back page
         pages.push(NaN);
 
-        for (let index = total - 4; index < total; index++) {
+        for (let index = totalPage - 4; index < totalPage; index++) {
           pages.push(index + 1);
         }
       } else {
@@ -65,7 +61,7 @@ export default function Pagination({ total, disabled }: PaginationProps) {
         pages.push(page + 1);
 
         pages.push(NaN);
-        pages.push(total);
+        pages.push(totalPage);
       }
     }
   }
@@ -81,14 +77,7 @@ export default function Pagination({ total, disabled }: PaginationProps) {
         </li>
         {pages.map((item, index) => {
           if (isNaN(item)) {
-            return (
-              <li
-                key={`${item}-${index}-${pathname}-${searchParams}`}
-                className="rounded-full overflow-hidden"
-              >
-                <LinkLIcon href="" icon={MoreHorizontal} />
-              </li>
-            );
+            return <PaginationEllipsis />;
           }
 
           return (
@@ -107,7 +96,7 @@ export default function Pagination({ total, disabled }: PaginationProps) {
         })}
         <li className="rounded-full overflow-hidden">
           <LinkLIcon
-            href={page == total ? "" : handlePage(page + 1)}
+            href={page == totalPage ? "" : handlePage(page + 1)}
             icon={ArrowRight}
           />
         </li>

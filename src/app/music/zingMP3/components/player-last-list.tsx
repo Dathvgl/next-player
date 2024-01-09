@@ -9,7 +9,7 @@ import { externalApi } from "~/lib/api";
 import { durationUTC } from "~/lib/convert";
 import handleFetch from "~/lib/fetch";
 import { MotionDiv, MotionLi } from "~/lib/motion";
-import { zingMP3Alt } from "~/redux/features/music-slice";
+import { zingMP3Alt } from "~/redux/slices/music-slice";
 import { useAppDispatch, useAppSelector } from "~/redux/hook";
 import {
   ZingMP3SongObject,

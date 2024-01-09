@@ -1,6 +1,6 @@
 import { PauseCircle, PlayCircle } from "lucide-react";
 import LIcon from "~/components/lucide-icon";
-import { zingMP3Play } from "~/redux/features/music-slice";
+import { zingMP3Play } from "~/redux/slices/music-slice";
 import { useAppDispatch, useAppSelector } from "~/redux/hook";
 
 export default function PlayerAudioPlay() {

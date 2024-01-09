@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { durationUTC } from "~/lib/convert";
-import { zingMP3Play } from "~/redux/features/music-slice";
+import { zingMP3Play } from "~/redux/slices/music-slice";
 import { useAppDispatch, useAppSelector } from "~/redux/hook";
 
 export default function AudioTimeline() {

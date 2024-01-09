@@ -8,7 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { zingMP3Loop } from "~/redux/features/music-slice";
+import { zingMP3Loop } from "~/redux/slices/music-slice";
 import { useAppDispatch, useAppSelector } from "~/redux/hook";
 import { ZingMP3Loop } from "~/types/music/zingMP3/zingMP3";
 

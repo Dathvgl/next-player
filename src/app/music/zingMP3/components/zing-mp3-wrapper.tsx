@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import { zingMP3Init } from "~/redux/features/music-slice";
+import { zingMP3Init } from "~/redux/slices/music-slice";
 import { useAppDispatch } from "~/redux/hook";
 import { ChildReact } from "~/types/type";
 

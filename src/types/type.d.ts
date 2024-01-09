@@ -4,13 +4,15 @@ export type ChildReact = {
 
 export type FetchMethod = "GET" | "POST" | "PUT" | "DELETE";
 
-export type WebLinkType =
+export type WebLink =
   | "home"
   | "music"
-  | "manga"
+  | "story"
   | "message"
   | "ecommerce"
   | "code";
+
+export type WebLinkAdmin = "home" | "role" | "story" | "ecommerce";
 
 export type WebStat = {
   date: string;
@@ -18,7 +20,7 @@ export type WebStat = {
   stats: {
     home: number;
     music: number;
-    manga: number;
+    story: number;
     message: number;
     ecommerce: number;
     code: number;

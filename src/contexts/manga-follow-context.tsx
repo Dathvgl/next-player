@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState } from "react";
-import { externalApi } from "~/lib/api";
+import { linkApi } from "~/lib/api";
 import handleFetch from "~/lib/fetch";
 import { ChildReact } from "~/types/type";
 
@@ -21,10 +21,10 @@ export const MangaFollowContextProvider = ({
   const [follow, setFollow] = useState(followed);
 
   const altFollow = async () => {
-    const data = await handleFetch<{ watched: number } | null>(
-      `${externalApi.manga}/detailFollow/${id}?type=${type}`,
-      { cache: "no-store", next: { revalidate: 0 } }
-    );
+    const data = await handleFetch<{ watched: number } | null>({
+      url: `${linkApi.manga}/detailFollow/${id}?type=${type}`,
+      init: { cache: "no-store", next: { revalidate: 0 } },
+    });
 
     if (data) setFollow(data.watched);
   };

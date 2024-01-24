@@ -9,7 +9,7 @@ import LIcon from "~/components/lucide-icon";
 import { Input } from "~/components/ui/input";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { Skeleton } from "~/components/ui/skeleton";
-import { externalApi } from "~/lib/api";
+import { linkApi } from "~/lib/api";
 import { durationUTC } from "~/lib/convert";
 import { ZingMP3Search } from "~/types/music/zingMP3/zingMP3";
 
@@ -51,7 +51,7 @@ function ZingMP3SearchList({ name }: { name: string }) {
   useEffect(() => {
     async function init() {
       if (name) {
-        await fetch(`${externalApi.musicZingMP3}/search/${name}`).then(
+        await fetch(`${linkApi.musicZingMP3}/search/${name}`).then(
           async (res) => {
             setData(await res.json());
           }

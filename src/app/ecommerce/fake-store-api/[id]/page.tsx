@@ -16,20 +16,21 @@ interface PageProps {
 export async function generateMetadata({
   params: { id },
 }: PageProps): Promise<Metadata> {
-  const data = await handleFetch<FakeProduct>(
-    `https://fakestoreapi.com/products/${id}`
-  );
+  const data = await handleFetch<FakeProduct>({
+    url: `https://fakestoreapi.com/products/${id}`,
+  });
+
   return { title: data?.title };
 }
 
 export default async function Page({ params: { id } }: PageProps) {
-  const product = await handleFetch<FakeProduct>(
-    `https://fakestoreapi.com/products/${id}`
-  );
+  const product = await handleFetch<FakeProduct>({
+    url: `https://fakestoreapi.com/products/${id}`,
+  });
 
-  const same = await handleFetch<FakeProduct[]>(
-    "https://fakestoreapi.com/products/category/jewelery?limit=4"
-  );
+  const same = await handleFetch<FakeProduct[]>({
+    url: "https://fakestoreapi.com/products/category/jewelery?limit=4",
+  });
 
   if (!product || !same) return <></>;
 

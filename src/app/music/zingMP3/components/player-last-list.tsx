@@ -5,12 +5,12 @@ import { CustomImage } from "~/components/custom-image";
 import LIcon from "~/components/lucide-icon";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
-import { externalApi } from "~/lib/api";
+import { linkApi } from "~/lib/api";
 import { durationUTC } from "~/lib/convert";
 import handleFetch from "~/lib/fetch";
 import { MotionDiv, MotionLi } from "~/lib/motion";
-import { zingMP3Alt } from "~/redux/slices/music-slice";
 import { useAppDispatch, useAppSelector } from "~/redux/hook";
+import { zingMP3Alt } from "~/redux/slices/music-slice";
 import {
   ZingMP3SongObject,
   ZingMP3SongResponse,
@@ -42,9 +42,9 @@ export default function PlayerLastList() {
       for (let index = 0; index < length; index++) {
         const id = filter[index];
 
-        const data = await handleFetch<ZingMP3SongResponse>(
-          `${externalApi.musicZingMP3}/infoSong/${id}`
-        );
+        const data = await handleFetch<ZingMP3SongResponse>({
+          url: `${linkApi.musicZingMP3}/infoSong/${id}`,
+        });
 
         if (!data || data.err != 0) continue;
         temp.push(data.data);

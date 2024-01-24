@@ -1,8 +1,7 @@
-import React from "react";
-import { externalApi } from "~/lib/api";
-import { CustomImage } from "../../../components/custom-image";
-import { MangaThumnail } from "~/types/manga";
+import { linkApi } from "~/lib/api";
 import handleFetch from "~/lib/fetch";
+import { MangaThumnail } from "~/types/manga";
+import { CustomImage } from "../../../components/custom-image";
 
 interface MangaThumnailProps {
   className?: string;
@@ -15,9 +14,9 @@ interface MangaThumnailProps {
 export default async function MangaThumnailServer(props: MangaThumnailProps) {
   const { className, type, id, title, fill } = props;
 
-  const data = await handleFetch<MangaThumnail>(
-    `${externalApi.manga}/thumnail/${id}?type=${type}`
-  );
+  const data = await handleFetch<MangaThumnail>({
+    url: `${linkApi.manga}/thumnail/${id}?type=${type}`,
+  });
 
   if (!data) return <></>;
 

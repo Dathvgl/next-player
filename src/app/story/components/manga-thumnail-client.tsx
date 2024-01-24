@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { CustomImage } from "~/components/custom-image";
 import { Skeleton } from "~/components/ui/skeleton";
-import { externalApi } from "~/lib/api";
+import { linkApi } from "~/lib/api";
 import handleFetch from "~/lib/fetch";
 import { MangaThumnail } from "~/types/manga";
 
@@ -21,9 +21,9 @@ export default function MangaThumnailClient(props: MangaThumnailProps) {
 
   useEffect(() => {
     async function init() {
-      const data = await handleFetch<MangaThumnail>(
-        `${externalApi.manga}/thumnail/${id}?type=${type}`
-      );
+      const data = await handleFetch<MangaThumnail>({
+        url: `${linkApi.manga}/thumnail/${id}?type=${type}`,
+      });
 
       setData(data);
     }

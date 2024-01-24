@@ -14,15 +14,15 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const categories = await handleFetch<string[]>(
-    "https://fakestoreapi.com/products/categories",
-    { next: { revalidate: 60 } }
-  );
+  const categories = await handleFetch<string[]>({
+    url: "https://fakestoreapi.com/products/categories",
+    init: { next: { revalidate: 60 } },
+  });
 
-  const products = await handleFetch<FakeProduct[]>(
-    "https://fakestoreapi.com/products?limit=10",
-    { next: { revalidate: 60 } }
-  );
+  const products = await handleFetch<FakeProduct[]>({
+    url: "https://fakestoreapi.com/products?limit=10",
+    init: { next: { revalidate: 60 } },
+  });
 
   if (!categories || !products) return <></>;
 

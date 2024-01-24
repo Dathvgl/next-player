@@ -1,11 +1,11 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { toast } from "~/components/ui/use-toast";
-import { externalApi } from "~/lib/api";
+import { linkApi } from "~/lib/api";
 import handleFetch from "~/lib/fetch";
 import { ChildReact } from "~/types/type";
 import { useAuth } from "./auth-context";
+import { toast } from "sonner";
 
 interface StateFollow {
   _id: string;
@@ -41,12 +41,10 @@ export const MangaFollowStateContextProvider = ({
 
     const token = await authContext.idToken();
 
-    const data = await handleFetch<StateFollow | null>(
-      `${externalApi.user}/followManga/${id}?type=${type}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
+    const data = await handleFetch<StateFollow | null>({
+      url: `${linkApi.user}/followManga/${id}?type=${type}`,
+      init: { headers: { Authorization: `Bearer ${token}` } },
+    });
 
     if (data) setStateFollow(data);
     else setStateFollow(undefined);
@@ -54,8 +52,7 @@ export const MangaFollowStateContextProvider = ({
 
   const postFollow = async (chapter?: string) => {
     if (!authContext?.user?.uid) {
-      toast({
-        title: "Theo dõi truyện",
+      toast("Theo dõi truyện", {
         description: "Cần đăng nhập để theo dõi",
       });
 
@@ -64,16 +61,15 @@ export const MangaFollowStateContextProvider = ({
 
     const token = await authContext.idToken();
 
-    await handleFetch(
-      `${externalApi.user}/followManga/${id}?type=${type}&chapter=${
+    await handleFetch({
+      url: `${linkApi.user}/followManga/${id}?type=${type}&chapter=${
         chapter ?? "empty"
       }`,
-      {
+      init: {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       },
-      true
-    );
+    });
 
     await getFollow();
   };
@@ -82,9 +78,9 @@ export const MangaFollowStateContextProvider = ({
     if (!authContext?.user?.uid || !stateFollow) return;
     const token = await authContext.idToken();
 
-    await handleFetch(
-      `${externalApi.user}/followManga/${id}`,
-      {
+    await handleFetch({
+      url: `${linkApi.user}/followManga/${id}`,
+      init: {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -99,22 +95,20 @@ export const MangaFollowStateContextProvider = ({
           currentChapter: chapter,
         }),
       },
-      true
-    );
+    });
   };
 
   const deleteFollow = async () => {
     if (!authContext?.user?.uid) return;
     const token = await authContext.idToken();
 
-    await handleFetch(
-      `${externalApi.user}/followManga/${id}?type=${type}`,
-      {
+    await handleFetch({
+      url: `${linkApi.user}/followManga/${id}?type=${type}`,
+      init: {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       },
-      true
-    );
+    });
 
     setStateFollow(undefined);
   };

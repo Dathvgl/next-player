@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { externalApi } from "~/lib/api";
+import { linkApi } from "~/lib/api";
 import { capitalize } from "~/lib/convert";
 import handleFetch from "~/lib/fetch";
 import { MangaTag } from "~/types/manga";
@@ -19,9 +19,9 @@ export async function generateMetadata({
   if (keys.length == 0) {
     return { title: `${capitalize(type)} | Descending | Lastest` };
   } else {
-    const data = await handleFetch<{ data: MangaTag[] }>(
-      `${externalApi.manga}/tag?type=${type}`
-    );
+    const data = await handleFetch<{ data: MangaTag[] }>({
+      url: `${linkApi.manga}/tag?type=${type}`,
+    });
 
     let str = "";
 
@@ -74,9 +74,9 @@ export async function generateMetadata({
 export default async function Page({ params }: { params: { type: string } }) {
   const { type } = params;
 
-  const data = await handleFetch<{ data: MangaTag[] }>(
-    `${externalApi.manga}/tag?type=${type}`
-  );
+  const data = await handleFetch<{ data: MangaTag[] }>({
+    url: `${linkApi.manga}/tag?type=${type}`,
+  });
 
   return (
     <section className="flex flex-col gap-4 mt-4">

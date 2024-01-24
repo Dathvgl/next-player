@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
 import Pagination from "~/components/pagination";
 import { site } from "~/configs/site";
-import { externalApi } from "~/lib/api";
+import { linkApi } from "~/lib/api";
 import { numChapter, timeFromNow } from "~/lib/convert";
 import handleFetch from "~/lib/fetch";
 import { MotionLi, MotionUl } from "~/lib/motion";
@@ -20,10 +20,10 @@ export default function MangaList({ type }: { type: string }) {
 
   useEffect(() => {
     async function init() {
-      const data = await handleFetch<MangaList>(
-        `${externalApi.manga}/list?${search}`,
-        { next: { revalidate: 3600 } }
-      );
+      const data = await handleFetch<MangaList>({
+        url: `${linkApi.manga}/list?${search}`,
+        init: { next: { revalidate: 3600 } },
+      });
 
       setData(data);
     }

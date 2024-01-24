@@ -1,4 +1,4 @@
-import { externalApi } from "~/lib/api";
+import { linkApi } from "~/lib/api";
 import handleFetch from "~/lib/fetch";
 import { ZingMP3SongResponse } from "~/types/music/zingMP3/song";
 import { ZingMP3Home } from "~/types/music/zingMP3/zingMP3";
@@ -15,9 +15,9 @@ export async function generateMetadata({
 }) {
   if (!id) return { title: "Zing MP3" };
 
-  const data = await handleFetch<ZingMP3SongResponse>(
-    `${externalApi.musicZingMP3}/infoSong/${id}`
-  );
+  const data = await handleFetch<ZingMP3SongResponse>({
+    url: `${linkApi.musicZingMP3}/infoSong/${id}`,
+  });
 
   if (!data || data.err != 0) return { title: "Zing MP3" };
   return {
@@ -27,12 +27,10 @@ export async function generateMetadata({
 }
 
 export default async function Page() {
-  const data = await handleFetch<ZingMP3Home>(
-    `${externalApi.musicZingMP3}/home`,
-    {
-      next: { revalidate: 60 },
-    }
-  );
+  const data = await handleFetch<ZingMP3Home>({
+    url: `${linkApi.musicZingMP3}/home`,
+    init: { next: { revalidate: 60 } },
+  });
 
   if (!data) return <></>;
   const { items } = data.data;

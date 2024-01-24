@@ -8,9 +8,9 @@ import { MotionDiv, MotionLi, MotionUl } from "~/lib/motion";
 import { FakeProduct } from "~/types/ecommerce/fake-store-api";
 
 export default async function SearchList({ filter }: { filter: string }) {
-  const data = await handleFetch<FakeProduct[]>(
-    `https://fakestoreapi.com/products/category/${filter}`
-  );
+  const data = await handleFetch<FakeProduct[]>({
+    url: `https://fakestoreapi.com/products/category/${filter}`,
+  });
 
   if (!data) return <></>;
 

@@ -12,7 +12,7 @@ import {
 } from "~/components/ui/table";
 import { MangaFollowContextProvider } from "~/contexts/manga-follow-context";
 import { MangaFollowStateContextProvider } from "~/contexts/manga-follow-state-context";
-import { externalApi } from "~/lib/api";
+import { linkApi } from "~/lib/api";
 import { compactNumber } from "~/lib/convert";
 import handleFetch from "~/lib/fetch";
 import { MangaChapter, MangaDetail } from "~/types/manga";
@@ -27,23 +27,24 @@ interface PageProps {
 export async function generateMetadata({
   params: { type, id },
 }: PageProps): Promise<Metadata> {
-  const data = await handleFetch<MangaDetail>(
-    `${externalApi.manga}/detail/${id}?type=${type}`
-  );
+  const data = await handleFetch<MangaDetail>({
+    url: `${linkApi.manga}/detail/${id}?type=${type}`,
+  });
+
   return { title: data?.title, description: data?.description };
 }
 
 export default async function Page(props: PageProps) {
   const { type, id } = props.params;
 
-  const detail = await handleFetch<MangaDetail>(
-    `${externalApi.manga}/detail/${id}?type=${type}`,
-    { next: { revalidate: 60 } }
-  );
+  const detail = await handleFetch<MangaDetail>({
+    url: `${linkApi.manga}/detail/${id}?type=${type}`,
+    init: { next: { revalidate: 60 } },
+  });
 
-  const chapters = await handleFetch<MangaChapter[]>(
-    `${externalApi.manga}/chapter/${id}?type=${type}`
-  );
+  const chapters = await handleFetch<MangaChapter[]>({
+    url: `${linkApi.manga}/chapter/${id}?type=${type}`,
+  });
 
   if (!detail) return <></>;
 

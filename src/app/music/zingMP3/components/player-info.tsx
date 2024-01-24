@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { CustomImage } from "~/components/custom-image";
-import { externalApi } from "~/lib/api";
+import { linkApi } from "~/lib/api";
 import handleFetch from "~/lib/fetch";
 import { useAppSelector } from "~/redux/hook";
 import { ZingMP3SongResponse } from "~/types/music/zingMP3/song";
@@ -14,9 +14,9 @@ export default function PlayerInfo() {
   useEffect(() => {
     async function init() {
       if (id) {
-        const data = await handleFetch<ZingMP3SongResponse>(
-          `${externalApi.musicZingMP3}/infoSong/${id}`
-        );
+        const data = await handleFetch<ZingMP3SongResponse>({
+          url: `${linkApi.musicZingMP3}/infoSong/${id}`,
+        });
 
         setData(data);
       }
@@ -33,7 +33,9 @@ export default function PlayerInfo() {
       <div className="w-12 h-12 rounded overflow-hidden">
         <CustomImage src={song.thumbnail} alt={song.title} />
       </div>
-      <div className="font-bold text-base line-clamp-2 flex-1">{song.title}</div>
+      <div className="font-bold text-base line-clamp-2 flex-1">
+        {song.title}
+      </div>
     </div>
   );
 }

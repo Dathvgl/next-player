@@ -6,7 +6,7 @@ import { ChildReact } from "~/types/type";
 export default function Layout({ children }: ChildReact) {
   return (
     <div className="flex p-4">
-      <nav className="basis-1/5">
+      <nav className="w-1/5">
         <ul className="p-4 flex flex-col gap-2">
           {siteListAdmin.map((item) => (
             <li key={item.name}>

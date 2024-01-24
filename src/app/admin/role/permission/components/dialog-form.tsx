@@ -26,17 +26,16 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { useToast } from "~/components/ui/use-toast";
-import { useGetRoleTypes, usePostRole, usePutRole } from "~/services/role-service";
-import { Role } from "~/types/role";
+import { getRoleTypeAll, postRole, putRole } from "~/services/role-service";
+import { Role, RoleType } from "~/types/role";
 
 type DialogFormProps = { type: "post" } | { type: "put"; data: Role };
 
 const schema = z.object({
+  code: z.string().trim().min(1),
   name: z.string().trim().min(1),
   type: z.string(),
 });
@@ -46,46 +45,39 @@ type FormSchema = z.infer<typeof schema>;
 export default function DialogForm(props: DialogFormProps) {
   const title = props.type == "post" ? "Tạo" : "Sửa";
 
-  const { toast } = useToast();
   const [open, setOpen] = useState(false);
-
-  const { data, refetch } = useGetRoleTypes();
-  const [postRoleType] = usePostRole();
-  const [putRoleType] = usePutRole();
+  const [data, setData] = useState<RoleType[]>([]);
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(schema),
-    defaultValues: { name: "" },
+    defaultValues: { code: "", name: "" },
   });
 
   useEffect(() => {
+    async function init() {
+      const data = await getRoleTypeAll();
+      if (data) setData(data);
+    }
+
+    init();
+  }, []);
+
+  useEffect(() => {
     if (props.type == "put") {
+      form.setValue("code", props.data.code);
       form.setValue("name", props.data.name);
       form.setValue("type", props.data.type._id);
     }
   }, [props.type == "put" ? props.data.name : undefined]);
 
   async function onSubmit(result: FormSchema) {
-    try {
-      if (props.type == "post") {
-        await postRoleType(result).unwrap();
-      } else {
-        await putRoleType({ id: props.data._id, data: result }).unwrap();
-      }
-
-      setOpen(false);
-
-      toast({
-        title: "Thành công",
-        description: title,
-      });
-    } catch (error) {
-      toast({
-        title: "Thất bại",
-        description: title,
-        variant: "destructive",
-      });
+    if (props.type == "post") {
+      await postRole(result);
+    } else {
+      await putRole({ id: props.data._id, data: result });
     }
+
+    setOpen(false);
   }
 
   return (
@@ -108,9 +100,29 @@ export default function DialogForm(props: DialogFormProps) {
           >
             <FormField
               control={form.control}
+              name="code"
+              render={({ field }) => (
+                <FormItem className="form-item">
+                  <FormLabel>Mã quyền</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="Mã quyền"
+                      onChange={(e) => {
+                        e.target.validity.valid &&
+                          field.onChange(e.target.value);
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="name"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="form-item">
                   <FormLabel>Tên quyền</FormLabel>
                   <FormControl>
                     <Input
@@ -130,7 +142,7 @@ export default function DialogForm(props: DialogFormProps) {
               control={form.control}
               name="type"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="form-item">
                   <FormLabel>Loại quyền</FormLabel>
                   <FormControl>
                     <Select value={field.value} onValueChange={field.onChange}>
@@ -139,15 +151,9 @@ export default function DialogForm(props: DialogFormProps) {
                           <SelectValue placeholder="Chọn loại quyền" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent className="max-h-64">
                         <SelectGroup>
-                          <SelectLabel
-                            className="cursor-pointer"
-                            onClick={refetch}
-                          >
-                            Tải lại
-                          </SelectLabel>
-                          {data?.data.map((item) => (
+                          {data.map((item) => (
                             <SelectItem key={item._id} value={item._id}>
                               {item.name}
                             </SelectItem>

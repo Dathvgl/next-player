@@ -21,13 +21,13 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import { useToast } from "~/components/ui/use-toast";
-import { usePostRoleType, usePutRoleType } from "~/services/role-service";
+import { postRoleType, putRoleType } from "~/services/role-service";
 import { RoleType } from "~/types/role";
 
 type DialogFormProps = { type: "post" } | { type: "put"; data: RoleType };
 
 const schema = z.object({
+  code: z.string().trim().min(1),
   name: z.string().trim().min(1),
 });
 
@@ -36,11 +36,7 @@ type FormSchema = z.infer<typeof schema>;
 export default function DialogForm(props: DialogFormProps) {
   const title = props.type == "post" ? "Tạo" : "Sửa";
 
-  const { toast } = useToast();
   const [open, setOpen] = useState(false);
-
-  const [postRoleType] = usePostRoleType();
-  const [putRoleType] = usePutRoleType();
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(schema),
@@ -49,31 +45,19 @@ export default function DialogForm(props: DialogFormProps) {
 
   useEffect(() => {
     if (props.type == "put") {
+      form.setValue("code", props.data.code);
       form.setValue("name", props.data.name);
     }
   }, [props.type == "put" ? props.data.name : undefined]);
 
   async function onSubmit(result: FormSchema) {
-    try {
-      if (props.type == "post") {
-        await postRoleType(result).unwrap();
-      } else {
-        await putRoleType({ id: props.data._id, data: result }).unwrap();
-      }
-
-      setOpen(false);
-
-      toast({
-        title: "Thành công",
-        description: title,
-      });
-    } catch (error) {
-      toast({
-        title: "Thất bại",
-        description: title,
-        variant: "destructive",
-      });
+    if (props.type == "post") {
+      await postRoleType(result);
+    } else {
+      await putRoleType({ id: props.data._id, data: result });
     }
+
+    setOpen(false);
   }
 
   return (
@@ -96,9 +80,22 @@ export default function DialogForm(props: DialogFormProps) {
           >
             <FormField
               control={form.control}
+              name="code"
+              render={({ field }) => (
+                <FormItem className="form-item">
+                  <FormLabel>Mã loại quyền</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="Mã loại quyền" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="name"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="form-item">
                   <FormLabel>Loại quyền</FormLabel>
                   <FormControl>
                     <Input {...field} placeholder="Loại quyền" />

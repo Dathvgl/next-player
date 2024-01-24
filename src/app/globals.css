@@ -78,53 +78,16 @@
   }
 }
 
-#root-menu-outside {
-  @apply flex flex-col divide-y relative z-20;
-  @apply transition-transform ease-linear translate-x-0;
-  @apply w-64 bg-white dark:bg-black;
-  @apply absolute max-md:w-[60vw] h-screen;
-}
-
-#root-menu-outside li > * {
+#root-menu li > * {
   @apply px-4 py-3 w-full flex items-center font-bold before:content-['\00a0'];
-  @apply hover:bg-green-500/10 dark:hover:bg-sky-500/30;
-}
-
-#root:has(input[type="radio"][name="root-menu-header"][value="close"]:checked)
-  #root-menu-click-outside {
-  @apply hidden;
-}
-
-#root:has(
-    input[type="radio"][name="root-menu-header"][value="open"]:not(:checked)
-  )
-  #root-menu-click-outside {
-  @apply hidden;
-}
-
-#root:has(
-    input[type="radio"][name="root-menu-header"][value="open"]:not(:checked)
-  )
-  #root-menu-outside {
-  @apply -translate-x-full;
-}
-
-.root-menu-header {
-  @apply transition opacity-100 ease-linear duration-500 static;
-}
-
-#root:has(input[type="radio"][name="root-menu-header"][value="open"]:checked)
-  .root-menu-header {
-  @apply opacity-0 absolute -z-50;
-}
-
-#root:has(
-    input[type="radio"][name="root-menu-header"][value="open"]:not(:checked)
-  )
-  #root-container {
-  @apply md:px-[15%] max-md:px-[10%];
+  @apply hover:bg-green-500/10 dark:hover:bg-stone-800;
 }
 
 .shadow-custom {
   @apply shadow-[0_0_15px_0_rgba(0,0,0,0.5)] dark:shadow-[0_0_15px_0_rgba(255,255,255,0.5)];
+}
+
+.form-item {
+  @apply grid grid-cols-4 items-center gap-x-2 space-y-0;
+  @apply [&>*:nth-child(2)]:col-span-3;
 }

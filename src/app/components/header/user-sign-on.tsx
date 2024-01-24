@@ -1,4 +1,5 @@
-import { User as UserType } from "firebase/auth";
+"use client";
+
 import {
   Cloud,
   CreditCard,
@@ -29,15 +30,13 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import { authOut } from "~/lib/auth";
 import ChatNotify from "./chat-notify";
+import { useAppSelector } from "~/redux/hook";
+import { userSelector } from "~/redux/selectors/user-selector";
 
-interface UserSignOnProps {
-  user: UserType;
-  handleSignOut: () => Promise<void>;
-}
-
-export default function UserSignOn(props: UserSignOnProps) {
-  const { user, handleSignOut } = props;
+export default function UserSignOn() {
+  const user = useAppSelector(userSelector)!;
 
   return (
     <>
@@ -47,8 +46,8 @@ export default function UserSignOn(props: UserSignOnProps) {
           <button>
             <CustomImage
               className="w-10 h-10 rounded-full overflow-hidden"
-              src={user.photoURL ?? ""}
-              alt={user.displayName ?? "User"}
+              src={user.thumnail}
+              alt={user.name}
             />
           </button>
         </DropdownMenuTrigger>
@@ -121,7 +120,7 @@ export default function UserSignOn(props: UserSignOnProps) {
             <span>API</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={async () => await handleSignOut()}>
+          <DropdownMenuItem onClick={authOut}>
             <LogOut className="mr-2 h-4 w-4" />
             <span>Log out</span>
           </DropdownMenuItem>

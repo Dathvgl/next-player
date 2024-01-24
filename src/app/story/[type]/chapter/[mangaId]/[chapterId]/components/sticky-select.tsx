@@ -79,11 +79,11 @@ export default function StickySelect(props: StickySelectProps) {
       ) : (
         <>{prevBtn}</>
       )}
-      <Select defaultValue={currentId} onValueChange={onSelect}>
+      <Select value={currentId} onValueChange={onSelect}>
         <SelectTrigger className="w-32">
           <SelectValue placeholder="Chọn chapter" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="max-h-64">
           <SelectGroup>
             {chapters.map((item) => (
               <SelectItem key={item._id} value={item._id}>

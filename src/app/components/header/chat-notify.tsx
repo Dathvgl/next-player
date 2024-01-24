@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useAuth } from "~/contexts/auth-context";
 import { listenRealtime } from "~/firebase/firebase";
+import { useAppSelector } from "~/redux/hook";
+import { userUIDSelector } from "~/redux/selectors/user-selector";
 import { ChatNotifyType } from "~/types/messenger";
 import ChatNotifyDetail from "./chat-notify-detail";
 
 export default function ChatNotify() {
-  const uid = useAuth()?.user?.uid ?? "";
+  const uid = useAppSelector(userUIDSelector);
   const [chatNotifies, setChatNotifies] = useState<ChatNotifyType[]>([]);
 
   useEffect(() => {

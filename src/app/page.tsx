@@ -7,7 +7,10 @@ import ListSimulation from "./components/list-simulation";
 const ChartStat = dynamic(() => import("./components/chart-stat"), {
   ssr: false,
 });
-const DailyWork = dynamic(() => import("./components/daily-work"), { ssr: false });
+
+const DailyWork = dynamic(() => import("./components/daily-work"), {
+  ssr: false,
+});
 
 export const metadata: Metadata = { title: "Trang chủ" };
 

@@ -1,13 +1,13 @@
 "use client";
 
-import { X } from "lucide-react";
+import { Menu } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { useOnClickOutside } from "usehooks-ts";
-import { CustomIcons } from "~/components/custom-icons";
-import CustomInput from "~/components/custom-input";
 import LIcon from "~/components/lucide-icon";
-import { siteConfig, siteList } from "~/configs/site";
+import { Button } from "~/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
+import { siteList } from "~/configs/site";
 import useGridBreak from "~/hooks/use-grid-break";
 import { MotionDiv, MotionLi } from "~/lib/motion";
 
@@ -31,28 +31,14 @@ export default function NavSide() {
   }
 
   return (
-    <>
-      <div
-        id="root-menu-click-outside"
-        className="md:hidden absolute w-screen h-screen bg-black/50 z-[15]"
-      />
-      <aside id="root-menu-outside" ref={ref}>
-        <div className="h-16 flex items-center px-4 py-2 gap-4">
-          <CustomInput
-            type="radio"
-            name="root-menu-header"
-            value="close"
-            state={state}
-            callback={handleCallback}
-          >
-            <LIcon className="w-5 h-5" icon={X} button />
-          </CustomInput>
-          <Link href="/" className="flex items-center space-x-2">
-            <LIcon icon={CustomIcons.logo} className="h-6 w-6" />
-            <span className="inline-block font-bold">{siteConfig.name}</span>
-          </Link>
-        </div>
-        <nav className="select-none">
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="ghost">
+          <Menu className="w-5 h-5" />
+        </Button>
+      </SheetTrigger>
+      <SheetContent className="p-0" side="left">
+        <nav id="root-menu" className="select-none">
           <ul>
             {siteList.map((item, index) => (
               <MotionLi
@@ -74,7 +60,7 @@ export default function NavSide() {
                       },
                     }}
                   >
-                    <LIcon icon={item.icon} size={25} />
+                    <LIcon icon={item.icon} size={22} />
                     <span className="whitespace-nowrap">{item.name}</span>
                   </MotionDiv>
                 </Link>
@@ -82,7 +68,7 @@ export default function NavSide() {
             ))}
           </ul>
         </nav>
-      </aside>
-    </>
+      </SheetContent>
+    </Sheet>
   );
 }

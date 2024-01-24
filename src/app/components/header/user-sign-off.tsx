@@ -3,14 +3,10 @@ import { CustomIcons } from "~/components/custom-icons";
 import LIcon from "~/components/lucide-icon";
 import { Button } from "~/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
-import { AuthContextProps } from "~/contexts/auth-context";
-import { MotionUl, MotionLi } from "~/lib/motion";
+import { authGoogle } from "~/lib/auth";
+import { MotionLi, MotionUl } from "~/lib/motion";
 
-interface UserSignOffProps extends Pick<AuthContextProps, "googleSignIn"> {}
-
-export default function UserSignOff(props: UserSignOffProps) {
-  const { googleSignIn } = props;
-
+export default function UserSignOff() {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -21,7 +17,7 @@ export default function UserSignOff(props: UserSignOffProps) {
       <DialogContent className="[&>button]:hidden !w-auto">
         <MotionUl>
           <MotionLi className="flex justify-center">
-            <Button onClick={async () => await googleSignIn()}>
+            <Button onClick={authGoogle}>
               <LIcon className="w-5 h-5" icon={CustomIcons.google} />
               <span className="ml-3">Sign in with Google</span>
             </Button>

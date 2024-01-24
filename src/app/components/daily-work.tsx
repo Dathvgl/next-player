@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { CustomImage } from "~/components/custom-image";
 import LIcon from "~/components/lucide-icon";
 import useGeolocation from "~/hooks/use-geolocation";
-import useWeather, { WeatherIcon } from "~/hooks/use-weather";
+import useWeather, { weatherIcon } from "~/hooks/use-weather";
 import { capitalize } from "~/lib/convert";
 
 export default function DailyWork() {
@@ -44,7 +44,7 @@ function WeatherWork() {
         <div className="flex items-center">
           <CustomImage
             className="w-16 h-16"
-            src={WeatherIcon(weather.weather[0].icon)}
+            src={weatherIcon(weather.weather[0].icon)}
             alt={weather.weather[0].description}
           />
           <div className="text-3xl font-bold">

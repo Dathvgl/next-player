@@ -1,9 +1,11 @@
-const linkExternalApiCrawl = process.env.NEXT_PUBLIC_EXTERNAL_API_CRAWL;
-const linkExternalApiFsfssfssfsfsfs =
+const linkApiCrawl = process.env.NEXT_PUBLIC_EXTERNAL_API_CRAWL;
+const linkApiFsfssfssfsfsfs =
   process.env.NEXT_PUBLIC_EXTERNAL_API_FSFSSFSSFSFSFS;
 
-export const externalApi = {
-  manga: `${linkExternalApiCrawl}/api/manga`,
-  user: `${linkExternalApiCrawl}/api/user`,
-  musicZingMP3: `${linkExternalApiFsfssfssfsfsfs}/api/zingMP3`,
+export const linkApi = {
+  base: `${linkApiCrawl}`,
+  role: `${linkApiCrawl}/api/role`,
+  user: `${linkApiCrawl}/api/user`,
+  manga: `${linkApiCrawl}/api/manga`,
+  musicZingMP3: `${linkApiFsfssfssfsfsfs}/api/zingMP3`,
 };

@@ -1,25 +1,45 @@
-import { toast } from "~/components/ui/use-toast";
+import { ExternalToast, toast } from "sonner";
 
-export default async function handleFetch<T>(
-  input: RequestInfo | URL,
-  init?: RequestInit | undefined,
-  text?: boolean
-) {
-  try {
-    if (text) {
-      const text = await (await fetch(input, init)).text();
+type HandleFetchProps = {
+  url: RequestInfo | URL;
+  init?: RequestInit | undefined;
+  sonner?: {
+    title?: string;
+    data?: ExternalToast | undefined;
+  };
+};
 
-      toast({
-        title: "Handle Fetching",
-        description: text,
+export default async function handleFetch<T>({
+  url,
+  init,
+  sonner,
+}: HandleFetchProps) {
+  const res = await fetch(url, init);
+
+  if (res.status >= 300) {
+    const { message } = (await res.json()) as { message: string };
+
+    if (sonner) {
+      toast(sonner.title, {
+        ...sonner.data,
+        description: sonner.data?.description ?? message,
       });
-    } else return (await fetch(input, init)).json() as Promise<T>;
-  } catch (error: unknown) {
-    console.error(error);
+    }
 
-    toast({
-      title: "Handle Fetching",
-      description: "Error while fetching",
-    });
+    return;
   }
+
+  const response = await res.json();
+  const { message } = response as { message?: string };
+
+  if (message) {
+    if (sonner) {
+      toast(sonner.title, {
+        ...sonner.data,
+        description: sonner.data?.description ?? message,
+      });
+    }
+  }
+
+  return response as T;
 }

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { toast } from "~/components/ui/use-toast";
-import { externalApi } from "~/lib/api";
+import { toast } from "sonner";
+import { linkApi } from "~/lib/api";
 import handleFetch from "~/lib/fetch";
 import { ZingMP3SongDetailResponse } from "~/types/music/zingMP3/song";
 import { ZingMP3Loop } from "~/types/music/zingMP3/zingMP3";
@@ -83,7 +83,7 @@ export const musicSlice = createSlice({
         description: string;
       };
 
-      toast({ title: "Zing MP3 Error", description: description });
+      toast("Zing MP3 Error", { description: description });
     });
   },
 });
@@ -91,9 +91,9 @@ export const musicSlice = createSlice({
 export const zingMP3Init = createAsyncThunk(
   "music/zingMP3Song",
   async (id: string, { rejectWithValue }) => {
-    const data = await handleFetch<ZingMP3SongDetailResponse>(
-      `${externalApi.musicZingMP3}/song/${id}`
-    );
+    const data = await handleFetch<ZingMP3SongDetailResponse>({
+      url: `${linkApi.musicZingMP3}/song/${id}`,
+    });
 
     if (!data || data.err != 0 || !id) {
       return rejectWithValue({

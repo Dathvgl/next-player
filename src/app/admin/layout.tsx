@@ -19,7 +19,7 @@ export default function Layout({ children }: ChildReact) {
           ))}
         </ul>
       </nav>
-      <div className="basis-4/5">{children}</div>
+      <div className="w-4/5">{children}</div>
     </div>
   );
 }

@@ -15,27 +15,29 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { compactNumber, timeFromNow } from "~/lib/convert";
-import { MangaDetailAdmin } from "~/types/manga";
+import { zInt } from "~/lib/zod";
+import { postMangaAdmin } from "~/services/manga-service";
+import { MangaDetailAdmin, MangaType } from "~/types/manga";
 
 const schema = z.object({
-  limit: z
-    .number()
-    .int()
-    .min(0)
-    .or(z.string())
-    .pipe(z.coerce.number().int().min(0)),
+  limit: zInt,
 });
 
 type FormSchema = z.infer<typeof schema>;
 
-export default function MangaDetail({ manga }: { manga: MangaDetailAdmin }) {
+type MangaDetailProps = {
+  type: MangaType;
+  manga: MangaDetailAdmin;
+};
+
+export default function MangaDetail({ type, manga }: MangaDetailProps) {
   const form = useForm<FormSchema>({
     resolver: zodResolver(schema),
     defaultValues: { limit: 0 },
   });
 
-  function onSubmit({ limit }: FormSchema) {
-    console.log(limit);
+  async function onSubmit({ limit }: FormSchema) {
+    await postMangaAdmin({ limit, href: manga.href, type: type });
   }
 
   return (
@@ -77,8 +79,9 @@ export default function MangaDetail({ manga }: { manga: MangaDetailAdmin }) {
                     inputMode="numeric"
                     placeholder="Giới hạn"
                     pattern="[0-9]*"
-                    onChange={(e) => {
-                      e.target.validity.valid && field.onChange(e.target.value);
+                    onChange={(event) => {
+                      event.target.validity.valid &&
+                        field.onChange(event.target.value);
                     }}
                   />
                 </FormControl>

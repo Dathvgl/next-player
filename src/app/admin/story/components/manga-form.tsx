@@ -7,40 +7,30 @@ import { Button } from "~/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import { toast } from "~/components/ui/use-toast";
-import { externalApi } from "~/lib/api";
-import handleFetch from "~/lib/fetch";
+import { zInt } from "~/lib/zod";
+import { postMangaAdmin } from "~/services/manga-service";
 import { MangaType } from "~/types/manga";
 
 const schema = z.object({
-  href: z.string(),
-  type: z.string(),
-  limit: z.string().optional(),
+  href: z.string().trim(),
+  type: z.string().trim(),
+  limit: zInt,
 });
 
 export default function MangaForm({ type }: { type: MangaType }) {
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
-    values: { href: "", type, limit: "" },
+    values: { href: "", type, limit: 0 },
   });
 
   async function onSubmit(values: z.infer<typeof schema>) {
-    try {
-      const data = await handleFetch(
-        `${externalApi.manga}/detailCrawl?type=${values.type}&href=${values.href}&limit=${values.limit}`
-      );
-
-      console.log(data);
-    } catch (error) {
-      toast({ title: "Lỗi crawl" });
-    }
+    await postMangaAdmin(values);
   }
 
   return (
@@ -55,9 +45,8 @@ export default function MangaForm({ type }: { type: MangaType }) {
               control={form.control}
               name="href"
               render={({ field }) => (
-                <FormItem className="flex-1">
+                <FormItem className="flex-1 form-item">
                   <FormLabel>Href truyện</FormLabel>
-                  <FormDescription>Đường dẫn truyện</FormDescription>
                   <FormControl>
                     <Input placeholder="href" autoComplete="off" {...field} />
                   </FormControl>
@@ -75,9 +64,8 @@ export default function MangaForm({ type }: { type: MangaType }) {
               name="type"
               disabled
               render={({ field }) => (
-                <FormItem className="flex-1">
+                <FormItem className="flex-1 form-item">
                   <FormLabel>Type truyện</FormLabel>
-                  <FormDescription>Loại trang web</FormDescription>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -89,9 +77,8 @@ export default function MangaForm({ type }: { type: MangaType }) {
               control={form.control}
               name="limit"
               render={({ field }) => (
-                <FormItem className="flex-1">
+                <FormItem className="flex-1 form-item">
                   <FormLabel>Limit truyện</FormLabel>
-                  <FormDescription>Giới hạn crawl</FormDescription>
                   <FormControl>
                     <Input placeholder="limit" autoComplete="off" {...field} />
                   </FormControl>

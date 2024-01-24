@@ -2,8 +2,8 @@ import Image from "next/image";
 
 interface CustomImageProps {
   className?: string;
-  src: string;
-  alt: string;
+  src?: string;
+  alt?: string;
   fill?: boolean;
   objectFit?: "cover" | "contain" | "fill" | "scale-down" | "none";
 }
@@ -15,6 +15,8 @@ export function CustomImage({
   fill,
   objectFit,
 }: CustomImageProps) {
+  if (!src || !alt) return null;
+
   return (
     <div className={`${className ?? ""}${fill ? " relative" : ""}`}>
       <Image

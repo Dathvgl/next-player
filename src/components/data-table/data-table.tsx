@@ -3,9 +3,11 @@ import {
   type ColumnDef,
   type Table as TanstackTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, RotateCcw } from "lucide-react";
+import { RotateCcw } from "lucide-react";
+import { cn } from "~/lib/utils";
 import Pagination from "../pagination";
-import { Button } from "../ui/button";
+import { Checkbox } from "../ui/checkbox";
+import { Input } from "../ui/input";
 import {
   Table,
   TableBody,
@@ -18,52 +20,99 @@ import { DataTableViewOptions } from "./data-table-view-options";
 
 type ColumnTableProps<T> = {
   base: ColumnDef<T>[];
-  name: string;
-  sort?: boolean;
-  refetch?: () => void;
+  radio?: {
+    head?: boolean;
+    ceil: boolean;
+    onClick?: () => void;
+    options?: Omit<ColumnDef<T>, "id" | "header" | "cell">;
+  };
+  checkbox?: {
+    ceil: boolean;
+    options?: Omit<ColumnDef<T>, "id" | "header" | "cell">;
+  };
 };
 
 export function columnTable<T>({
   base,
-  name,
-  sort,
-  refetch,
+  radio,
+  checkbox,
 }: ColumnTableProps<T>): ColumnDef<T>[] {
-  const column = base.shift();
-  if (!column) return [];
+  if (!radio && !checkbox) return base;
 
-  column.header = ({ column }) => {
-    return (
-      <div className="flex items-center gap-2">
-        {refetch && (
-          <Button
-            variant="ghost"
-            size="icon"
+  if (radio) {
+    const list: ColumnDef<T>[] = [
+      {
+        id: "radio",
+        header: ({ table }) => {
+          return radio?.head ? (
+            <span
+              onClick={() => {
+                table.resetRowSelection();
+                radio.onClick?.();
+              }}
+            >
+              <RotateCcw className="w-4 h-4 hover:scale-110 hover:rotate-180 transition-all duration-1000 cursor-pointer" />
+            </span>
+          ) : null;
+        },
+        cell: ({ row, table }) => (
+          <Input
+            className="w-4 h-3 m-auto p-0 transition-all"
+            type="radio"
+            name="radioSelect"
+            defaultChecked={row.getIsSelected()}
             onClick={() => {
-              refetch();
+              if (!row.getIsSelected()) {
+                table.resetRowSelection();
+                row.toggleSelected(true);
+              }
             }}
-          >
-            <RotateCcw className="w-5 h-5" />
-          </Button>
-        )}
-        {sort ? (
-          <Button
-            variant="ghost"
-            onClick={() => {
-              column.toggleSorting(column.getIsSorted() === "asc");
-            }}
-          >
-            {name}
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        ) : (
-          <span>{name}</span>
-        )}
-      </div>
-    );
-  };
+          />
+        ),
+        ...radio.options,
+      },
+      ...base,
+    ];
 
-  return [column, ...base];
+    return list;
+  }
+
+  if (checkbox) {
+    const list: ColumnDef<T>[] = [
+      {
+        id: "checkbox",
+        header: ({ table }) => {
+          return (
+            <Checkbox
+              className="translate-y-[2px]"
+              aria-label="Select all"
+              checked={
+                table.getIsAllPageRowsSelected() ||
+                (table.getIsSomePageRowsSelected() && "indeterminate")
+              }
+              onCheckedChange={(value) => {
+                table.toggleAllPageRowsSelected(!!value);
+              }}
+            />
+          );
+        },
+        cell: ({ row }) => (
+          <Checkbox
+            className="translate-y-[2px]"
+            aria-label="Select row"
+            checked={row.getIsSelected()}
+            onCheckedChange={(value) => row.toggleSelected(!!value)}
+          />
+        ),
+        ...checkbox.options,
+      },
+      ...base,
+    ];
+
+    return list;
+  }
+
+  return base;
 }
 
 type DataTableProps<TData, TValue> = {
@@ -72,6 +121,7 @@ type DataTableProps<TData, TValue> = {
   totalPage?: number;
   toolbar?: React.ReactNode;
   onSelect?: (value: TData) => void;
+  onChecked?: (value: TData[]) => void;
 };
 
 export function DataTable<TData, TValue>({
@@ -80,10 +130,11 @@ export function DataTable<TData, TValue>({
   totalPage = 1,
   toolbar,
   onSelect,
+  onChecked,
 }: DataTableProps<TData, TValue>) {
   return (
     <section className="w-full space-y-2.5 overflow-auto">
-      <section className="flex w-full items-center justify-between space-x-2 overflow-auto p-1">
+      <section className="flex w-full items-center justify-between space-x-2 overflow-auto">
         {toolbar}
         <div className="flex items-center space-x-2">
           <DataTableViewOptions table={dataTable} />
@@ -91,12 +142,19 @@ export function DataTable<TData, TValue>({
       </section>
       <section className="rounded-md border">
         <Table>
-          <TableHeader>
+          <TableHeader className="whitespace-nowrap">
             {dataTable.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      className={cn(
+                        "",
+                        header.id == "radio" && "w-[16px]",
+                        header.id == "checkbox" && "w-[32px]"
+                      )}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -115,11 +173,18 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  onClick={() => {
-                    dataTable.toggleAllPageRowsSelected(false);
-                    row.toggleSelected(true);
-                    onSelect?.(row.original);
-                  }}
+                  onClick={
+                    !onSelect && !onChecked
+                      ? undefined
+                      : () => {
+                          if (onSelect) {
+                            dataTable.toggleAllPageRowsSelected(false);
+                            onSelect?.(row.original);
+                          }
+
+                          row.toggleSelected(true);
+                        }
+                  }
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

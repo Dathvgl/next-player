@@ -1,4 +1,5 @@
 import {
+  Aperture,
   BookIcon,
   Code2,
   HomeIcon,
@@ -6,6 +7,7 @@ import {
   MessageCircle,
   Music4Icon,
   ShoppingBag,
+  Users,
 } from "lucide-react";
 import { WebLink, WebLinkAdmin } from "~/types/type";
 
@@ -99,7 +101,13 @@ export const siteNavigateAdmin: Record<WebLinkAdmin, SiteLink<WebLinkAdmin>> = {
     name: "Quyền hạn",
     path: "/admin/role",
     alt: "role",
-    icon: BookIcon,
+    icon: Aperture,
+  },
+  user: {
+    name: "Người dùng",
+    path: "/admin/user",
+    alt: "user",
+    icon: Users,
   },
   story: {
     name: "Truyện tranh",

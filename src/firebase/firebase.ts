@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, inMemoryPersistence, setPersistence } from "firebase/auth";
 import {
   DataSnapshot,
   QueryConstraint,
@@ -44,6 +44,7 @@ const config = {
 const app = initializeApp(config);
 
 export const auth = getAuth(app);
+setPersistence(auth, inMemoryPersistence);
 
 const store = getFirestore(app);
 

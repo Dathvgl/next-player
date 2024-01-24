@@ -18,7 +18,7 @@ export type MangaList = FetchList<
   }
 >;
 
-export type MangaListAdmin = ListResult<MangaDetailAmin>;
+export type MangaListAdmin = FetchList<MangaDetailAdmin>;
 
 export type MangaThumnail = {
   _id: string;

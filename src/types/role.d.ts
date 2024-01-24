@@ -1,11 +1,13 @@
 export type Role = {
   _id: string;
+  code: string;
   name: string;
   type: RoleType;
 };
 
 export type RoleType = {
   _id: string;
+  code: string;
   name: string;
 };
 

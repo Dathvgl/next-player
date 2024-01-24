@@ -1,8 +1,13 @@
 export type ChildReact = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
-export type FetchMethod = "GET" | "POST" | "PUT" | "DELETE";
+export type TypeParam = Record<string, string | string[] | undefined>;
+
+export type ParamReact = {
+  params: Record<string, string>;
+  searchParams: TypeParam;
+};
 
 export type WebLink =
   | "home"
@@ -12,7 +17,7 @@ export type WebLink =
   | "ecommerce"
   | "code";
 
-export type WebLinkAdmin = "home" | "role" | "story" | "ecommerce";
+export type WebLinkAdmin = "home" | "role" | "user" | "story" | "ecommerce";
 
 export type WebStat = {
   date: string;
@@ -46,4 +51,9 @@ export type FetchList<T> = {
   canPrev: boolean;
   canNext: boolean;
   data: T[];
+};
+
+export type FetchQuery = {
+  page: number;
+  limit?: number;
 };

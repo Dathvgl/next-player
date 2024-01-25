@@ -29,7 +29,6 @@ export async function generateMetadata({
 export default async function Page() {
   const data = await handleFetch<ZingMP3Home>({
     url: `${linkApi.musicZingMP3}/home`,
-    init: { next: { revalidate: 60 } },
   });
 
   if (!data) return <></>;

@@ -39,7 +39,6 @@ export default async function Page(props: PageProps) {
 
   const detail = await handleFetch<MangaDetail>({
     url: `${linkApi.manga}/detail/${id}?type=${type}`,
-    init: { next: { revalidate: 60 } },
   });
 
   const chapters = await handleFetch<MangaChapter[]>({

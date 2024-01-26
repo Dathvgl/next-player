@@ -1,4 +1,7 @@
+"use server";
+
 import { revalidateTag } from "next/cache";
+import { cookies } from "next/headers";
 import { linkApi } from "~/lib/api";
 import handleFetch from "~/lib/fetch";
 import { MangaListAdmin, MangaType } from "~/types/manga";
@@ -24,7 +27,7 @@ export async function getMangaAdmin({
   return await handleFetch<MangaListAdmin>({
     url: url.toString(),
     init: {
-      credentials: "include",
+      headers: { Cookie: cookies().toString() },
       next: { tags: ["mangaAdmin"] },
     },
   });
@@ -39,8 +42,8 @@ export async function postMangaAdmin(props: {
     url: `${linkApi.manga}/detailCrawl`,
     init: {
       method: "POST",
-      credentials: "include",
       headers: {
+        Cookie: cookies().toString(),
         Accept: "application/json",
         "Content-Type": "application/json",
       },

@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidateTag } from "next/cache";
+import { cookies } from "next/headers";
 import { linkApi } from "~/lib/api";
 import handleFetch from "~/lib/fetch";
 import { Role, RolePost, RoleType, RoleTypePost } from "~/types/role";
@@ -19,7 +20,7 @@ export async function getRoles({ page }: FetchQuery) {
   return await handleFetch<FetchList<Role>>({
     url: url.toString(),
     init: {
-      credentials: "include",
+      headers: { Cookie: cookies().toString() },
       next: { tags: ["roles"] },
     },
   });
@@ -29,7 +30,7 @@ export async function getRoleAll() {
   return await handleFetch<Role[]>({
     url: `${linkApi.role}/all`,
     init: {
-      credentials: "include",
+      headers: { Cookie: cookies().toString() },
       next: { tags: ["roleAll"] },
     },
   });
@@ -40,8 +41,8 @@ export async function postRole(props: RolePost) {
     url: linkApi.role,
     init: {
       method: "POST",
-      credentials: "include",
       headers: {
+        Cookie: cookies().toString(),
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -58,8 +59,8 @@ export async function putRole(props: { id: string; data: RolePost }) {
     url: `${linkApi.role}/${props.id}`,
     init: {
       method: "PUT",
-      credentials: "include",
       headers: {
+        Cookie: cookies().toString(),
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -76,7 +77,7 @@ export async function deleteRole(props: string) {
     url: `${linkApi.role}/${props}`,
     init: {
       method: "DELETE",
-      credentials: "include",
+      headers: { Cookie: cookies().toString() },
     },
   });
 
@@ -97,7 +98,7 @@ export async function getRoleTypes({ page }: FetchQuery) {
   return await handleFetch<FetchList<Role>>({
     url: url.toString(),
     init: {
-      credentials: "include",
+      headers: { Cookie: cookies().toString() },
       next: { tags: ["roleTypes"] },
     },
   });
@@ -107,7 +108,7 @@ export async function getRoleTypeAll() {
   return await handleFetch<RoleType[]>({
     url: `${linkApi.role}/type/all`,
     init: {
-      credentials: "include",
+      headers: { Cookie: cookies().toString() },
       next: { tags: ["roleTypeAll"] },
     },
   });
@@ -118,8 +119,8 @@ export async function postRoleType(props: RoleTypePost) {
     url: `${linkApi.role}/type`,
     init: {
       method: "POST",
-      credentials: "include",
       headers: {
+        Cookie: cookies().toString(),
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -136,8 +137,8 @@ export async function putRoleType(props: { id: string; data: RoleTypePost }) {
     url: `${linkApi.role}/type/${props.id}`,
     init: {
       method: "PUT",
-      credentials: "include",
       headers: {
+        Cookie: cookies().toString(),
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -154,7 +155,7 @@ export async function deleteRoleType(props: string) {
     url: `${linkApi.role}/type/${props}`,
     init: {
       method: "DELETE",
-      credentials: "include",
+      headers: { Cookie: cookies().toString() },
     },
   });
 

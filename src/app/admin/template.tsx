@@ -15,7 +15,6 @@ export default function Template({ children }: ChildReact) {
     }
   }, [roles]);
 
-  if (!roles) {
-    return null;
-  } else children;
+  if (!roles) return null;
+  else return children;
 }

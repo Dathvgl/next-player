@@ -1,5 +1,3 @@
-"use server";
-
 import { cookies } from "next/headers";
 import { linkApi } from "~/lib/api";
 import handleFetch from "~/lib/fetch";
@@ -9,8 +7,8 @@ export async function postAuthSignIn(idToken: string) {
     url: `${linkApi.user}/session-signin`,
     init: {
       method: "POST",
+      credentials: "include",
       headers: {
-        Cookie: cookies().toString(),
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -24,7 +22,7 @@ export async function postAuthSignOut() {
     url: `${linkApi.user}/session-signout`,
     init: {
       method: "POST",
-      headers: { Cookie: cookies().toString() },
+      credentials: "include",
     },
   });
 }

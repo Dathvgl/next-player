@@ -6,6 +6,7 @@ import { siteAdmin } from "~/configs/site";
 
 export default function Page() {
   const router = useRouter();
+  console.log("kakaka");
 
   useEffect(() => {
     router.replace(`${siteAdmin.role}/permission`);

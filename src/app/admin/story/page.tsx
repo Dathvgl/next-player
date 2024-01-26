@@ -7,6 +7,11 @@ import MangaForm from "./components/manga-form";
 import MangaHandle from "./components/manga-handle";
 import { numberParam, stringParam } from "~/lib/param";
 import Pagination from "~/components/pagination";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Quản trị | Truyện",
+};
 
 export default async function Page({ searchParams }: ParamReact) {
   const page = numberParam({ searchParams, name: "page" });

@@ -2,11 +2,8 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "~/firebase/firebase";
 import { userInitial } from "~/redux/slices/user-slice";
 import { store } from "~/redux/store";
-import {
-  getUser,
-  postAuthSignIn,
-  postAuthSignOut,
-} from "~/services/user-service";
+import { postAuthSignIn, postAuthSignOut } from "~/services/auth-service";
+import { getUser } from "~/services/user-service";
 
 export async function authGoogle() {
   const provider = new GoogleAuthProvider();
@@ -22,5 +19,6 @@ export async function authGoogle() {
 
 export async function authOut() {
   await postAuthSignOut();
-  store.dispatch(userInitial(null));
+  const data = await getUser();
+  store.dispatch(userInitial(data ?? null));
 }

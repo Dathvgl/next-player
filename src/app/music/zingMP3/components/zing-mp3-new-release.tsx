@@ -14,7 +14,7 @@ export default function ZingMP3NewRelease(props: {
   data?: unknown | undefined;
 }) {
   const { data } = props;
-  if (!data) return <></>;
+  if (!data) return null;
   else return <ZingMP3NewReleaseItem data={data} />;
 }
 

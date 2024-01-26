@@ -29,7 +29,7 @@ interface RTItem {
 
 export default function RTChart(props: { data?: unknown | undefined }) {
   const { data } = props;
-  if (!data) return <></>;
+  if (!data) return null;
   const item = data as ZingMP3RTChartSection;
   const list: RTItem[] = item.items.slice(0, 3).map((x) => {
     const obj = item.chart.items[x.encodeId];
@@ -140,14 +140,14 @@ function CustomTooltip(props: any) {
   }> & { list: RTItem[] };
 
   if (!active || !payload || !payload.length) {
-    return <></>;
+    return null;
   }
 
   return (
     <div className="bg-black/50 dark:bg-white/50 font-bold p-1 rounded">
       {payload.map((item) => {
         const detail = list.find(({ encodeId }) => encodeId == item.name);
-        if (!detail) return <></>;
+        if (!detail) return null;
 
         return (
           <div key={item.name} className="flex gap-2 px-2 py-1 w-64">

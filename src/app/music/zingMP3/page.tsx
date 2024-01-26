@@ -31,7 +31,7 @@ export default async function Page() {
     url: `${linkApi.musicZingMP3}/home`,
   });
 
-  if (!data) return <></>;
+  if (!data) return null;
   const { items } = data.data;
 
   return (

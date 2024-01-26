@@ -45,7 +45,7 @@ export default async function Page(props: PageProps) {
     url: `${linkApi.manga}/chapter/${id}?type=${type}`,
   });
 
-  if (!detail) return <></>;
+  if (!detail) return null;
 
   return (
     <MangaFollowStateContextProvider id={id} type={type}>

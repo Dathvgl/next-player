@@ -34,7 +34,7 @@ function WeatherWork() {
   const geolocation = useGeolocation();
   const weather = useWeather({ coords: geolocation.coords });
 
-  if (!weather) return <></>;
+  if (!weather) return null;
 
   return (
     <div className="flex items-center justify-center max-lg:gap-10 gap-28">

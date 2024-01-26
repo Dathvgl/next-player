@@ -15,9 +15,9 @@ export default function MangaButtonContinue(props: MangaButtonContinueProps) {
   const { type, id, chapters } = props;
   const stateFollow = useMangaFollowState()?.stateFollow;
 
-  if (!stateFollow || !chapters) return <></>;
+  if (!stateFollow || !chapters) return null;
   const result = chapters.find((item) => item == stateFollow.currentChapterId);
-  if (!result) return <></>;
+  if (!result) return null;
 
   return (
     <Link

@@ -10,7 +10,7 @@ export default function FourItemHome(props: {
   row?: number;
 }) {
   const { data, row } = props;
-  if (!data) return <></>;
+  if (!data) return null;
   const item = data as { title: string; items: ZingMP3PlaylistObject[] };
 
   return (

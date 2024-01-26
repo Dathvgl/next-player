@@ -82,7 +82,7 @@ export default function ChatMessenger() {
     handleChat();
   }, [handleChat]);
 
-  if (!messageId || !uid) return <></>;
+  if (!messageId || !uid) return null;
   return (
     <ChatMessengerDetail uid={uid} messageId={messageId} members={members} />
   );

@@ -18,7 +18,7 @@ export default async function MangaThumnailServer(props: MangaThumnailProps) {
     url: `${linkApi.manga}/thumnail/${id}?type=${type}`,
   });
 
-  if (!data) return <></>;
+  if (!data) return null;
 
   return (
     <CustomImage

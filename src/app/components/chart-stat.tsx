@@ -77,7 +77,7 @@ function CustomTooltip(props: any) {
   }>;
 
   if (!active || !payload || !payload.length) {
-    return <></>;
+    return null;
   }
 
   const data = payload[0].payload;

@@ -25,7 +25,7 @@ export default function PlayerInfo() {
     init();
   }, [id]);
 
-  if (!data) return <></>;
+  if (!data) return null;
   const song = data.data;
 
   return (

@@ -12,7 +12,7 @@ export default async function SearchList({ filter }: { filter: string }) {
     url: `https://fakestoreapi.com/products/category/${filter}`,
   });
 
-  if (!data) return <></>;
+  if (!data) return null;
 
   return (
     <div className="p-8">

@@ -44,7 +44,7 @@ export default function MangaFilter({ list }: { list?: MangaTag[] }) {
     setInputName(() => "");
   }
 
-  if (!list) return <></>;
+  if (!list) return null;
 
   return (
     <section className="flex items-center gap-2">

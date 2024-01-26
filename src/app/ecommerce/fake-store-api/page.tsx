@@ -22,7 +22,7 @@ export default async function Page() {
     url: "https://fakestoreapi.com/products?limit=10",
   });
 
-  if (!categories || !products) return <></>;
+  if (!categories || !products) return null;
 
   return (
     <div className="p-8 flex flex-col gap-4 divide-y divide-black dark:divide-white">

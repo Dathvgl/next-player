@@ -11,9 +11,9 @@ interface MangaButtonProps {
 }
 
 export default function MangaButton({ type, id, chapters }: MangaButtonProps) {
-  if (!chapters) return <></>;
+  if (!chapters) return null;
   const sort = chapters.sort((a, b) => a.chapter - b.chapter);
-  if (sort.length == 0) return <></>;
+  if (sort.length == 0) return null;
 
   return (
     <div className="flex gap-4">

@@ -70,5 +70,5 @@ export default function BodyHandle(props: BodyHandleProps) {
     init();
   }, [chapterId, mangaFollowStateContext?.stateFollow]);
 
-  return <></>;
+  return null;
 }

@@ -32,7 +32,7 @@ export default async function Page({ params: { id } }: PageProps) {
     url: "https://fakestoreapi.com/products/category/jewelery?limit=4",
   });
 
-  if (!product || !same) return <></>;
+  if (!product || !same) return null;
 
   return (
     <div className="p-8 flex flex-col gap-4">

@@ -12,6 +12,6 @@ export default async function MangaDetailChapter({
   id,
   data,
 }: MangaChapterProps) {
-  if (!data) return <></>;
+  if (!data) return null;
   return <MangaDetailChapterBody id={id} type={type} data={data} />;
 }

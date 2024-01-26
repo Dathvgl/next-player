@@ -8,7 +8,7 @@ import useGridBreak from "~/hooks/use-grid-break";
 
 export default function ZingMP3Player() {
   const src = useAppSelector((state) => state.music.zingMP3.current.src);
-  if (!src) return <></>;
+  if (!src) return null;
   return <ZingMP3PlayerControls />;
 }
 

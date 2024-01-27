@@ -2,10 +2,8 @@ import moment from "moment";
 import "moment/locale/vi";
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import SiteHeader from "~/app/components/header/site-header";
 import HandleProvider from "~/components/handle-provider/handle-provider";
 import { NavigationEvents } from "~/components/navigation-event";
-import { ScrollArea } from "~/components/ui/scroll-area";
 import { Toaster } from "~/components/ui/sonner";
 import { siteConfig } from "~/configs/site";
 import { fontDancingScript, fontSans } from "~/lib/fonts";
@@ -47,12 +45,7 @@ export default function RootLayout({ children }: ChildReact) {
         )}
       >
         <HandleProvider>
-          <main className="flex relative [&>div>div>div]:!block">
-            <ScrollArea className="flex-1 relative h-screen flex flex-col">
-              <SiteHeader />
-              <div className="flex-1">{children}</div>
-            </ScrollArea>
-          </main>
+          <>{children}</>
         </HandleProvider>
         <Suspense fallback={null}>
           <NavigationEvents />

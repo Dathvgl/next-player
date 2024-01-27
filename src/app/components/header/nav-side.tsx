@@ -11,7 +11,7 @@ export default function NavSide() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost">
+        <Button className="md:hidden" variant="ghost">
           <Menu className="w-5 h-5" />
         </Button>
       </SheetTrigger>

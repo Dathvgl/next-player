@@ -20,12 +20,12 @@ export default function SideLink() {
         <span className="inline-block font-bold">{siteConfig.name}</span>
       </Link>
       <ul className="p-4 flex flex-col gap-2">
-        {siteListAdmin.map((item) => (
+        {siteListAdmin.map((item, index) => (
           <li key={item.name}>
             <Button
               className={cn(
                 "w-full justify-normal",
-                item.path.includes(name)
+                (name == undefined && index == 0) || item.path.includes(name)
                   ? "bg-accent text-accent-foreground"
                   : ""
               )}

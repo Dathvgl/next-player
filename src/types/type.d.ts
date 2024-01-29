@@ -4,8 +4,8 @@ export type ChildReact = {
 
 export type TypeParam = Record<string, string | string[] | undefined>;
 
-export type ParamReact = {
-  params: Record<string, string>;
+export type ParamReact<T = Record<string, string>> = {
+  params: T;
   searchParams: TypeParam;
 };
 

@@ -15,18 +15,15 @@ import { MangaFollowStateContextProvider } from "~/contexts/manga-follow-state-c
 import { linkApi } from "~/lib/api";
 import { compactNumber } from "~/lib/convert";
 import handleFetch from "~/lib/fetch";
-import { MangaChapter, MangaDetail } from "~/types/manga";
+import { MangaChapter, MangaDetail, MangaType } from "~/types/manga";
+import { ParamReact } from "~/types/type";
 import MangaButton from "./components/manga-button";
 import MangaDetailChapter from "./components/manga-detail-chapter";
 import { MangaFollow, MangaFollowCeil } from "./components/manga-follow";
 
-interface PageProps {
-  params: { type: string; id: string };
-}
-
 export async function generateMetadata({
   params: { type, id },
-}: PageProps): Promise<Metadata> {
+}: ParamReact<{ type: string; id: string }>): Promise<Metadata> {
   const data = await handleFetch<MangaDetail>({
     url: `${linkApi.manga}/detail/${id}?type=${type}`,
   });
@@ -34,9 +31,9 @@ export async function generateMetadata({
   return { title: data?.title, description: data?.description };
 }
 
-export default async function Page(props: PageProps) {
-  const { type, id } = props.params;
-
+export default async function Page({
+  params: { type, id },
+}: ParamReact<{ type: MangaType; id: string }>) {
   const detail = await handleFetch<MangaDetail>({
     url: `${linkApi.manga}/detail/${id}?type=${type}`,
   });

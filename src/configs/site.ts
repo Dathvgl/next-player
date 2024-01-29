@@ -12,9 +12,9 @@ import {
 import { WebLink, WebLinkAdmin } from "~/types/type";
 
 export const siteConfig = {
-  name: "Next.js",
+  name: "fsfssfssfsfsfs",
   description:
-    "Beautifully designed components built with Radix UI and Tailwind CSS.",
+    "Một trang web cơ bản chứa những chức năng mà người tạo muốn tích vào",
   links: {
     twitter: "https://twitter.com/shadcn",
     github: "https://github.com/shadcn/ui",

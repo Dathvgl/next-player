@@ -133,14 +133,14 @@ export function DataTable<TData, TValue>({
   onChecked,
 }: DataTableProps<TData, TValue>) {
   return (
-    <section className="w-full space-y-2.5 overflow-auto">
-      <section className="flex w-full items-center justify-between space-x-2 overflow-auto">
+    <section className="w-full space-y-2.5">
+      <section className="flex w-full items-center justify-between space-x-2">
         {toolbar}
         <div className="flex items-center space-x-2">
           <DataTableViewOptions table={dataTable} />
         </div>
       </section>
-      <section className="rounded-md border">
+      <section className="rounded-md border overflow-auto">
         <Table>
           <TableHeader className="whitespace-nowrap">
             {dataTable.getHeaderGroups().map((headerGroup) => (

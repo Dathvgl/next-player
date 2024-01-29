@@ -1,24 +1,16 @@
-"use client";
-
 import { redirect } from "next/navigation";
-import { useUpdateEffect } from "usehooks-ts";
-import { useAppSelector } from "~/redux/hook";
-import { userRolesSelector } from "~/redux/selectors/user-selector";
+import { getUser } from "~/services/user-service";
 import { ChildReact } from "~/types/type";
 
-export function AuthProtect({
+export async function AuthProtect({
   children,
   filter,
 }: ChildReact & { filter?: string[] }) {
-  const roles = useAppSelector(userRolesSelector);
+  const data = await getUser();
 
-  useUpdateEffect(() => {
-    if (!roles) {
-      redirect("/");
-    }
-  }, [JSON.stringify(roles)]);
+  if (!data) {
+    redirect("/");
+  }
 
-  if (!roles) {
-    return null;
-  } else return <>{children}</>;
+  return <>{children}</>;
 }

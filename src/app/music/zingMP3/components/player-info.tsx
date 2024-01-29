@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CustomImage } from "~/components/custom-image";
+import { CustomImage } from "~/components/custom-image/custom-image";
 import { linkApi } from "~/lib/api";
 import handleFetch from "~/lib/fetch";
 import { useAppSelector } from "~/redux/hook";

@@ -1,5 +1,5 @@
 import { PlayCircle } from "lucide-react";
-import { CustomImage } from "~/components/custom-image";
+import { CustomImage } from "~/components/custom-image/custom-image";
 import LIcon from "~/components/lucide-icon";
 import { MotionDiv } from "~/lib/motion";
 import { ZingMP3ArtistObject } from "~/types/music/zingMP3/artist";

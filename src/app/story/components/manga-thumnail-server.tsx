@@ -1,29 +1,32 @@
-import { linkApi } from "~/lib/api";
-import handleFetch from "~/lib/fetch";
-import { MangaThumnail } from "~/types/manga";
-import { CustomImage } from "../../../components/custom-image";
+import { CustomImage } from "~/components/custom-image/custom-image";
+import { getMangaThumnail } from "~/services/manga-service";
+import { MangaType } from "~/types/manga";
 
-interface MangaThumnailProps {
+type MangaThumnailProps = {
   className?: string;
-  type: string;
+  type: MangaType;
   id: string;
   title: string;
   fill?: boolean;
-}
+  hover?: boolean;
+};
 
-export default async function MangaThumnailServer(props: MangaThumnailProps) {
-  const { className, type, id, title, fill } = props;
-
-  const data = await handleFetch<MangaThumnail>({
-    url: `${linkApi.manga}/thumnail/${id}?type=${type}`,
-  });
-
+export default async function MangaThumnailServer({
+  className,
+  type,
+  id,
+  title,
+  fill,
+  hover,
+}: MangaThumnailProps) {
+  const data = await getMangaThumnail({ id, type });
   if (!data) return null;
 
   return (
     <CustomImage
       className={className}
       fill={fill}
+      hover={hover}
       src={data.src}
       alt={title}
       objectFit="cover"

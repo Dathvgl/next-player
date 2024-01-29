@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CustomImage } from "~/components/custom-image";
+import { CustomImage } from "~/components/custom-image/custom-image";
 import useGridBreak from "~/hooks/use-grid-break";
 import { MotionLi, MotionUl } from "~/lib/motion";
 import { MangaChapterDetail } from "~/types/manga";

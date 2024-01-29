@@ -9,7 +9,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { CustomImage } from "~/components/custom-image";
+import { CustomImage } from "~/components/custom-image/custom-image";
 import { compactNumber, strToHex } from "~/lib/convert";
 import { ZingMP3RTChartSection } from "~/types/music/zingMP3/rtChart";
 import { RechartsToolTip } from "~/types/type";

@@ -4,7 +4,7 @@ import { where } from "firebase/firestore";
 import { MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
-import { CustomImage } from "~/components/custom-image";
+import { CustomImage } from "~/components/custom-image/custom-image";
 import LIcon from "~/components/lucide-icon";
 import {
   DropdownMenu,

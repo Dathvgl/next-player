@@ -3,7 +3,7 @@
 import { ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { CustomImage } from "~/components/custom-image";
+import { CustomImage } from "~/components/custom-image/custom-image";
 import LIcon from "~/components/lucide-icon";
 import { timeFromNow } from "~/lib/convert";
 import { ZingMP3ReleaseSection } from "~/types/music/zingMP3/release";

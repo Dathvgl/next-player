@@ -2,7 +2,7 @@ import { Star } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
 import Chip from "~/components/chip";
-import { CustomImage } from "~/components/custom-image";
+import { CustomImage } from "~/components/custom-image/custom-image";
 import LIcon from "~/components/lucide-icon";
 import { site } from "~/configs/site";
 import handleFetch from "~/lib/fetch";

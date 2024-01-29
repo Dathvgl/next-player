@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CustomImage } from "~/components/custom-image";
+import { CustomImage } from "~/components/custom-image/custom-image";
 import { timeFromNow } from "~/lib/convert";
 import { ChatPeopleType } from "~/types/messenger";
 

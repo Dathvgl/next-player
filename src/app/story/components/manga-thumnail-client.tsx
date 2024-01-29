@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CustomImage } from "~/components/custom-image";
+import { CustomImage } from "~/components/custom-image/custom-image";
 import { Skeleton } from "~/components/ui/skeleton";
 import { linkApi } from "~/lib/api";
 import handleFetch from "~/lib/fetch";
@@ -13,10 +13,17 @@ interface MangaThumnailProps {
   id: string;
   title: string;
   fill?: boolean;
+  hover?: boolean;
 }
 
-export default function MangaThumnailClient(props: MangaThumnailProps) {
-  const { className, type, id, title, fill } = props;
+export default function MangaThumnailClient({
+  className,
+  type,
+  id,
+  title,
+  fill,
+  hover,
+}: MangaThumnailProps) {
   const [data, setData] = useState<MangaThumnail>();
 
   useEffect(() => {
@@ -37,6 +44,7 @@ export default function MangaThumnailClient(props: MangaThumnailProps) {
     <CustomImage
       className={className}
       fill={fill}
+      hover={hover}
       src={data.src}
       alt={title}
       objectFit="cover"

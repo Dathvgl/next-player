@@ -3,7 +3,7 @@
 import { Droplet, GaugeCircle, Wind } from "lucide-react";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { CustomImage } from "~/components/custom-image";
+import { CustomImage } from "~/components/custom-image/custom-image";
 import LIcon from "~/components/lucide-icon";
 import useGeolocation from "~/hooks/use-geolocation";
 import useWeather, { weatherIcon } from "~/hooks/use-weather";

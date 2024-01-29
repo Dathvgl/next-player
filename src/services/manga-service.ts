@@ -74,3 +74,31 @@ export async function postMangaAdmin(props: {
 
   revalidateTag("mangaAdmin");
 }
+
+type PutMangaAdminProps = {
+  id: string;
+  data: FormData;
+};
+
+export async function putMangaAdmin({ id, data }: PutMangaAdminProps) {
+  await handleFetch({
+    url: `${linkApi.manga}/detail/${id}`,
+    init: {
+      method: "PUT",
+      headers: {
+        Cookie: cookies().toString(),
+        Accept: "application/json",
+      },
+      body: data,
+    },
+  });
+
+  if (!data.entries().next().done) {
+    revalidateTag("mangaDetail");
+    revalidateTag("mangaAdmin");
+  }
+
+  if (data.has("file")) {
+    revalidateTag("mangaThumnail");
+  }
+}

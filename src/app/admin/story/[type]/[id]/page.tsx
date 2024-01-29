@@ -42,7 +42,7 @@ export default async function Page({
   return (
     <section className="flex flex-col gap-4">
       <div className="flex items-center gap-2">
-        <DialogForm data={{ ...detail, src: thumnail.src }} />
+        <DialogForm type={type} data={{ ...detail, src: thumnail.src }} />
         <Button variant="destructive">
           <Trash2 className="mr-2 w-4 h-4" /> Xóa truyện
         </Button>

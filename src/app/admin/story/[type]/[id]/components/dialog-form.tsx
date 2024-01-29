@@ -26,11 +26,16 @@ import {
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
 import { cleanObject } from "~/lib/convert";
-import { MangaDetail } from "~/types/manga";
+import { putMangaAdmin } from "~/services/manga-service";
+import { MangaDetail, MangaType } from "~/types/manga";
 
-type DialogFormProps = { data: MangaDetail & { src: string } };
+type DialogFormProps = {
+  type: MangaType;
+  data: MangaDetail & { src: string };
+};
 
 const schema = z.object({
+  file: z.custom<File>((item) => item instanceof File).optional(),
   title: z.string().trim().min(1),
   altTitle: z.string().trim().optional(),
   status: z.string().trim(),
@@ -39,7 +44,7 @@ const schema = z.object({
 
 type FormSchema = z.infer<typeof schema>;
 
-export default function DialogForm({ data }: DialogFormProps) {
+export default function DialogForm({ type, data }: DialogFormProps) {
   const [open, setOpen] = useState(false);
 
   const form = useForm<FormSchema>({
@@ -65,9 +70,19 @@ export default function DialogForm({ data }: DialogFormProps) {
     }
   }, []);
 
-  async function onSubmit(result: FormSchema) {
+  async function onSubmit({ file, ...result }: FormSchema) {
     const obj: Partial<FormSchema> = cleanObject(data, result);
-    // await ({ id: props.data._id, data: result });
+    const formData = new FormData();
+
+    if (file) {
+      formData.append("file", file);
+    }
+
+    for (const [key, value] of Object.entries(obj)) {
+      formData.append(key, value);
+    }
+
+    await putMangaAdmin({ id: data._id, data: formData });
     setOpen(false);
   }
 
@@ -103,6 +118,9 @@ export default function DialogForm({ data }: DialogFormProps) {
                 <CustomImageInput
                   className="rounded-lg overflow-hidden"
                   src={data.src}
+                  onChange={(value) => {
+                    form.setValue("file", value);
+                  }}
                 />
               </div>
             </div>

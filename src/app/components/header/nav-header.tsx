@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CustomIcons } from "~/components/custom-icons";
+import { customIcons } from "~/components/custom-icons";
 import LIcon from "~/components/lucide-icon";
 import {
   DropdownMenu,
@@ -18,7 +18,7 @@ export default function NavHeader() {
       <div className="flex gap-4 items-center">
         <NavSide />
         <Link href="/" className="flex items-center space-x-2 max-md:hidden">
-          <LIcon icon={CustomIcons.logo} className="h-6 w-6" />
+          <LIcon icon={customIcons.logo} className="h-6 w-6" />
           <span className="inline-block font-bold">{siteConfig.name}</span>
         </Link>
       </div>

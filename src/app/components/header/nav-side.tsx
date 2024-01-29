@@ -1,6 +1,6 @@
 import { Menu } from "lucide-react";
 import Link from "next/link";
-import { CustomIcons } from "~/components/custom-icons";
+import { customIcons } from "~/components/custom-icons";
 import LIcon from "~/components/lucide-icon";
 import { Button } from "~/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
@@ -21,7 +21,7 @@ export default function NavSide() {
             href="/"
             className="flex items-center space-x-2 h-16 border-b px-4"
           >
-            <LIcon icon={CustomIcons.logo} className="h-6 w-6" />
+            <LIcon icon={customIcons.logo} className="h-6 w-6" />
             <span className="inline-block font-bold">{siteConfig.name}</span>
           </Link>
           <NavSideLink />

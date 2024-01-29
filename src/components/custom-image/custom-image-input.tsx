@@ -7,17 +7,21 @@ import { cn } from "~/lib/utils";
 type CustomImageInputProps = {
   className?: string;
   src?: string;
+  onChange?: (value?: File) => void;
 };
 
 export default function CustomImageInput({
   className,
   src,
+  onChange,
 }: CustomImageInputProps) {
   const ref = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState(src);
   const [selectedFile, setSelectedFile] = useState<File>();
 
   useEffect(() => {
+    onChange?.(selectedFile);
+
     if (!selectedFile) {
       setPreview(src);
       return;
@@ -31,7 +35,7 @@ export default function CustomImageInput({
     };
   }, [selectedFile]);
 
-  function onChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function onChangeInput(event: React.ChangeEvent<HTMLInputElement>) {
     if (!event.target.files || event.target.files.length === 0) {
       setSelectedFile(undefined);
     } else setSelectedFile(event.target.files[0]);
@@ -54,7 +58,7 @@ export default function CustomImageInput({
         ref={ref}
         type="file"
         accept="image/*"
-        onChange={onChange}
+        onChange={onChangeInput}
       />
     </button>
   );

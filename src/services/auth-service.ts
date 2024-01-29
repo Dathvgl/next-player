@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import { linkApi } from "~/lib/api";
 import handleFetch from "~/lib/fetch";
 

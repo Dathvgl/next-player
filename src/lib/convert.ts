@@ -79,5 +79,7 @@ export function cleanObject<T extends Record<string, unknown>>(
     }
   }
 
-  return obj as T;
+  if (Object.keys(obj).length == 0) {
+    return {};
+  } else return obj as T;
 }

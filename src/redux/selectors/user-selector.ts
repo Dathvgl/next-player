@@ -7,7 +7,3 @@ export function userSelector(state: RootState) {
 export function userUIDSelector(state: RootState) {
   return state.user.user!.uid;
 }
-
-export function userRolesSelector(state: RootState) {
-  return state.user.user?.roles;
-}

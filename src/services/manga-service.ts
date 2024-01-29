@@ -4,8 +4,29 @@ import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { linkApi } from "~/lib/api";
 import handleFetch from "~/lib/fetch";
-import { MangaListAdmin, MangaType } from "~/types/manga";
+import {
+  MangaDetail,
+  MangaListAdmin,
+  MangaThumnail,
+  MangaType,
+} from "~/types/manga";
 import { FetchQuery } from "~/types/type";
+
+type BaseProps = { id: string; type: MangaType };
+
+export async function getMangaDetail({ id, type }: BaseProps) {
+  return await handleFetch<MangaDetail>({
+    url: `${linkApi.manga}/detail/${id}?type=${type}`,
+    init: { next: { tags: ["mangaDetail"] } },
+  });
+}
+
+export async function getMangaThumnail({ id, type }: BaseProps) {
+  return await handleFetch<MangaThumnail>({
+    url: `${linkApi.manga}/thumnail/${id}?type=${type}`,
+    init: { next: { tags: ["mangaThumnail"] } },
+  });
+}
 
 // Admin
 export async function getMangaAdmin({

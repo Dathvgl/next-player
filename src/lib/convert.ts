@@ -40,12 +40,13 @@ export function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export const durationUTC = (duration: number, format: string = "mm:ss") =>
-  moment
+export function durationUTC(duration: number, format: string = "mm:ss") {
+  return moment
     .utc(moment.duration(duration, "seconds").asMilliseconds())
     .format(format);
+}
 
-export const strArray = (str: string) => {
+export function strArray(str: string) {
   const arr: string[] = [];
   const string = str.trim().replace(/ +(?= )/g, "");
 
@@ -54,4 +55,29 @@ export const strArray = (str: string) => {
   }
 
   return arr;
-};
+}
+
+export function cleanObject<T extends Record<string, unknown>>(
+  base: T,
+  clean: T
+) {
+  const obj = structuredClone(clean);
+
+  for (const [key, value] of Object.entries(clean)) {
+    if (typeof value == "undefined") {
+      delete obj[key];
+    }
+
+    if (typeof value == "string" && value.trim() == "") {
+      delete obj[key];
+    }
+
+    if (typeof value != "object") {
+      if (base[key] == clean[key]) {
+        delete obj[key];
+      }
+    }
+  }
+
+  return obj as T;
+}

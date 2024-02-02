@@ -8,12 +8,12 @@ import { MangaChapterDetail } from "~/types/manga";
 import BodyHandle from "./body-handle";
 import StickySelect from "./sticky-select";
 
-interface BodyPageProps {
+type BodyPageProps = {
   type: string;
   mangaId: string;
   chapterId: string;
   data: MangaChapterDetail;
-}
+};
 
 export default function BodyPage(props: BodyPageProps) {
   const { type, mangaId, chapterId, data } = props;

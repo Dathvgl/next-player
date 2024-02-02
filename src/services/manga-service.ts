@@ -5,6 +5,8 @@ import { cookies } from "next/headers";
 import { linkApi } from "~/lib/api";
 import handleFetch from "~/lib/fetch";
 import {
+  MangaChapter,
+  MangaChapterDetail,
   MangaDetail,
   MangaListAdmin,
   MangaThumnail,
@@ -17,14 +19,32 @@ type BaseProps = { id: string; type: MangaType };
 export async function getMangaDetail({ id, type }: BaseProps) {
   return await handleFetch<MangaDetail>({
     url: `${linkApi.manga}/detail/${id}?type=${type}`,
-    init: { next: { tags: ["mangaDetail"] } },
+    init: { next: { tags: [`mangaDetail/${id}`] } },
   });
 }
 
 export async function getMangaThumnail({ id, type }: BaseProps) {
   return await handleFetch<MangaThumnail>({
     url: `${linkApi.manga}/thumnail/${id}?type=${type}`,
-    init: { next: { tags: ["mangaThumnail"] } },
+    init: { next: { tags: [`mangaThumnail/${id}`] } },
+  });
+}
+
+export async function getMangaChapters({ id, type }: BaseProps) {
+  return await handleFetch<MangaChapter[]>({
+    url: `${linkApi.manga}/chapter/${id}?type=${type}`,
+    init: { next: { tags: [`mangaChapters/${id}`] } },
+  });
+}
+
+export async function getMangaChapterImage({
+  id: detailId,
+  chapterId,
+  type,
+}: BaseProps & { chapterId: string }) {
+  return await handleFetch<MangaChapterDetail>({
+    url: `${linkApi.manga}/chapter/${detailId}/${chapterId}?type=${type}`,
+    init: { next: { tags: [`mangaChapterImage/${detailId}/${chapterId}`] } },
   });
 }
 
@@ -94,11 +114,37 @@ export async function putMangaAdmin({ id, data }: PutMangaAdminProps) {
   });
 
   if (!data.entries().next().done) {
-    revalidateTag("mangaDetail");
+    revalidateTag(`mangaDetail/${id}`);
     revalidateTag("mangaAdmin");
   }
 
   if (data.has("file")) {
-    revalidateTag("mangaThumnail");
+    revalidateTag(`mangaThumnail/${id}`);
   }
+}
+
+type PutMangaAdminChapterImageProps = {
+  detailId: string;
+  chapterId: string;
+  data: FormData;
+};
+
+export async function putMangaAdminChapterImage({
+  detailId,
+  chapterId,
+  data,
+}: PutMangaAdminChapterImageProps) {
+  await handleFetch({
+    url: `${linkApi.manga}/chapter/${detailId}/${chapterId}`,
+    init: {
+      method: "PUT",
+      headers: {
+        Cookie: cookies().toString(),
+        Accept: "application/json",
+      },
+      body: data,
+    },
+  });
+
+  revalidateTag(`mangaChapterImage/${detailId}/${chapterId}`);
 }

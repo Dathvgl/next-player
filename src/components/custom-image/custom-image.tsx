@@ -19,7 +19,7 @@ export function CustomImage({
   hover,
   objectFit,
 }: CustomImageProps) {
-  if (!src || !alt) return null;
+  if (!src || alt == undefined) return null;
 
   return (
     <div className={`relative group ${className ?? ""}`}>

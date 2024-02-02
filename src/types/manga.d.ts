@@ -58,14 +58,16 @@ export type MangaChapterDetail = {
   current: {
     _id: string;
     chapter: number;
-    chapters: {
-      _id: string;
-      chapterId: string;
-      chapterIndex: string;
-      src: string;
-    }[];
+    chapters: MangaChapterImage[];
   } | null;
   chapters: { _id: string; chapter: number }[];
+};
+
+export type MangaChapterImage = {
+  _id: string;
+  chapterId: string;
+  chapterIndex: string;
+  src: string;
 };
 
 export type MangaTag = {

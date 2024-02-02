@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { customIcons } from "~/components/custom-icons";
 import LIcon from "~/components/lucide-icon";
+import NavSide from "~/components/nav-side";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +11,6 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { siteConfig, siteList } from "~/configs/site";
-import NavSide from "./nav-side";
 
 export default function NavHeader() {
   return (

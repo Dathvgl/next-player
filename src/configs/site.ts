@@ -22,7 +22,7 @@ export const siteConfig = {
   },
 };
 
-type SiteLink<T> = {
+export type SiteLink<T> = {
   name: string;
   path: string;
   alt: T;

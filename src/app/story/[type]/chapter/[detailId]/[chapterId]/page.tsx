@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import { CustomImage } from "~/components/custom-image/custom-image";
-import { MotionLi } from "~/lib/motion";
 import {
   getMangaChapterImage,
   getMangaDetail,
@@ -54,14 +53,9 @@ export default async function Page({
       <section className="w-full flex justify-center">
         <BodyZoom>
           {chapter.current?.chapters.map((item) => (
-            <MotionLi
-              key={item._id}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-            >
+            <li key={item._id}>
               <CustomImage src={item.src} alt={item.chapterIndex} />
-            </MotionLi>
+            </li>
           ))}
         </BodyZoom>
       </section>

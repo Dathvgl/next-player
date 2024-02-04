@@ -3,7 +3,6 @@ import Link from "next/link";
 import LIcon from "~/components/lucide-icon";
 import { Button } from "~/components/ui/button";
 import { site } from "~/configs/site";
-import { MotionSection } from "~/lib/motion";
 import { MangaChapterDetail, MangaFollow, MangaType } from "~/types/manga";
 import FollowButton from "./follow-button";
 import StickySelect from "./sticky-select";
@@ -52,7 +51,7 @@ export default function StickyBar({
   );
 
   return (
-    <MotionSection className="sticky top-0 py-2 bg-white dark:bg-black gap-2 max-sm:gap-0 flex justify-center">
+    <section className="sticky z-10 top-0 py-2 bg-white dark:bg-black gap-2 max-sm:gap-0 flex justify-center">
       <Link href={`${site.story}/${type}/${detailId}`}>
         <LIcon icon={List} button />
       </Link>
@@ -79,6 +78,6 @@ export default function StickyBar({
       )}
       <div className="md:hidden max-md:block">{followButton}</div>
       <StickyZoom />
-    </MotionSection>
+    </section>
   );
 }

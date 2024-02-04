@@ -11,7 +11,11 @@ import {
   TableRow,
 } from "~/components/ui/table";
 import { compactNumber } from "~/lib/convert";
-import { getMangaChapters, getMangaDetail, getMangaUserFollow } from "~/services/manga-service";
+import {
+  getMangaChapters,
+  getMangaDetail,
+  getMangaUserFollow,
+} from "~/services/manga-service";
 import { MangaType } from "~/types/manga";
 import { ParamReact } from "~/types/type";
 import MangaButton from "./components/manga-button";
@@ -50,12 +54,12 @@ export default async function Page({
         <div className="flex max-md:flex-col gap-4">
           <Dialog>
             <DialogTrigger asChild>
-              <button className="md:w-[40%] rounded-lg overflow-hidden group relative">
-                <div className="absolute hidden w-full h-full group-hover:block group-hover:bg-black group-hover:bg-opacity-30" />
+              <button className="md:w-[35%]">
                 <MangaThumnailServer
                   className="rounded-lg overflow-hidden"
                   type={type}
                   id={id}
+                  hover
                   title={detail.title}
                 />
               </button>

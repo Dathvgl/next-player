@@ -9,12 +9,13 @@ import { numChapter, timeFromNow } from "~/lib/convert";
 import handleFetch from "~/lib/fetch";
 import { MotionLi, MotionUl } from "~/lib/motion";
 import { useAppSelector } from "~/redux/hook";
-import { MangaList } from "~/types/manga";
+import { mangaFilterSelector } from "~/redux/selectors/manga-selector";
+import { MangaList, MangaType } from "~/types/manga";
 import MangaThumnailClient from "../../components/manga-thumnail-client";
 import MangaListLoading from "./manga-list-loading";
 
-export default function MangaList({ type }: { type: string }) {
-  const filter = useAppSelector((state) => state.manga.filter);
+export default function MangaList({ type }: { type: MangaType }) {
+  const filter = useAppSelector(mangaFilterSelector);
   const [data, setData] = useState<MangaList>();
   const search = handleUrl();
 

@@ -1,25 +1,26 @@
 "use client";
 
+import { Heart } from "lucide-react";
+import LIcon from "~/components/lucide-icon";
 import { Button } from "~/components/ui/button";
-import { cn } from "~/lib/utils";
 import {
   deleteMangaUserFollow,
   postMangaUserFollow,
 } from "~/services/manga-service";
 import { MangaFollow, MangaType } from "~/types/manga";
 
-type MangaFollowProps = {
+type FollowButtonProps = {
   id: string;
   type: MangaType;
   followed?: MangaFollow | null;
 };
 
-export default async function MangaFollow({
+export default function FollowButton({
   id,
   type,
   followed,
-}: MangaFollowProps) {
-  async function onClick() {
+}: FollowButtonProps) {
+  async function onFollow() {
     if (followed) {
       await deleteMangaUserFollow({ id, type });
     } else {
@@ -29,15 +30,16 @@ export default async function MangaFollow({
 
   return (
     <Button
-      className={cn(
-        "text-white hover:text-white",
+      className={`rounded-3xl ${
         followed
-          ? "bg-red-600 hover:bg-red-700"
-          : "bg-green-600 hover:bg-green-700"
-      )}
-      onClick={onClick}
+          ? "[&_svg]:fill-red"
+          : "[&_svg]:fill-black dark:[&_svg]:fill-white"
+      }`}
+      variant="outline"
+      size="icon"
+      onClick={onFollow}
     >
-      {followed ? "Hủy theo dõi" : "Theo dõi"}
+      <LIcon icon={Heart} fill={followed ? "red" : undefined} />
     </Button>
   );
 }

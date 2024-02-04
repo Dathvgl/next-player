@@ -3,18 +3,17 @@
 import { useEffect, useState } from "react";
 import { CustomImage } from "~/components/custom-image/custom-image";
 import { Skeleton } from "~/components/ui/skeleton";
-import { linkApi } from "~/lib/api";
-import handleFetch from "~/lib/fetch";
-import { MangaThumnail } from "~/types/manga";
+import { getMangaThumnail } from "~/services/manga-service";
+import { MangaThumnail, MangaType } from "~/types/manga";
 
-interface MangaThumnailProps {
+type MangaThumnailProps = {
   className?: string;
-  type: string;
+  type: MangaType;
   id: string;
   title: string;
   fill?: boolean;
   hover?: boolean;
-}
+};
 
 export default function MangaThumnailClient({
   className,
@@ -28,17 +27,15 @@ export default function MangaThumnailClient({
 
   useEffect(() => {
     async function init() {
-      const data = await handleFetch<MangaThumnail>({
-        url: `${linkApi.manga}/thumnail/${id}?type=${type}`,
-      });
-
-      setData(data);
+      setData(await getMangaThumnail({ id, type }));
     }
 
     init();
   }, [type, id]);
 
-  if (!data) return <Skeleton className={`${className} bg-stone-300`} />;
+  if (!data) {
+    return <Skeleton className={`${className} bg-stone-300`} />;
+  }
 
   return (
     <CustomImage

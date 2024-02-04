@@ -3,12 +3,13 @@
 import { IteratedDataSnapshot } from "firebase/database";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import { useAuth } from "~/contexts/auth-context";
 import { onceRealtime, pushRealTime, setStore } from "~/firebase/firebase";
+import { useAppSelector } from "~/redux/hook";
+import { userUIDSelector } from "~/redux/selectors/user-selector";
 import ChatMessengerDetail from "./chat-messenger-detail";
 
 export default function ChatMessenger() {
-  const uid = useAuth()?.user?.uid;
+  const uid = useAppSelector(userUIDSelector);
   const currentUid = useSearchParams().get("uid");
   const [messageId, setMessageId] = useState<string>();
   const [members, setMembers] = useState<string[]>([]);

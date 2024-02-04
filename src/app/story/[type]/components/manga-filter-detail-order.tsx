@@ -1,7 +1,8 @@
 "use client";
 
-import { mangaFilterOrder } from "~/redux/slices/manga-slice";
 import { useAppDispatch, useAppSelector } from "~/redux/hook";
+import { mangaFilterOrderSelector } from "~/redux/selectors/manga-selector";
+import { mangaFilterOrder } from "~/redux/slices/manga-slice";
 import { MangaOrder } from "~/types/manga";
 
 const orders: { name: string; value: MangaOrder }[] = [
@@ -16,7 +17,7 @@ const orders: { name: string; value: MangaOrder }[] = [
 ];
 
 export function MangaFilterDetailOrder() {
-  const order = useAppSelector((state) => state.manga.filter.order);
+  const order = useAppSelector(mangaFilterOrderSelector);
   const dispatch = useAppDispatch();
 
   return (

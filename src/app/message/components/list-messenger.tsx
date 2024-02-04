@@ -1,17 +1,18 @@
 "use client";
 
+import { where } from "firebase/firestore";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { listenListStore, listenStore } from "~/firebase/firebase";
-import ListMessengerDetail from "./list-messenger-detail";
-import { where } from "firebase/firestore";
+import { useAppSelector } from "~/redux/hook";
+import { userUIDSelector } from "~/redux/selectors/user-selector";
 import { ChatPeopleType } from "~/types/messenger";
 import FindMessenger from "./find-messenger";
-import { useAuth } from "~/contexts/auth-context";
+import ListMessengerDetail from "./list-messenger-detail";
 
 export default function ListMessenger() {
-  const uid = useAuth()?.user?.uid;
+  const uid = useAppSelector(userUIDSelector);
   const currentUid = useSearchParams().get("uid");
   const [uids, setUids] = useState<string[]>([]);
 

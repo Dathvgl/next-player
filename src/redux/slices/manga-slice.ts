@@ -4,27 +4,29 @@ import { MangaOrder, MangaSort } from "~/types/manga";
 const orders: MangaOrder[] = ["asc", "desc"];
 const sorts: MangaSort[] = ["lastest", "chapter", "name"];
 
-interface FilterInit {
+type FilterInit = {
   keyword: string | null;
   order: string | null;
   sort: string | null;
   includes: string[];
   excludes: string[];
-}
+};
 
-interface FilterState {
+type FilterState = {
   keyword: string;
   order: MangaOrder;
   sort: MangaSort;
   includes: string[];
   excludes: string[];
-}
+};
 
-interface MangaState {
+type MangaState = {
+  zoom: number;
   filter: FilterState;
-}
+};
 
 const initialState: MangaState = {
+  zoom: 50,
   filter: {
     keyword: "",
     order: "desc",
@@ -38,6 +40,23 @@ export const mangaSlice = createSlice({
   name: "manga",
   initialState,
   reducers: {
+    mangaZoom(state, action: PayloadAction<"plus" | "minus" | number>) {
+      if (typeof action.payload == "number") {
+        state.zoom == action.payload;
+      }
+
+      if (typeof action.payload == "string") {
+        if (action.payload == "plus") {
+          if (state.zoom + 5 <= 100) {
+            state.zoom += 5;
+          }
+        } else {
+          if (state.zoom - 5 > 0) {
+            state.zoom -= 5;
+          }
+        }
+      }
+    },
     mangaFilterInit(state, action: PayloadAction<FilterInit>) {
       const { keyword, order, sort, includes, excludes } = action.payload;
 
@@ -88,6 +107,7 @@ export const mangaSlice = createSlice({
 });
 
 export const {
+  mangaZoom,
   mangaFilterInit,
   mangaFilterKeyword,
   mangaFilterSort,

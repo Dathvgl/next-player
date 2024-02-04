@@ -6,7 +6,7 @@ export type MangaOrder = "asc" | "desc";
 
 export type MangaLocal = {
   type: string;
-  mangaId: string;
+  detailId: string;
   chapterId: string;
   chapterNum: number;
   timestamp: number;
@@ -74,4 +74,11 @@ export type MangaTag = {
   _id: string;
   name: string;
   description: string;
+};
+
+export type MangaFollow = {
+  _id: string;
+  currentChapterId: string;
+  lastestChapterId: string;
+  createdAt: number;
 };

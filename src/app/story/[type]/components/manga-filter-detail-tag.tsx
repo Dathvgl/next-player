@@ -1,17 +1,21 @@
 "use client";
 
 import { capitalize } from "~/lib/convert";
+import { useAppDispatch, useAppSelector } from "~/redux/hook";
+import {
+  mangaFilterExcludeSelector,
+  mangaFilterIncludeSelector,
+} from "~/redux/selectors/manga-selector";
 import {
   mangaFilterExclude,
   mangaFilterInclude,
   mangaFilterNoclude,
 } from "~/redux/slices/manga-slice";
-import { useAppDispatch, useAppSelector } from "~/redux/hook";
 import { MangaTag } from "~/types/manga";
 
 export function MangaFilterDetailTag({ list }: { list: MangaTag[] }) {
-  const includes = useAppSelector((state) => state.manga.filter.includes);
-  const excludes = useAppSelector((state) => state.manga.filter.excludes);
+  const includes = useAppSelector(mangaFilterIncludeSelector);
+  const excludes = useAppSelector(mangaFilterExcludeSelector);
   const dispatch = useAppDispatch();
 
   return (

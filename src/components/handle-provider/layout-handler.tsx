@@ -1,10 +1,10 @@
 "use client";
 
-import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { usePathname } from "next/navigation";
 import SiteHeader from "~/app/components/header/site-header";
 import { siteAdmin } from "~/configs/site";
 import { ChildReact } from "~/types/type";
+import { ScrollArea } from "../ui/scroll-area";
 
 export default function LayoutHandler({ children }: ChildReact) {
   const pathname = usePathname();

@@ -54,7 +54,9 @@ export default function MangaFilter({ list }: { list?: MangaTag[] }) {
           className="flex-1 border-0"
           placeholder="Search name"
           value={inputName}
-          onChange={(event) => setInputName(() => event.target.value)}
+          onChange={({ target: { value } }) => {
+            setInputName(value);
+          }}
         />
         {name && (
           <div onClick={clearSearch}>

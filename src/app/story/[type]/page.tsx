@@ -2,26 +2,21 @@ import { Metadata } from "next";
 import { linkApi } from "~/lib/api";
 import { capitalize } from "~/lib/convert";
 import handleFetch from "~/lib/fetch";
-import { MangaTag } from "~/types/manga";
+import { getMangaTags } from "~/services/manga-service";
+import { MangaTag, MangaType } from "~/types/manga";
 import MangaFilter from "./components/manga-filter";
 import MangaList from "./components/manga-list";
-
-interface PageProps {
-  params: { type: string };
-  searchParams: Record<string, unknown>;
-}
+import { ParamReact } from "~/types/type";
 
 export async function generateMetadata({
   params: { type },
   searchParams,
-}: PageProps): Promise<Metadata> {
+}: ParamReact<{ type: MangaType }>): Promise<Metadata> {
   const keys = Object.keys(searchParams);
   if (keys.length == 0) {
     return { title: `${capitalize(type)} | Descending | Lastest` };
   } else {
-    const data = await handleFetch<{ data: MangaTag[] }>({
-      url: `${linkApi.manga}/tag?type=${type}`,
-    });
+    const data = await getMangaTags({ type });
 
     let str = "";
 
@@ -71,21 +66,15 @@ export async function generateMetadata({
   }
 }
 
-export default async function Page({ params }: { params: { type: string } }) {
-  const { type } = params;
-
-  const data = await handleFetch<{ data: MangaTag[] }>({
-    url: `${linkApi.manga}/tag?type=${type}`,
-  });
+export default async function Page({
+  params: { type },
+}: ParamReact<{ type: MangaType }>) {
+  const data = await getMangaTags({ type });
 
   return (
-    <section className="flex flex-col gap-4 mt-4">
+    <section className="flex flex-col gap-4 container mt-4">
       <MangaFilter list={data?.data} />
-      <section className="flex gap-4">
-        <div className="flex-1">
-          <MangaList type={type} />
-        </div>
-      </section>
+      <MangaList type={type} />
     </section>
   );
 }

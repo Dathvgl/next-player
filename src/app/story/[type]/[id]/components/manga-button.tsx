@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { site } from "~/configs/site";
-import { MangaChapter } from "~/types/manga";
+import { MangaChapter, MangaType } from "~/types/manga";
 import MangaButtonContinue from "./manga-button-continue";
 
-interface MangaButtonProps {
+type MangaButtonProps = {
   id: string;
-  type: string;
+  type: MangaType;
   chapters?: MangaChapter[];
-}
+};
 
 export default function MangaButton({ type, id, chapters }: MangaButtonProps) {
   if (!chapters) return null;
@@ -36,8 +36,8 @@ export default function MangaButton({ type, id, chapters }: MangaButtonProps) {
         </Button>
       </Link>
       <MangaButtonContinue
-        type={type}
         id={id}
+        type={type}
         chapters={sort.map(({ _id }) => _id)}
       />
     </div>

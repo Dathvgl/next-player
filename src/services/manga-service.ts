@@ -8,7 +8,9 @@ import {
   MangaChapter,
   MangaChapterDetail,
   MangaDetail,
+  MangaFollow,
   MangaListAdmin,
+  MangaTag,
   MangaThumnail,
   MangaType,
 } from "~/types/manga";
@@ -48,11 +50,103 @@ export async function getMangaChapterImage({
   });
 }
 
+export async function getMangaTags({ type }: Pick<BaseProps, "type">) {
+  return await handleFetch<{ data: MangaTag[] }>({
+    url: `${linkApi.manga}/tag?type=${type}`,
+    init: { next: { tags: [`mangaTags/${type}`] } },
+  });
+}
+
+export async function getMangaFollow({ id, type }: BaseProps) {
+  return await handleFetch<{ followed: number } | null>({
+    url: `${linkApi.manga}/detailFollow/${id}?type=${type}`,
+    init: { next: { tags: [`mangaFollow/${id}`] } },
+  });
+}
+
+export async function getMangaUserFollow({ id, type }: BaseProps) {
+  return await handleFetch<MangaFollow | null>({
+    url: `${linkApi.user}/followManga/${id}?type=${type}`,
+    init: {
+      headers: {
+        Cookie: cookies().toString(),
+        Accept: "application/json",
+      },
+      next: { tags: [`mangaFollow/${id}`] },
+    },
+  });
+}
+
+export async function postMangaUserFollow({
+  id,
+  type,
+  chapter,
+}: BaseProps & { chapter?: string }) {
+  await handleFetch<MangaFollow | null>({
+    url: `${linkApi.user}/followManga/${id}`,
+    init: {
+      method: "POST",
+      headers: {
+        Cookie: cookies().toString(),
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        type,
+        chapter: chapter ?? "empty",
+      }),
+    },
+  });
+
+  revalidateTag(`mangaFollow/${id}`);
+}
+
+export async function putMangaUserFollow({
+  id,
+  type,
+  replace,
+  chapter,
+}: BaseProps & { replace: boolean; chapter: string }) {
+  await handleFetch({
+    url: `${linkApi.user}/followManga/${id}`,
+    init: {
+      method: "PUT",
+      headers: {
+        Cookie: cookies().toString(),
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        type,
+        replace,
+        currentChapter: chapter,
+      }),
+    },
+  });
+
+  revalidateTag(`mangaFollow/${id}`);
+}
+
+export async function deleteMangaUserFollow({ id, type }: BaseProps) {
+  await handleFetch({
+    url: `${linkApi.user}/followManga/${id}?type=${type}`,
+    init: {
+      method: "DELETE",
+      headers: {
+        Cookie: cookies().toString(),
+        Accept: "application/json",
+      },
+    },
+  });
+
+  revalidateTag(`mangaFollow/${id}`);
+}
+
 // Admin
 export async function getMangaAdmin({
   page,
   type,
-}: FetchQuery & { type: MangaType }) {
+}: FetchQuery & Pick<BaseProps, "type">) {
   const url = new URL(`${linkApi.manga}/list`);
 
   const params = new URLSearchParams({

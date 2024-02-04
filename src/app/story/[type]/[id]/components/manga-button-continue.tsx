@@ -1,22 +1,24 @@
-"use client";
-
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { site } from "~/configs/site";
-import { useMangaFollowState } from "~/contexts/manga-follow-state-context";
+import { getMangaUserFollow } from "~/services/manga-service";
+import { MangaType } from "~/types/manga";
 
-interface MangaButtonContinueProps {
+type MangaButtonContinueProps = {
   id: string;
-  type: string;
-  chapters?: string[];
-}
+  type: MangaType;
+  chapters: string[];
+};
 
-export default function MangaButtonContinue(props: MangaButtonContinueProps) {
-  const { type, id, chapters } = props;
-  const stateFollow = useMangaFollowState()?.stateFollow;
+export default async function MangaButtonContinue({
+  id,
+  type,
+  chapters,
+}: MangaButtonContinueProps) {
+  const data = await getMangaUserFollow({ id, type });
 
-  if (!stateFollow || !chapters) return null;
-  const result = chapters.find((item) => item == stateFollow.currentChapterId);
+  if (!data) return null;
+  const result = chapters.find((item) => item == data.currentChapterId);
   if (!result) return null;
 
   return (

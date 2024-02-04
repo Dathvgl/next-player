@@ -30,16 +30,18 @@ export default async function handleFetch<T>({
   }
 
   const response = await res.json();
-  const { message } = response as { message?: string };
+  try {
+    const { message } = response as { message?: string };
 
-  if (message) {
-    if (sonner) {
-      toast(sonner.title, {
-        ...sonner.data,
-        description: sonner.data?.description ?? message,
-      });
+    if (message) {
+      if (sonner) {
+        toast(sonner.title, {
+          ...sonner.data,
+          description: sonner.data?.description ?? message,
+        });
+      }
     }
-  }
 
-  return response as T;
+    return response as T;
+  } catch (error) {}
 }

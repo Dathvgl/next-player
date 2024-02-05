@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import useGridBreak from "~/hooks/use-grid-break";
+import { useBreakPoint } from "~/components/break-point";
 import { useAppDispatch } from "~/redux/hook";
 import { mangaZoom } from "~/redux/slices/manga-slice";
 import { putMangaUserFollow } from "~/services/manga-service";
@@ -30,7 +30,7 @@ export default function BodyHandle({
 }: BodyHandleProps) {
   const { current, chapters } = data;
 
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   const [mangaLocal, setMangaLocal] = useLocalStorage<MangaLocal[]>(
     "mangaHistory",
@@ -45,15 +45,15 @@ export default function BodyHandle({
     ]
   );
 
-  const gridBreak = useGridBreak(["xs", "lg", "xl"]);
+  const { sm } = useBreakPoint(["sm"]);
 
   useEffect(() => {
-    if (!gridBreak || gridBreak == "sm") {
+    if (sm) {
       dispatch(mangaZoom(100));
     } else {
       dispatch(mangaZoom(50));
     }
-  }, [gridBreak]);
+  }, [sm]);
 
   useEffect(() => {
     const local: MangaLocal = {

@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import useGridBreak from "~/hooks/use-grid-break";
+import { useBreakPoint } from "~/components/break-point";
 import { MotionDiv } from "~/lib/motion";
 
 export default function Intro() {
   const [isOpen, setIsOpen] = useState(false);
-  const gridBreak = useGridBreak(["xs", "xl"]);
+  const { md, lg } = useBreakPoint(["md", "lg"]);
 
   return (
     <MotionDiv
@@ -18,7 +18,7 @@ export default function Intro() {
       variants={{
         init: { width: "100px", height: "100px", borderRadius: 50 },
         click: {
-          width: gridBreak == "md" ? "75%" : gridBreak == "lg" ? "50%" : "100%",
+          width: md ? "75%" : lg ? "50%" : "100%",
           height: "200px",
         },
       }}
@@ -39,7 +39,7 @@ export default function Intro() {
       >
         <p
           className={`font-dancing-script font-bold text-black text-justify ${
-            gridBreak ? "text-2xl" : ""
+            lg ? "text-2xl" : ""
           }`}
         >
           TA CÓ MỘT WEBSITE MÔ PHỎNG VÔ HẠN LẦN
@@ -60,7 +60,7 @@ export default function Intro() {
         }}
       >
         <p className="font-bold text-black text-md text-justify italic">
-          {gridBreak ? (
+          {lg ? (
             <>
               &quot;Clone website? Xem những video build website hàng tiếng?
               Không ta sẽ xây trang web mô phỏng vô số website khác!&quot;

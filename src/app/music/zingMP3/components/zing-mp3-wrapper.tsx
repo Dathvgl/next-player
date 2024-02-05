@@ -2,8 +2,8 @@
 
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import { zingMP3Init } from "~/redux/slices/music-slice";
 import { useAppDispatch } from "~/redux/hook";
+import { zingMP3Init } from "~/redux/slices/music-slice";
 import { ChildReact } from "~/types/type";
 
 export default function ZingMP3Wrapper({ children }: ChildReact) {
@@ -15,5 +15,5 @@ export default function ZingMP3Wrapper({ children }: ChildReact) {
     if (id) dispatch(zingMP3Init(id));
   }, [id]);
 
-  return <>{children}</>;
+  return children;
 }

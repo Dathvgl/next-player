@@ -11,7 +11,7 @@ import { ZingMP3ReleaseSection } from "~/types/music/zingMP3/release";
 type FilterType = "all" | "vPop" | "others";
 
 export default function ZingMP3NewRelease(props: {
-  data?: unknown | undefined;
+  data?: ZingMP3ReleaseSection;
 }) {
   const { data } = props;
   if (!data) return null;
@@ -74,16 +74,18 @@ function ZingMP3NewReleaseItem({ data }: { data: unknown }) {
         {items[filter].slice(0, 12).map((item, index) => (
           <div
             key={index}
-            className="px-2 py-1 cursor-pointer gap-2 flex justify-between items-center hover:bg-black hover:bg-opacity-20 rounded-md  group group/icon"
-            onClick={() => song(item.encodeId)}
+            className="px-2 py-1 gap-2 flex justify-between items-center hover:bg-black hover:bg-opacity-20 rounded-md  group group/icon"
           >
-            <div className="w-12 h-12 rounded overflow-hidden">
+            <button
+              className="w-12 h-12 rounded overflow-hidden"
+              onClick={() => song(item.encodeId)}
+            >
               <CustomImage
                 className="h-full"
                 src={item.thumbnail}
                 alt={item.title}
               />
-            </div>
+            </button>
             <div className="text-sm flex-1">
               <div className="font-bold line-clamp-1">{item.title}</div>
               <div className="line-clamp-1">

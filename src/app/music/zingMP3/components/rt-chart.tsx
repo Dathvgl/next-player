@@ -1,20 +1,9 @@
-"use client";
-
-import {
-  CartesianGrid,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
 import { CustomImage } from "~/components/custom-image/custom-image";
-import { compactNumber, strToHex } from "~/lib/convert";
+import { strToHex } from "~/lib/convert";
 import { ZingMP3RTChartSection } from "~/types/music/zingMP3/rtChart";
-import { RechartsToolTip } from "~/types/type";
+import RTChartItem from "./rt-chart-item";
 
-interface RTItem {
+export type RTItem = {
   encodeId: string;
   title: string;
   score: number;
@@ -25,14 +14,14 @@ interface RTItem {
     hour: string;
     counter: number;
   }[];
-}
+};
 
-export default function RTChart(props: { data?: unknown | undefined }) {
-  const { data } = props;
+export default function RTChart({ data }: { data?: ZingMP3RTChartSection }) {
   if (!data) return null;
-  const item = data as ZingMP3RTChartSection;
-  const list: RTItem[] = item.items.slice(0, 3).map((x) => {
-    const obj = item.chart.items[x.encodeId];
+
+  const list: RTItem[] = data.items.slice(0, 3).map((x) => {
+    const obj = data.chart.items[x.encodeId];
+
     return {
       encodeId: x.encodeId,
       title: x.title,
@@ -78,18 +67,18 @@ export default function RTChart(props: { data?: unknown | undefined }) {
         </div>
       </div>
       <div className="flex-1">
-        <RTChartLine list={list} times={item.chart.times} />
+        <RTChartLine list={list} times={data.chart.times} />
       </div>
     </div>
   );
 }
 
-interface RTChartLineProps {
+type RTChartLineProps = {
   list: RTItem[];
   times: {
     hour: string;
   }[];
-}
+};
 
 function RTChartLine({ list, times }: RTChartLineProps) {
   const lines: { name: string; fill: string }[] = [];
@@ -98,7 +87,7 @@ function RTChartLine({ list, times }: RTChartLineProps) {
     ({ hour }) => ({ name: `${hour}:00` })
   );
 
-  list.map((item) => {
+  list.forEach((item) => {
     lines.push({ name: item.encodeId, fill: strToHex(item.encodeId) });
     item.chart.forEach((x, index) => {
       data[index][item.encodeId] = x.counter;
@@ -107,64 +96,7 @@ function RTChartLine({ list, times }: RTChartLineProps) {
 
   return (
     <div className="w-full h-full flex items-center">
-      <ResponsiveContainer width="99%" height="100%">
-        <LineChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" vertical={false} />
-          <XAxis dataKey="name" className="[&_tspan]:fill-white" />
-          <YAxis className="[&_tspan]:fill-white" axisLine={false} />
-          <Tooltip
-            content={(props) => <CustomTooltip {...props} list={list} />}
-          />
-          {lines.map((item) => {
-            return (
-              <Line
-                key={item.name}
-                type="monotone"
-                dataKey={item.name}
-                dot={<></>}
-                strokeWidth={3}
-                stroke={item.fill}
-                fill={item.fill}
-              />
-            );
-          })}
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
-  );
-}
-
-function CustomTooltip(props: any) {
-  const { active, payload, list } = props as RechartsToolTip<{
-    [key: string]: number;
-  }> & { list: RTItem[] };
-
-  if (!active || !payload || !payload.length) {
-    return null;
-  }
-
-  return (
-    <div className="bg-black/50 dark:bg-white/50 font-bold p-1 rounded">
-      {payload.map((item) => {
-        const detail = list.find(({ encodeId }) => encodeId == item.name);
-        if (!detail) return null;
-
-        return (
-          <div key={item.name} className="flex gap-2 px-2 py-1 w-64">
-            <div className="w-10 h-10 rounded overflow-hidden">
-              <CustomImage
-                className="h-full"
-                src={detail.thumbnail}
-                alt={detail.title}
-              />
-            </div>
-            <div className="flex flex-col flex-1">
-              <p className="line-clamp-1">{detail.title}</p>
-              <p>{compactNumber(item.value)}</p>
-            </div>
-          </div>
-        );
-      })}
+      <RTChartItem data={data} list={list} lines={lines} />
     </div>
   );
 }

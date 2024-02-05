@@ -1,17 +1,22 @@
 import { PlayCircle } from "lucide-react";
 import { CustomImage } from "~/components/custom-image/custom-image";
 import LIcon from "~/components/lucide-icon";
-import { MotionDiv } from "~/lib/motion";
+import { MotionButton, MotionDiv } from "~/lib/motion";
 import { ZingMP3ArtistObject } from "~/types/music/zingMP3/artist";
 import { ZingMP3PlaylistObject } from "~/types/music/zingMP3/playlist";
 
-export default function FourItemHome(props: {
-  data?: unknown | undefined;
+type FourItemHomeProps = {
+  data?: unknown;
   row?: number;
-}) {
-  const { data, row } = props;
+};
+
+export default function FourItemHome({ data, row }: FourItemHomeProps) {
   if (!data) return null;
-  const item = data as { title: string; items: ZingMP3PlaylistObject[] };
+
+  const item = data as {
+    title: string;
+    items: ZingMP3PlaylistObject[];
+  };
 
   return (
     <div className="mt-9 flex flex-col gap-2">
@@ -21,11 +26,11 @@ export default function FourItemHome(props: {
           ?.slice(0, 4 * (row ?? item.items.length))
           .map((child, index) => (
             <div key={index} className="flex flex-col gap-2">
-              <MotionDiv
+              <MotionButton
                 className="relative group rounded-lg w-full aspect-square overflow-hidden"
                 whileHover="hover"
               >
-                <div className="absolute z-20 w-full h-full rounded-lg hidden group-hover:flex items-center gap-3 justify-center group-hover:bg-black group-hover:bg-opacity-30 text-7xl text-white text-opacity-50">
+                <div className="absolute z-[15] w-full h-full rounded-lg hidden group-hover:flex items-center gap-3 justify-center group-hover:bg-black group-hover:bg-opacity-30 text-7xl text-white text-opacity-50">
                   <LIcon icon={PlayCircle} size={75} />
                 </div>
                 <MotionDiv
@@ -35,7 +40,7 @@ export default function FourItemHome(props: {
                 >
                   <CustomImage src={child.thumbnailM} alt={child.encodeId} />
                 </MotionDiv>
-              </MotionDiv>
+              </MotionButton>
               {child?.uid != undefined ? (
                 <FourItemExtend title={child.title} data={child.artists} />
               ) : (

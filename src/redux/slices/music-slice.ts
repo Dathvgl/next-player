@@ -1,11 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toast } from "sonner";
-import { linkApi } from "~/lib/api";
-import handleFetch from "~/lib/fetch";
-import { ZingMP3SongDetailResponse } from "~/types/music/zingMP3/song";
+import { getZingMP3Detail, getZingMP3Song } from "~/services/music-service";
+import { ZingMP3SongObject } from "~/types/music/zingMP3/song";
 import { ZingMP3Loop } from "~/types/music/zingMP3/zingMP3";
 
-interface ZingMP3State {
+type ZingMP3State = {
   play: boolean;
   volume: number;
   loop: ZingMP3Loop;
@@ -13,12 +12,13 @@ interface ZingMP3State {
   current: {
     id: string;
     src: string;
+    info?: ZingMP3SongObject;
   };
-}
+};
 
-interface MusicState {
+type MusicState = {
   zingMP3: ZingMP3State;
-}
+};
 
 const initialState: MusicState = {
   zingMP3: {
@@ -37,16 +37,6 @@ export const musicSlice = createSlice({
   name: "music",
   initialState,
   reducers: {
-    zingMP3Init(state, action: PayloadAction<{ id: string; src: string }>) {
-      const { id, src } = action.payload;
-
-      if (!state.zingMP3.list.includes(id)) {
-        state.zingMP3.list.push(id);
-      }
-
-      state.zingMP3.current.id = id;
-      state.zingMP3.current.src = src;
-    },
     zingMP3Alt(state, action: PayloadAction<string>) {
       const list = state.zingMP3.list.filter((item) => item != action.payload);
       state.zingMP3.list = list;
@@ -68,7 +58,7 @@ export const musicSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(zingMP3Init.pending, (state, action) => {});
     builder.addCase(zingMP3Init.fulfilled, (state, action) => {
-      const { id, src } = action.payload;
+      const { id, src, info } = action.payload;
 
       if (!state.zingMP3.list.includes(id)) {
         state.zingMP3.list.push(id);
@@ -76,12 +66,17 @@ export const musicSlice = createSlice({
 
       state.zingMP3.current.id = id;
       state.zingMP3.current.src = src;
+      state.zingMP3.current.info = info;
     });
     builder.addCase(zingMP3Init.rejected, (state, action) => {
       const { title, description } = action.payload as {
         title: string;
         description: string;
       };
+
+      state.zingMP3.current.id = "";
+      state.zingMP3.current.src = "";
+      state.zingMP3.current.info = undefined;
 
       toast("Zing MP3 Error", { description: description });
     });
@@ -91,18 +86,17 @@ export const musicSlice = createSlice({
 export const zingMP3Init = createAsyncThunk(
   "music/zingMP3Song",
   async (id: string, { rejectWithValue }) => {
-    const data = await handleFetch<ZingMP3SongDetailResponse>({
-      url: `${linkApi.musicZingMP3}/song/${id}`,
-    });
+    const song = await getZingMP3Song(id);
+    const detail = await getZingMP3Detail(id);
 
-    if (!data || data.err != 0 || !id) {
+    if (!song || song.err != 0 || !id || !detail || detail.err != 0) {
       return rejectWithValue({
         title: "Zing MP3 Error",
-        description: data?.msg ?? "Error fetch",
+        description: song?.msg ?? "Error fetch",
       });
     } else {
-      const { "128": src } = data.data;
-      return { id, src };
+      const { "128": src } = song.data;
+      return { id, src, info: detail.data };
     }
   }
 );

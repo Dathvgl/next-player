@@ -1,5 +1,12 @@
+"use client";
+
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "~/redux/hook";
+import {
+  musicZingMP3IdSelector,
+  musicZingMP3ListSelector,
+  musicZingMP3LoopSelector,
+} from "~/redux/selectors/music-selector";
 import { ChildReact } from "~/types/type";
 
 export default function PlayerAudioButton({
@@ -8,9 +15,9 @@ export default function PlayerAudioButton({
 }: ChildReact & { increment: number }) {
   const router = useRouter();
 
-  const id = useAppSelector((state) => state.music.zingMP3.current.id);
-  const list = useAppSelector((state) => state.music.zingMP3.list);
-  const loop = useAppSelector((state) => state.music.zingMP3.loop);
+  const id = useAppSelector(musicZingMP3IdSelector);
+  const list = useAppSelector(musicZingMP3ListSelector);
+  const loop = useAppSelector(musicZingMP3LoopSelector);
 
   function onClick() {
     if (loop == "one" || loop == "loop-one") return;

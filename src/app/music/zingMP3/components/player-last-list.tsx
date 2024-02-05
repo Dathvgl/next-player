@@ -1,3 +1,5 @@
+"use client";
+
 import { ListMusic, MoreHorizontal, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -5,22 +7,22 @@ import { CustomImage } from "~/components/custom-image/custom-image";
 import LIcon from "~/components/lucide-icon";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
-import { linkApi } from "~/lib/api";
 import { durationUTC } from "~/lib/convert";
-import handleFetch from "~/lib/fetch";
 import { MotionDiv, MotionLi } from "~/lib/motion";
 import { useAppDispatch, useAppSelector } from "~/redux/hook";
-import { zingMP3Alt } from "~/redux/slices/music-slice";
 import {
-  ZingMP3SongObject,
-  ZingMP3SongResponse,
-} from "~/types/music/zingMP3/song";
+  musicZingMP3IdSelector,
+  musicZingMP3ListSelector,
+} from "~/redux/selectors/music-selector";
+import { zingMP3Alt } from "~/redux/slices/music-slice";
+import { getZingMP3Detail } from "~/services/music-service";
+import { ZingMP3SongObject } from "~/types/music/zingMP3/song";
 
 export default function PlayerLastList() {
   const router = useRouter();
 
-  const id = useAppSelector((state) => state.music.zingMP3.current.id);
-  const list = useAppSelector((state) => state.music.zingMP3.list);
+  const id = useAppSelector(musicZingMP3IdSelector);
+  const list = useAppSelector(musicZingMP3ListSelector);
 
   const dispatch = useAppDispatch();
   const [array, setArray] = useState<ZingMP3SongObject[]>([]);
@@ -41,10 +43,7 @@ export default function PlayerLastList() {
       const length = filter.length;
       for (let index = 0; index < length; index++) {
         const id = filter[index];
-
-        const data = await handleFetch<ZingMP3SongResponse>({
-          url: `${linkApi.musicZingMP3}/infoSong/${id}`,
-        });
+        const data = await getZingMP3Detail(id);
 
         if (!data || data.err != 0) continue;
         temp.push(data.data);

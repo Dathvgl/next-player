@@ -3,11 +3,12 @@
 import { Volume1, Volume2, VolumeX } from "lucide-react";
 import { ChangeEvent, useEffect, useRef } from "react";
 import LIcon from "~/components/lucide-icon";
-import { zingMP3Volume } from "~/redux/slices/music-slice";
 import { useAppDispatch, useAppSelector } from "~/redux/hook";
+import { musicZingMP3VolumeSelector } from "~/redux/selectors/music-selector";
+import { zingMP3Volume } from "~/redux/slices/music-slice";
 
 export default function PlayerLastVolume() {
-  const volume = useAppSelector((state) => state.music.zingMP3.volume);
+  const volume = useAppSelector(musicZingMP3VolumeSelector);
   const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
 

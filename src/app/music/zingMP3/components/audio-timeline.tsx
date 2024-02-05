@@ -3,15 +3,22 @@
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { durationUTC } from "~/lib/convert";
-import { zingMP3Play } from "~/redux/slices/music-slice";
 import { useAppDispatch, useAppSelector } from "~/redux/hook";
+import {
+  musicZingMP3CurrentSelector,
+  musicZingMP3ListSelector,
+  musicZingMP3LoopSelector,
+  musicZingMP3PlaySelector,
+  musicZingMP3VolumeSelector,
+} from "~/redux/selectors/music-selector";
+import { zingMP3Play } from "~/redux/slices/music-slice";
 
 export default function AudioTimeline() {
-  const current = useAppSelector((state) => state.music.zingMP3.current);
-  const play = useAppSelector((state) => state.music.zingMP3.play);
-  const volume = useAppSelector((state) => state.music.zingMP3.volume);
-  const list = useAppSelector((state) => state.music.zingMP3.list);
-  const loop = useAppSelector((state) => state.music.zingMP3.loop);
+  const current = useAppSelector(musicZingMP3CurrentSelector);
+  const play = useAppSelector(musicZingMP3PlaySelector);
+  const volume = useAppSelector(musicZingMP3VolumeSelector);
+  const list = useAppSelector(musicZingMP3ListSelector);
+  const loop = useAppSelector(musicZingMP3LoopSelector);
 
   const dispatch = useAppDispatch();
   const router = useRouter();

@@ -11,6 +11,7 @@ import { ScrollArea } from "~/components/ui/scroll-area";
 import { Skeleton } from "~/components/ui/skeleton";
 import { linkApi } from "~/lib/api";
 import { durationUTC } from "~/lib/convert";
+import { getZingMP3Search } from "~/services/music-service";
 import { ZingMP3Search } from "~/types/music/zingMP3/zingMP3";
 
 export default function ZingMP3Search() {
@@ -51,11 +52,7 @@ function ZingMP3SearchList({ name }: { name: string }) {
   useEffect(() => {
     async function init() {
       if (name) {
-        await fetch(`${linkApi.musicZingMP3}/search/${name}`).then(
-          async (res) => {
-            setData(await res.json());
-          }
-        );
+        setData(await getZingMP3Search(name));
       }
     }
 

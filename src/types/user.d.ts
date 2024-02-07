@@ -10,3 +10,5 @@ export type User = {
 };
 
 export type UserPost = Omit<User, "_id" | "uid" | "roles">;
+
+export type UserMessage = Pick<UserType, "_id" | "uid" | "name" | "thumnail">;

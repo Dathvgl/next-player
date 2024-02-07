@@ -1,5 +1,5 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "~/firebase/firebase";
+import { auth } from "~/database/firebase";
 import { userInitial } from "~/redux/slices/user-slice";
 import { store } from "~/redux/store";
 import { postAuthSignIn, postAuthSignOut } from "~/services/auth-service";

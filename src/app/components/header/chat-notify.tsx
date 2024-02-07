@@ -1,29 +1,41 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { listenRealtime } from "~/firebase/firebase";
+import { listenRealtime } from "~/database/firebase";
 import { useAppSelector } from "~/redux/hook";
 import { userUIDSelector } from "~/redux/selectors/user-selector";
-import { ChatNotifyType } from "~/types/messenger";
+import { ChatNotifyType } from "~/types/message";
 import ChatNotifyDetail from "./chat-notify-detail";
+import { postMessageUsers } from "~/services/user-service";
+import { UserMessage } from "~/types/user";
 
 export default function ChatNotify() {
   const uid = useAppSelector(userUIDSelector);
+
+  const [users, setUsers] = useState<UserMessage[]>([]);
   const [chatNotifies, setChatNotifies] = useState<ChatNotifyType[]>([]);
 
   useEffect(() => {
-    const unsubscribe = listenRealtime(`/chatNotify/${uid}`, (snapshot) => {
-      const list: ChatNotifyType[] = [];
+    const unsubscribe = listenRealtime(
+      `/chatNotify/${uid}`,
+      async (snapshot) => {
+        const list: ChatNotifyType[] = [];
 
-      snapshot.forEach((item) => {
-        list.push({ ...item.val(), messageId: item.key });
-      });
+        snapshot.forEach((item) => {
+          list.push({ ...item.val(), messageId: item.key });
+        });
 
-      setChatNotifies(list);
-    });
+        const data = await postMessageUsers(list.map(({ sender }) => sender));
 
-    return () => unsubscribe();
+        setUsers(data ?? []);
+        setChatNotifies(list);
+      }
+    );
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
-  return <ChatNotifyDetail chatNotifies={chatNotifies} />;
+  return <ChatNotifyDetail users={users} chatNotifies={chatNotifies} />;
 }

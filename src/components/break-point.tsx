@@ -62,7 +62,6 @@ export function useBreakPoint<T extends PointInit>(
   useEffect(() => {
     function handleResize() {
       const main = window.innerWidth;
-      console.log(main);
 
       if (typeof base == "number" && typeof point == "boolean") {
         if (main >= base) {

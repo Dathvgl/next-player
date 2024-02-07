@@ -1,16 +1,18 @@
 import { Metadata } from "next";
-import ChatMessenger from "./components/chat-messenger";
-import ListMessenger from "./components/list-messenger";
+import ChatMessage from "./components/chat-message";
+import MessageHandler from "./components/message-handler";
+import MessageOffset from "./components/message-offset";
 
 export const metadata: Metadata = {
-  title: "Chat online",
+  title: "Trò chuyện",
 };
 
 export default function Page() {
   return (
     <section className="flex divide-x h-[calc(100vh-var(--height-header-body))] max-md:flex-col">
-      <ListMessenger />
-      <ChatMessenger />
+      <MessageHandler />
+      <MessageOffset />
+      <ChatMessage />
     </section>
   );
 }

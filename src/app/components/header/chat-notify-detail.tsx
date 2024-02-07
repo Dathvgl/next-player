@@ -13,44 +13,56 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { Skeleton } from "~/components/ui/skeleton";
-import { listenListStore } from "~/firebase/firebase";
+import { listenListStore } from "~/database/firebase";
 import { timeFromNow } from "~/lib/convert";
-import { ChatNotifyType, ChatPeopleType } from "~/types/messenger";
+import {
+  ChatMessageUser,
+  ChatNotifyType,
+  ChatPeopleType,
+} from "~/types/message";
+import { UserMessage } from "~/types/user";
 
-interface ChatNotifyDetailProps {
+type ChatNotifyDetailProps = {
+  users: UserMessage[];
   chatNotifies: ChatNotifyType[];
-}
+};
 
 export default function ChatNotifyDetail({
+  users,
   chatNotifies,
 }: ChatNotifyDetailProps) {
   const badge = chatNotifies.filter(({ seen }) => !seen).length;
-  const [people, setPeople] = useState<ChatPeopleType[]>([]);
+  const [people, setPeople] = useState<ChatMessageUser[]>([]);
 
   useEffect(() => {
     if (chatNotifies.length == 0) return;
+    const uids = chatNotifies.map(({ sender }) => sender);
+
     const unsubscribe = listenListStore(
       "users",
       (snapshot) => {
         if (snapshot.empty) return;
-        const list: ChatPeopleType[] = [];
+        const list: ChatMessageUser[] = [];
 
         snapshot.forEach((item) => {
+          const data = item.data() as ChatPeopleType;
           if (!item.exists()) return;
-          list.push(item.data() as ChatPeopleType);
+
+          const result = users.find(({ uid }) => uid == data.uid);
+          if (!result) return;
+
+          list.push({ ...data, ...result });
         });
 
         setPeople(list);
       },
-      where(
-        "uid",
-        "in",
-        chatNotifies.map(({ sender }) => sender)
-      )
+      [where("uid", "in", uids)]
     );
 
-    return () => unsubscribe();
-  }, [chatNotifies.length]);
+    return () => {
+      unsubscribe();
+    };
+  }, [JSON.stringify(chatNotifies)]);
 
   return (
     <DropdownMenu>
@@ -83,15 +95,15 @@ export default function ChatNotifyDetail({
                     >
                       <Link
                         className="flex items-center gap-4"
-                        href={`/messenger?uid=${item.messageId}`}
+                        href={`/message?uid=${item.messageId}`}
                       >
                         <CustomImage
                           className="w-12 h-12 rounded-full overflow-hidden"
-                          src={person.photoURL ?? ""}
-                          alt={person.displayName ?? "Người lạ"}
+                          src={person.thumnail}
+                          alt={person.name}
                         />
                         <div className="flex-1">
-                          <b>{person.displayName}</b>
+                          <b>{person.name}</b>
                           <div className="flex justify-between gap-2">
                             <p className="flex-1 line-clamp-1">
                               {item.content}

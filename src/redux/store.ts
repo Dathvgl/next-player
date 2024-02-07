@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { mangaSlice } from "./slices/manga-slice";
 import { musicSlice } from "./slices/music-slice";
 import { userSlice } from "./slices/user-slice";
+import { messageSlice } from "./slices/message-slice";
 
 export const store = configureStore({
   devTools: process.env.NODE_ENV !== "production",
@@ -10,6 +11,7 @@ export const store = configureStore({
     [userSlice.name]: userSlice.reducer,
     [mangaSlice.name]: mangaSlice.reducer,
     [musicSlice.name]: musicSlice.reducer,
+    [messageSlice.name]: messageSlice.reducer,
   },
 });
 

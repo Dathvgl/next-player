@@ -4,7 +4,7 @@ import { customIcons } from "~/components/custom-icons";
 import LIcon from "~/components/lucide-icon";
 import NavSide from "~/components/nav-side";
 import PageTransition from "~/components/page-transition";
-import { AuthProtect } from "~/components/protect-route";
+import { AuthProtect } from "~/components/protect-route/protect-route";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { siteConfig } from "~/configs/site";
 import { ChildReact } from "~/types/type";

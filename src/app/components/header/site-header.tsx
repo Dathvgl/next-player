@@ -1,6 +1,8 @@
+import AuthClientRoute from "~/components/protect-route/auth-client-route";
 import NavHeader from "./nav-header";
 import ThemeToggle from "./theme-toggle";
 import UserSign from "./user-sign";
+import ChatNotify from "./chat-notify";
 
 export default function SiteHeader() {
   return (
@@ -10,6 +12,9 @@ export default function SiteHeader() {
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-1">
             <ThemeToggle />
+            <AuthClientRoute>
+              <ChatNotify />
+            </AuthClientRoute>
             <UserSign />
           </nav>
         </div>

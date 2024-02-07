@@ -6,4 +6,5 @@ export const linkApi = {
   user: `${linkApiCrawl}/api/user`,
   manga: `${linkApiCrawl}/api/manga`,
   music: `${linkApiCrawl}/api/music`,
+  message: `${linkApiCrawl}/api/message`,
 };

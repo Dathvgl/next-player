@@ -8,7 +8,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
-import { auth, setStore, updateStore } from "~/firebase/firebase";
+import { auth, setStore, updateStore } from "~/database/firebase";
 import { timestampNow } from "~/lib/convert";
 import { ChildReact } from "~/types/type";
 

@@ -22,11 +22,11 @@ export function MangaFilterDetailSave() {
   );
 }
 
-interface MangaFilterDetailSaveBodyProps {
+type MangaFilterDetailSaveBodyProps = {
   router: AppRouterInstance;
   pathname: string;
   params: URLSearchParams;
-}
+};
 
 function MangaFilterDetailSaveBody(props: MangaFilterDetailSaveBodyProps) {
   const { router, pathname, params } = props;

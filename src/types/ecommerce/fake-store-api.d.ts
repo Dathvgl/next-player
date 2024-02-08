@@ -1,4 +1,4 @@
-export interface FakeProduct {
+export type FakeProduct = {
   id: number;
   title: string;
   price: number;
@@ -6,4 +6,4 @@ export interface FakeProduct {
   category: string;
   image: string;
   rating: { rate: number; count: number };
-}
+};

@@ -5,10 +5,10 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { LinkLIcon } from "./lucide-icon";
 import { PaginationEllipsis } from "./ui/pagination";
 
-interface PaginationProps {
+type PaginationProps = {
   totalPage: number;
   disabled?: boolean;
-}
+};
 
 export default function Pagination({ totalPage, disabled }: PaginationProps) {
   const pathname = usePathname();

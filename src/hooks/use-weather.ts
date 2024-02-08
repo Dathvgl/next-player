@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import handleFetch from "~/lib/fetch";
 import { CurrentWeatherData } from "~/types/weather";
 
-interface UseWeatherProps {
+type UseWeatherProps = {
   coords: {
     lat: number;
     lon: number;
   };
-}
+};
 
 export default function useWeather(props: UseWeatherProps) {
   const { coords } = props;

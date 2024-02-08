@@ -3,14 +3,14 @@ import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 import { cn } from "~/lib/utils";
 
-interface IconProps {
+type IconProps = {
   icon: React.FC<LucideProps>;
   className?: string;
   color?: string;
   fill?: string;
   size?: number;
   button?: boolean;
-}
+};
 
 export default function LIcon({
   icon: Icon,

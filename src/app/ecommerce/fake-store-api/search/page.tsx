@@ -1,16 +1,14 @@
 import { Metadata } from "next";
+import { ParamReact } from "~/types/type";
 import SearchList from "./components/search-list";
-
-interface PageProps {
-  searchParams: { filter: string };
-}
 
 export async function generateMetadata({
   searchParams: { filter },
-}: PageProps): Promise<Metadata> {
+}: ParamReact): Promise<Metadata> {
   return { title: `Searching ${filter}` };
 }
 
-export default function Page({ searchParams: { filter } }: PageProps) {
+export default function Page({ searchParams: { filter } }: ParamReact) {
+  if (typeof filter != "string") return null;
   return <SearchList filter={filter} />;
 }

@@ -3,7 +3,7 @@
 import { HTMLInputTypeAttribute, useEffect, useRef } from "react";
 import { cn } from "~/lib/utils";
 
-interface CustomCheckboxProps {
+type CustomCheckboxProps = {
   id?: string;
   className?: string;
   name?: string;
@@ -12,7 +12,7 @@ interface CustomCheckboxProps {
   state?: boolean;
   callback?: () => void;
   children: React.ReactNode;
-}
+};
 
 export default function CustomInput(props: CustomCheckboxProps) {
   const { id, className, name, value, type, state, callback, children } = props;

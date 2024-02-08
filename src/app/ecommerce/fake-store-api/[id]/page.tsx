@@ -8,14 +8,11 @@ import { capitalize } from "~/lib/convert";
 import handleFetch from "~/lib/fetch";
 import { MotionDiv, MotionLi, MotionUl } from "~/lib/motion";
 import { FakeProduct } from "~/types/ecommerce/fake-store-api";
-
-interface PageProps {
-  params: { id: string };
-}
+import { ParamReact } from "~/types/type";
 
 export async function generateMetadata({
   params: { id },
-}: PageProps): Promise<Metadata> {
+}: ParamReact<{ id: string }>): Promise<Metadata> {
   const data = await handleFetch<FakeProduct>({
     url: `https://fakestoreapi.com/products/${id}`,
   });
@@ -23,7 +20,9 @@ export async function generateMetadata({
   return { title: data?.title };
 }
 
-export default async function Page({ params: { id } }: PageProps) {
+export default async function Page({
+  params: { id },
+}: ParamReact<{ id: string }>) {
   const product = await handleFetch<FakeProduct>({
     url: `https://fakestoreapi.com/products/${id}`,
   });

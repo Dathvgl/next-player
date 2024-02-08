@@ -1,6 +1,7 @@
 "use client";
 
 import { capitalize } from "~/lib/convert";
+import { cn } from "~/lib/utils";
 import { useAppDispatch, useAppSelector } from "~/redux/hook";
 import {
   mangaFilterExcludeSelector,
@@ -29,13 +30,14 @@ export function MangaFilterDetailTag({ list }: { list: MangaTag[] }) {
           return (
             <li
               key={item._id}
-              className={`px-2 py-1 rounded cursor-pointer dark:text-white/75 font-bold ${
+              className={cn(
+                "px-2 py-1 rounded cursor-pointer dark:text-white/75 font-bold",
                 inc
                   ? "bg-green-500/60"
                   : exc
                   ? "bg-red-500/60"
                   : "bg-stone-200 dark:bg-stone-800"
-              }`}
+              )}
               onClick={() => {
                 if (!inc && !exc) {
                   dispatch(mangaFilterInclude(item._id));

@@ -3,6 +3,7 @@
 import { Heart } from "lucide-react";
 import LIcon from "~/components/lucide-icon";
 import { Button } from "~/components/ui/button";
+import { cn } from "~/lib/utils";
 import {
   deleteMangaUserFollow,
   postMangaUserFollow,
@@ -30,11 +31,12 @@ export default function FollowButton({
 
   return (
     <Button
-      className={`rounded-3xl ${
+      className={cn(
+        "rounded-3xl",
         followed
           ? "[&_svg]:fill-red"
           : "[&_svg]:fill-black dark:[&_svg]:fill-white"
-      }`}
+      )}
       variant="outline"
       size="icon"
       onClick={onFollow}

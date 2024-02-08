@@ -1,6 +1,7 @@
 import { LucideProps } from "lucide-react";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
+import { cn } from "~/lib/utils";
 
 interface IconProps {
   icon: React.FC<LucideProps>;
@@ -29,10 +30,13 @@ export default function LIcon({
   else {
     return (
       <div
-        className={`${buttonVariants({
-          size: "icon",
-          variant: "ghost",
-        })} !rounded-full !overflow-hidden`}
+        className={cn(
+          "!rounded-full !overflow-hidden",
+          buttonVariants({
+            size: "icon",
+            variant: "ghost",
+          })
+        )}
       >
         {child}
       </div>

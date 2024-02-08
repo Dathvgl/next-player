@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { CustomImage } from "~/components/custom-image/custom-image";
 import { Skeleton } from "~/components/ui/skeleton";
+import { cn } from "~/lib/utils";
 import { getMangaThumnail } from "~/services/manga-service";
 import { MangaThumnail, MangaType } from "~/types/manga";
 
@@ -34,7 +35,7 @@ export default function MangaThumnailClient({
   }, [type, id]);
 
   if (!data) {
-    return <Skeleton className={`${className} bg-stone-300`} />;
+    return <Skeleton className={cn("bg-stone-300", className)} />;
   }
 
   return (

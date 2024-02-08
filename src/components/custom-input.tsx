@@ -1,6 +1,7 @@
 "use client";
 
 import { HTMLInputTypeAttribute, useEffect, useRef } from "react";
+import { cn } from "~/lib/utils";
 
 interface CustomCheckboxProps {
   id?: string;
@@ -31,7 +32,7 @@ export default function CustomInput(props: CustomCheckboxProps) {
   }
 
   return (
-    <button className={`relative ${className}`} onClick={onClick}>
+    <button className={cn("relative", className)} onClick={onClick}>
       <input
         ref={ref}
         id={id}

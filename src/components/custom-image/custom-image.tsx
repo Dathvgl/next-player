@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { cn } from "~/lib/utils";
 
 type CustomImageProps = {
   className?: string;
@@ -22,7 +23,7 @@ export function CustomImage({
   if (!src || alt == undefined) return null;
 
   return (
-    <div className={`relative group ${className ?? ""}`}>
+    <div className={cn("relative group", className)}>
       {hover && (
         <div className="absolute hidden w-full h-full group-hover:block group-hover:bg-black group-hover:bg-opacity-30" />
       )}

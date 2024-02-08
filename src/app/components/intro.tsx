@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useBreakPoint } from "~/components/break-point";
 import { MotionDiv } from "~/lib/motion";
+import { cn } from "~/lib/utils";
 
 export default function Intro() {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,9 +39,10 @@ export default function Intro() {
         }}
       >
         <p
-          className={`font-dancing-script font-bold text-black text-justify ${
+          className={cn(
+            "font-dancing-script font-bold text-black text-justify",
             lg ? "text-2xl" : ""
-          }`}
+          )}
         >
           TA CÓ MỘT WEBSITE MÔ PHỎNG VÔ HẠN LẦN
         </p>

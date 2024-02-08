@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "~/lib/utils";
 import { useAppDispatch, useAppSelector } from "~/redux/hook";
 import { mangaFilterSortSelector } from "~/redux/selectors/manga-selector";
 import { mangaFilterSort } from "~/redux/slices/manga-slice";
@@ -32,9 +33,10 @@ export function MangaFilterDetailSort() {
         return (
           <li
             key={item.value}
-            className={`px-2 py-1 rounded cursor-pointer dark:text-white/75 font-bold ${
+            className={cn(
+              "px-2 py-1 rounded cursor-pointer dark:text-white/75 font-bold",
               check ? "bg-green-500/60" : "bg-stone-200 dark:bg-stone-800"
-            }`}
+            )}
             onClick={() => {
               if (check) return;
               dispatch(mangaFilterSort(item.value));

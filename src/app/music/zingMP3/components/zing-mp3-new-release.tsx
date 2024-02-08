@@ -6,9 +6,16 @@ import { useState } from "react";
 import { CustomImage } from "~/components/custom-image/custom-image";
 import LIcon from "~/components/lucide-icon";
 import { timeFromNow } from "~/lib/convert";
+import { cn } from "~/lib/utils";
 import { ZingMP3ReleaseSection } from "~/types/music/zingMP3/release";
 
 type FilterType = "all" | "vPop" | "others";
+
+const filters: { label: string; value: FilterType }[] = [
+  { label: "TẤT CẢ", value: "all" },
+  { label: "VIỆT NAM", value: "vPop" },
+  { label: "QUỐC TẾ", value: "others" },
+];
 
 export default function ZingMP3NewRelease(props: {
   data?: ZingMP3ReleaseSection;
@@ -39,30 +46,17 @@ function ZingMP3NewReleaseItem({ data }: { data: unknown }) {
       <br />
       <div className="flex justify-between items-center text-xs font-semibold">
         <div className="flex gap-4">
-          <button
-            className={`px-6 py-2 rounded-3xl border ${
-              filter == "all" && "bg-blue-500"
-            }`}
-            onClick={() => onFilter("all")}
-          >
-            TẤT CẢ
-          </button>
-          <button
-            className={`px-6 py-2 rounded-3xl border ${
-              filter == "vPop" && "bg-blue-500"
-            }`}
-            onClick={() => onFilter("vPop")}
-          >
-            VIỆT NAM
-          </button>
-          <button
-            className={`px-6 py-2 rounded-3xl border ${
-              filter == "others" && "bg-blue-500"
-            }`}
-            onClick={() => onFilter("others")}
-          >
-            QUỐC TẾ
-          </button>
+          {filters.map(({ label, value }) => (
+            <button
+              className={cn(
+                "px-6 py-2 rounded-3xl border",
+                filter == value && "bg-blue-500"
+              )}
+              onClick={() => onFilter(value)}
+            >
+              {label}
+            </button>
+          ))}
         </div>
         <div className="flex items-center hover:text-blue-500">
           <div className="pr-1">TẤT CẢ</div>

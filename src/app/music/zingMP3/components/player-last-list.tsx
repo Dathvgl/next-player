@@ -9,6 +9,7 @@ import { ScrollArea } from "~/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
 import { durationUTC } from "~/lib/convert";
 import { MotionDiv, MotionLi } from "~/lib/motion";
+import { cn } from "~/lib/utils";
 import { useAppDispatch, useAppSelector } from "~/redux/hook";
 import {
   musicZingMP3IdSelector,
@@ -102,11 +103,12 @@ export default function PlayerLastList() {
                   key={item.encodeId}
                   initial="init"
                   whileHover="hover"
-                  className={`px-2 py-1.5 relative cursor-pointer overflow-hidden rounded gap-2 flex justify-between items-center group group/icon dark:text-white/80 ${
+                  className={cn(
+                    "px-2 py-1.5 relative cursor-pointer overflow-hidden rounded gap-2 flex justify-between items-center group group/icon dark:text-white/80",
                     active
                       ? "bg-black/20 dark:bg-white/20"
                       : " hover:bg-black/20 dark:hover:bg-white/20"
-                  }`}
+                  )}
                   onClick={
                     active
                       ? undefined

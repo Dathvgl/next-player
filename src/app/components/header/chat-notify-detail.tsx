@@ -1,9 +1,8 @@
 "use client";
 
-import { where } from "firebase/firestore";
 import { MessageCircle } from "lucide-react";
 import Link from "next/link";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
 import { CustomImage } from "~/components/custom-image/custom-image";
 import LIcon from "~/components/lucide-icon";
 import {
@@ -13,56 +12,18 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { Skeleton } from "~/components/ui/skeleton";
-import { listenListStore } from "~/database/firebase";
 import { timeFromNow } from "~/lib/convert";
-import {
-  ChatMessageUser,
-  ChatNotifyType,
-  ChatPeopleType,
-} from "~/types/message";
+import { useAppSelector } from "~/redux/hook";
+import { messageChatNotifySelector } from "~/redux/selectors/message-selector";
 import { UserMessage } from "~/types/user";
 
 type ChatNotifyDetailProps = {
   users: UserMessage[];
-  chatNotifies: ChatNotifyType[];
 };
 
-export default function ChatNotifyDetail({
-  users,
-  chatNotifies,
-}: ChatNotifyDetailProps) {
-  const badge = chatNotifies.filter(({ seen }) => !seen).length;
-  const [people, setPeople] = useState<ChatMessageUser[]>([]);
-
-  useEffect(() => {
-    if (chatNotifies.length == 0) return;
-    const uids = chatNotifies.map(({ sender }) => sender);
-
-    const unsubscribe = listenListStore(
-      "users",
-      (snapshot) => {
-        if (snapshot.empty) return;
-        const list: ChatMessageUser[] = [];
-
-        snapshot.forEach((item) => {
-          const data = item.data() as ChatPeopleType;
-          if (!item.exists()) return;
-
-          const result = users.find(({ uid }) => uid == data.uid);
-          if (!result) return;
-
-          list.push({ ...data, ...result });
-        });
-
-        setPeople(list);
-      },
-      [where("uid", "in", uids)]
-    );
-
-    return () => {
-      unsubscribe();
-    };
-  }, [JSON.stringify(chatNotifies)]);
+export default function ChatNotifyDetail({ users }: ChatNotifyDetailProps) {
+  const chatNotify = useAppSelector(messageChatNotifySelector);
+  const badge = chatNotify.filter(({ seen }) => !seen).length;
 
   return (
     <DropdownMenu>
@@ -72,7 +33,7 @@ export default function ChatNotifyDetail({
             <LIcon className="w-5 h-5" icon={MessageCircle} button />
           </button>
           {badge != 0 && (
-            <strong className="w-7 h-7 flex items-center justify-center absolute -top-2 -right-2 rounded-full bg-red-500">
+            <strong className="w-7 h-7 select-none flex items-center justify-center absolute -top-2 -right-2 rounded-full bg-red-500">
               {badge > 99 ? 99 : badge}
             </strong>
           )}
@@ -81,21 +42,21 @@ export default function ChatNotifyDetail({
       <DropdownMenuContent align="end" className="w-80">
         <ScrollArea className="h-[318px]">
           <ul className="p-2">
-            {chatNotifies.length != 0 ? (
-              chatNotifies
+            {chatNotify.length != 0 ? (
+              chatNotify
                 .sort((a, b) => b.timestamp - a.timestamp)
                 .map((item, index) => {
-                  const person = people.find(({ uid }) => uid == item.sender);
+                  const person = users.find(({ uid }) => uid == item.sender);
                   if (!person) return <Fragment key={index} />;
 
                   return (
                     <li
-                      key={item.messageId}
+                      key={item.roomId}
                       className="rounded overflow-hidden p-2 hover:bg-black/20 dark:hover:bg-white/20"
                     >
                       <Link
                         className="flex items-center gap-4"
-                        href={`/message?uid=${item.messageId}`}
+                        href={`/message?uid=${item.roomId}`}
                       >
                         <CustomImage
                           className="w-12 h-12 rounded-full overflow-hidden"

@@ -7,8 +7,7 @@ export type ChatPeopleType = {
 };
 
 export type ChatNotifyType = {
-  chatUid: string;
-  messageId: string;
+  roomId: string;
   seen: boolean;
   sender: string;
   content: string;

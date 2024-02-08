@@ -3,10 +3,19 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { orderByChild } from "firebase/database";
 import { AnimatePresence } from "framer-motion";
+import { Eraser, MoreHorizontal, SendHorizonal, Trash2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
+import { CustomImage } from "~/components/custom-image/custom-image";
+import LIcon from "~/components/lucide-icon";
 import { Button } from "~/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
 import {
   Form,
   FormControl,
@@ -24,11 +33,13 @@ import {
   updateRealTime,
   writeRealTime,
 } from "~/database/firebase";
-import { timestampNow } from "~/lib/convert";
+import { timeFromNow, timestampNow } from "~/lib/convert";
 import { MotionLi } from "~/lib/motion";
+import { cn } from "~/lib/utils";
 import { useAppSelector } from "~/redux/hook";
 import { userUIDSelector } from "~/redux/selectors/user-selector";
 import { postMessageRoom } from "~/services/message-service";
+import { UserMessage } from "~/types/user";
 
 type MessageLogType = {
   id: string;
@@ -41,7 +52,7 @@ type MessageLogType = {
 type ChatMessageDetailProps = {
   roomId: string;
   roomUid: string;
-  members: string[];
+  members: UserMessage[];
 };
 
 const formSchema = z.object({
@@ -117,7 +128,7 @@ export default function ChatMessageDetail({
       const { length } = members;
 
       for (let index = 0; index < length; index++) {
-        const item = members[index];
+        const item = members[index].uid;
         const pathRef = `/chatNotify/${item}/${roomId}`;
 
         const once = await onceRealtime(pathRef);
@@ -150,6 +161,12 @@ export default function ChatMessageDetail({
     });
   }
 
+  async function onRemove(messageId: string) {
+    await updateRealTime(`${pathRef}/${messageId}`, { remove: true });
+  }
+
+  function onDelete(messageId: string) {}
+
   return (
     <section className="flex-1 h-full flex flex-col [&>div>div>div]:h-full">
       <ScrollArea ref={scrollRef} className="flex-1">
@@ -160,23 +177,106 @@ export default function ChatMessageDetail({
           >
             {chats.map((item) => {
               const receive = item.uid == uid;
+              const member = members.find(({ uid }) => item.uid == uid);
+
+              if (!member) return null;
+
               return (
                 <MotionLi
                   key={`${item.id}-${item.uid}`}
-                  className={`flex w-full ${
+                  className={cn(
+                    "flex w-full",
                     receive ? "justify-end" : "justify-start"
-                  }`}
+                  )}
                   initial={{ opacity: 0, y: 100 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, transition: { duration: 0.15 } }}
                 >
-                  <div
-                    className={`px-3 py-2 rounded text-white max-w-[40%] ${
-                      receive ? "bg-[#0084ff]" : "bg-[#3e4042]"
-                    }`}
+                  <section
+                    className={cn(
+                      "max-w-[40%] flex flex-col gap-2",
+                      receive ? "items-end" : "items-start"
+                    )}
                   >
-                    {item.message}
-                  </div>
+                    <div
+                      className={cn(
+                        "flex gap-2",
+                        receive ? "flex-row" : "flex-row-reverse"
+                      )}
+                    >
+                      <div
+                        className={cn(
+                          "flex flex-col",
+                          receive ? "items-end" : "items-start"
+                        )}
+                      >
+                        <strong>{member.name}</strong>
+                        <i className="text-sm">
+                          {timeFromNow(item.timestamp / 1000)}
+                        </i>
+                      </div>
+                      <CustomImage
+                        className="w-10 h-10 rounded-full overflow-hidden"
+                        src={member.thumnail}
+                        alt={member.name}
+                      />
+                    </div>
+                    <div
+                      className={cn(
+                        "flex gap-2",
+                        receive ? "flex-row" : "flex-row-reverse",
+                        receive ? "justify-end" : "justify-start"
+                      )}
+                    >
+                      <div className="flex">
+                        <div
+                          className={cn(
+                            "flex",
+                            receive ? "justify-end" : "justify-start"
+                          )}
+                        >
+                          <div
+                            className={cn(
+                              "px-2.5 py-1.5 rounded text-white w-fit",
+                              receive && !item.remove
+                                ? "bg-[#0084ff]"
+                                : "bg-[#3e4042]"
+                            )}
+                          >
+                            {item.remove ? "Gỡ tin nhắn" : item.message}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="w-10 flex justify-center">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button
+                              className="p-1 w-8 h-8 rounded-full overflow-hidden"
+                              variant="ghost"
+                            >
+                              <MoreHorizontal />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent>
+                            <DropdownMenuItem
+                              onClick={
+                                item.remove
+                                  ? undefined
+                                  : () => onRemove(item.id)
+                              }
+                            >
+                              <Eraser className="mr-2 h-4 w-4" />
+                              <span>Gỡ</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => onDelete(item.id)}>
+                              <Trash2 className="mr-2 h-4 w-4" />
+                              <span>Xóa</span>
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
+                    </div>
+                  </section>
                 </MotionLi>
               );
             })}
@@ -202,7 +302,9 @@ export default function ChatMessageDetail({
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button className="p-1.5 rounded-full overflow-hidden" type="submit">
+            <SendHorizonal />
+          </Button>
         </form>
       </Form>
     </section>

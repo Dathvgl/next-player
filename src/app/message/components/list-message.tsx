@@ -11,7 +11,6 @@ import ListMessageDetail from "./list-message-detail";
 export default function ListMessage() {
   const chatList = useAppSelector(messageChatListSelector);
   const [people, setPeople] = useState<ChatMessageUser[]>([]);
-  console.log(chatList);
 
   useEffect(() => {
     if (chatList.length == 0) return;
@@ -49,7 +48,7 @@ export default function ListMessage() {
   if (people.length == 0) return null;
 
   return (
-    <ul className="p-2">
+    <ul className="p-3">
       {people.map((item) => (
         <ListMessageDetail key={item.uid} data={item} extra />
       ))}

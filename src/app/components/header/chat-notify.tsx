@@ -2,18 +2,19 @@
 
 import { useEffect, useState } from "react";
 import { listenRealtime } from "~/database/firebase";
-import { useAppSelector } from "~/redux/hook";
+import { useAppDispatch, useAppSelector } from "~/redux/hook";
 import { userUIDSelector } from "~/redux/selectors/user-selector";
 import { ChatNotifyType } from "~/types/message";
 import ChatNotifyDetail from "./chat-notify-detail";
 import { postMessageUsers } from "~/services/user-service";
 import { UserMessage } from "~/types/user";
+import { messageChatNotify } from "~/redux/slices/message-slice";
 
 export default function ChatNotify() {
   const uid = useAppSelector(userUIDSelector);
+  const dispatch = useAppDispatch();
 
   const [users, setUsers] = useState<UserMessage[]>([]);
-  const [chatNotifies, setChatNotifies] = useState<ChatNotifyType[]>([]);
 
   useEffect(() => {
     const unsubscribe = listenRealtime(
@@ -22,13 +23,13 @@ export default function ChatNotify() {
         const list: ChatNotifyType[] = [];
 
         snapshot.forEach((item) => {
-          list.push({ ...item.val(), messageId: item.key });
+          list.push({ ...item.val(), roomId: item.key });
         });
 
         const data = await postMessageUsers(list.map(({ sender }) => sender));
 
         setUsers(data ?? []);
-        setChatNotifies(list);
+        dispatch(messageChatNotify(list));
       }
     );
 
@@ -37,5 +38,5 @@ export default function ChatNotify() {
     };
   }, []);
 
-  return <ChatNotifyDetail users={users} chatNotifies={chatNotifies} />;
+  return <ChatNotifyDetail users={users} />;
 }

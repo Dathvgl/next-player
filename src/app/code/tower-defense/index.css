@@ -1,0 +1,130 @@
+@font-face {
+  font-family: "ChangaOne";
+  src: url("/tower-defense/fonts/ChangaOne-Regular.ttf");
+}
+
+body {
+  font-family: "ChangaOne", cursive;
+}
+
+img {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.game {
+  @apply relative inline-block bg-white;
+}
+
+.result {
+  @apply absolute inset-0 z-20 hidden text-[96px] text-white;
+  @apply bg-black/20 p-4 items-center justify-center;
+
+  -webkit-text-stroke: 3px black;
+}
+
+.info {
+  @apply flex justify-between absolute top-4 right-4 text-[32px] text-white;
+
+  user-select: none;
+  -webkit-text-stroke: 2px black;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.info .info-row {
+  @apply flex items-center gap-2;
+}
+
+.info .svg-heart {
+  @apply w-8 text-red-500 stroke-black;
+}
+
+.info .svg-gold {
+  @apply w-8 text-yellow-300 stroke-black;
+}
+
+.info .svg-wave {
+  @apply w-8 stroke-black;
+
+  color: rgb(102, 204, 255);
+}
+
+.info .svg-time {
+  @apply w-8 text-white stroke-black;
+}
+
+#basePlace {
+  @apply flex absolute;
+}
+
+#buttons {
+  @apply grid grid-cols-2 flex-1 gap-8 ml-4;
+}
+
+#buttons button {
+  @apply cursor-pointer font-bold rounded-lg bg-blue-600 text-white;
+}
+
+#buttons :last-child {
+  @apply col-span-2;
+}
+
+#skills {
+  @apply flex items-center justify-evenly;
+}
+
+#skills svg {
+  @apply w-8 h-8 cursor-pointer rounded-full;
+
+  padding: 0.2rem;
+}
+
+#skills svg:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+#turrets {
+  @apply grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+#turret-upgrade {
+  @apply hidden absolute;
+}
+
+#turret-upgrade .svg-upgrade {
+  background-color: aquamarine;
+}
+
+#turret-upgrade .svg-remove {
+  @apply bg-red-500;
+}
+
+#turn-monster {
+  @apply flex justify-evenly items-center gap-4 absolute px-4 py-[40px];
+
+  border-radius: 50rem;
+  background-color: rgba(0, 255, 0, 0.3);
+}
+
+.ver-line {
+  @apply h-[50px];
+
+  border-left: 6px solid green;
+}
+
+#infomation {
+  @apply absolute bottom-0 right-4 text-[24px];
+}
+
+#info-hover {
+  @apply absolute text-justify hidden text-white p-4 text-[24px];
+
+  font-family: "Times New Roman", Times, serif;
+  background-color: hsla(0, 0%, 0%, 0.5);
+}

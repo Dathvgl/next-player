@@ -10,12 +10,9 @@ import { capitalize } from "~/lib/convert";
 import { MotionLi, MotionUl } from "~/lib/motion";
 
 const codeList = [
-  {
-    type: "evervault",
-  },
-  {
-    type: "audio-visualization",
-  },
+  { type: "evervault" },
+  { type: "audio-visualization" },
+  { type: "tower-defense" },
 ];
 
 export const metadata: Metadata = {

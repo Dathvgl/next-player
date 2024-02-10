@@ -1,0 +1,218 @@
+{
+  "acid ooze": {
+    "type": "ground",
+    "info": {
+      "name": "Acid Ooze",
+      "hp": 11,
+      "speed": 2,
+      "resist": {
+        "normal": 110,
+        "fire": 107,
+        "light": null,
+        "ice": 100,
+        "poison": 100,
+        "energy": null
+      }
+    },
+    "normal": {
+      "gold": 3,
+      "size": 10
+    },
+    "boss": {
+      "gold": 18,
+      "size": 3
+    }
+  },
+  "humongous ettin": {
+    "type": "ground",
+    "info": {
+      "name": "Humongous Ettin",
+      "hp": 107,
+      "speed": 0.4,
+      "resist": {
+        "normal": 20,
+        "fire": 80,
+        "light": null,
+        "ice": 20,
+        "poison": 100,
+        "energy": null
+      }
+    },
+    "normal": {
+      "gold": 16,
+      "size": 2
+    },
+    "boss": {
+      "gold": 96,
+      "size": 1
+    }
+  },
+  "wretched fomorian": {
+    "type": "ground",
+    "info": {
+      "name": "Wretched Fomorian",
+      "hp": 9,
+      "speed": 1.2,
+      "resist": {
+        "normal": 10,
+        "fire": 21,
+        "light": null,
+        "ice": 100,
+        "poison": 100,
+        "energy": null
+      }
+    },
+    "normal": {
+      "gold": 5,
+      "size": 7
+    },
+    "boss": {
+      "gold": 30,
+      "size": 3
+    }
+  },
+  "werewolf stalker": {
+    "type": "ground",
+    "info": {
+      "name": "Werewolf Stalker",
+      "hp": 9,
+      "speed": 1.5,
+      "resist": {
+        "normal": 10,
+        "fire": 109,
+        "light": null,
+        "ice": 5,
+        "poison": 100,
+        "energy": null
+      }
+    },
+    "normal": {
+      "gold": 3,
+      "size": 20
+    },
+    "boss": {
+      "gold": 18,
+      "size": 3
+    }
+  },
+  "swamp troll": {
+    "type": "ground",
+    "info": {
+      "name": "Swamp Troll",
+      "hp": 135,
+      "speed": 0.8,
+      "resist": {
+        "normal": 100,
+        "fire": 100,
+        "light": null,
+        "ice": 105,
+        "poison": 100,
+        "energy": null
+      }
+    },
+    "normal": {
+      "gold": 3,
+      "size": 5
+    },
+    "boss": {
+      "gold": 18,
+      "size": 1
+    }
+  },
+  "ocular watcher": {
+    "type": "air",
+    "info": {
+      "name": "Ocular Watcher",
+      "hp": 15,
+      "speed": 2,
+      "resist": {
+        "normal": 110,
+        "fire": null,
+        "light": 110,
+        "ice": 20,
+        "poison": null,
+        "energy": null
+      }
+    },
+    "normal": {
+      "gold": 4,
+      "size": 5
+    },
+    "boss": {
+      "gold": 24,
+      "size": 2
+    }
+  },
+  "intellect devourer": {
+    "type": "ground",
+    "info": {
+      "name": "Intellect Devourer",
+      "hp": 85,
+      "speed": 2,
+      "resist": {
+        "normal": 100,
+        "fire": 25,
+        "light": null,
+        "ice": 50,
+        "poison": 100,
+        "energy": null
+      }
+    },
+    "normal": {
+      "gold": 6,
+      "size": 3
+    },
+    "boss": {
+      "gold": 36,
+      "size": 2
+    }
+  },
+  "red cap": {
+    "type": "ground",
+    "info": {
+      "name": "Red Cap",
+      "hp": 22,
+      "speed": 3,
+      "resist": {
+        "normal": 100,
+        "fire": 109,
+        "light": null,
+        "ice": 120,
+        "poison": 100,
+        "energy": null
+      }
+    },
+    "normal": {
+      "gold": 5,
+      "size": 5
+    },
+    "boss": {
+      "gold": 50,
+      "size": 1
+    }
+  },
+  "clawing harpy": {
+    "type": "air",
+    "info": {
+      "name": "Clawing Harpy",
+      "hp": 20,
+      "speed": 1,
+      "resist": {
+        "normal": 10,
+        "fire": null,
+        "light": 10,
+        "ice": 40,
+        "poison": null,
+        "energy": null
+      }
+    },
+    "normal": {
+      "gold": 5,
+      "size": 5
+    },
+    "boss": {
+      "gold": 30,
+      "size": 1
+    }
+  }
+}

@@ -1,0 +1,362 @@
+{
+  "normal": {
+    "affect": null,
+    "info": {
+      "srcBullet": "orange",
+      "shoot": ["ground", "air"],
+      "description": "Tháp bình thường không bắn loang"
+    },
+    "level": [
+      {
+        "power": 10,
+        "speed": 1.5,
+        "spread": null,
+        "effect": null,
+        "radius": 1.5,
+        "buy": 5,
+        "sell": 2,
+        "upgrade": 10
+      },
+      {
+        "power": 25,
+        "speed": 1.6,
+        "spread": null,
+        "effect": null,
+        "radius": 1.7,
+        "buy": 5,
+        "sell": 5,
+        "upgrade": 20
+      },
+      {
+        "power": 63,
+        "speed": 1.7,
+        "spread": null,
+        "effect": null,
+        "radius": 2,
+        "buy": 5,
+        "sell": 10,
+        "upgrade": 40
+      },
+      {
+        "power": 158,
+        "speed": 1.9,
+        "spread": null,
+        "effect": null,
+        "radius": 2.5,
+        "buy": 5,
+        "sell": 20,
+        "upgrade": 100
+      },
+      {
+        "power": 315,
+        "speed": 2,
+        "spread": null,
+        "effect": null,
+        "radius": 3,
+        "buy": 5,
+        "sell": 50,
+        "upgrade": null
+      }
+    ]
+  },
+  "fire": {
+    "affect": null,
+    "info": {
+      "srcBullet": "red",
+      "shoot": ["ground"],
+      "description": "Tháp lửa có sức tấn công cao và bắn loang"
+    },
+    "level": [
+      {
+        "power": 15,
+        "speed": 0.6,
+        "spread": 1,
+        "effect": null,
+        "radius": 2,
+        "buy": 10,
+        "sell": 5,
+        "upgrade": 20
+      },
+      {
+        "power": 45,
+        "speed": 0.6,
+        "spread": 1,
+        "effect": null,
+        "radius": 2.5,
+        "buy": 10,
+        "sell": 10,
+        "upgrade": 40
+      },
+      {
+        "power": 135,
+        "speed": 0.6,
+        "spread": 1,
+        "effect": null,
+        "radius": 3,
+        "buy": 10,
+        "sell": 20,
+        "upgrade": 80
+      },
+      {
+        "power": 405,
+        "speed": 0.6,
+        "spread": 1,
+        "effect": null,
+        "radius": 3.5,
+        "buy": 10,
+        "sell": 40,
+        "upgrade": 200
+      },
+      {
+        "power": 1013,
+        "speed": 0.6,
+        "spread": 2,
+        "effect": null,
+        "radius": 4,
+        "buy": 10,
+        "sell": 100,
+        "upgrade": null
+      }
+    ]
+  },
+  "light": {
+    "affect": null,
+    "info": {
+      "srcBullet": "blue",
+      "shoot": ["air"],
+      "description": "Tháp điện có thể bắn loang và chỉ bắn quái bay"
+    },
+    "level": [
+      {
+        "power": 20,
+        "speed": 5,
+        "spread": 1,
+        "effect": null,
+        "radius": 2,
+        "buy": 15,
+        "sell": 7,
+        "upgrade": 30
+      },
+      {
+        "power": 50,
+        "speed": 5.5,
+        "spread": 1,
+        "effect": null,
+        "radius": 2.5,
+        "buy": 15,
+        "sell": 15,
+        "upgrade": 60
+      },
+      {
+        "power": 125,
+        "speed": 6,
+        "spread": 1,
+        "effect": null,
+        "radius": 6,
+        "buy": 15,
+        "sell": 30,
+        "upgrade": 120
+      },
+      {
+        "power": 313,
+        "speed": 6.5,
+        "spread": 2,
+        "effect": null,
+        "radius": 3.5,
+        "buy": 15,
+        "sell": 60,
+        "upgrade": 240
+      },
+      {
+        "power": 782,
+        "speed": 7,
+        "spread": 2,
+        "effect": null,
+        "radius": 4,
+        "buy": 15,
+        "sell": 120,
+        "upgrade": null
+      }
+    ]
+  },
+  "ice": {
+    "affect": "slow",
+    "info": {
+      "srcBullet": "cyan",
+      "shoot": ["ground", "air"],
+      "description": "Tháp băng làm chậm kẻ thù và bắn loang"
+    },
+    "level": [
+      {
+        "power": 5,
+        "speed": 1.5,
+        "spread": 1,
+        "effect": 10,
+        "radius": 1.5,
+        "buy": 20,
+        "sell": 10,
+        "upgrade": 40
+      },
+      {
+        "power": 10,
+        "speed": 1.5,
+        "spread": 1,
+        "effect": 20,
+        "radius": 1.5,
+        "buy": 20,
+        "sell": 20,
+        "upgrade": 80
+      },
+      {
+        "power": 20,
+        "speed": 1.5,
+        "spread": 2,
+        "effect": 10,
+        "radius": 1.5,
+        "buy": 20,
+        "sell": 40,
+        "upgrade": 160
+      },
+      {
+        "power": 40,
+        "speed": 1.5,
+        "spread": 2,
+        "effect": 10,
+        "radius": 1.5,
+        "buy": 20,
+        "sell": 80,
+        "upgrade": 320
+      },
+      {
+        "power": 80,
+        "speed": 1.5,
+        "spread": 3,
+        "effect": 10,
+        "radius": 1.5,
+        "buy": 20,
+        "sell": 160,
+        "upgrade": null
+      }
+    ]
+  },
+  "poison": {
+    "affect": "toxic",
+    "info": {
+      "srcBullet": "lime",
+      "shoot": ["ground"],
+      "description": "Tháp độc làm kẻ thù dính độc rút máu và bắn loang"
+    },
+    "level": [
+      {
+        "power": 1,
+        "speed": 1,
+        "spread": 1,
+        "effect": 5,
+        "radius": 1.5,
+        "buy": 20,
+        "sell": 10,
+        "upgrade": 40
+      },
+      {
+        "power": 2,
+        "speed": 1.1,
+        "spread": 1,
+        "effect": 10,
+        "radius": 1.7,
+        "buy": 20,
+        "sell": 20,
+        "upgrade": 80
+      },
+      {
+        "power": 3,
+        "speed": 1.2,
+        "spread": 1,
+        "effect": 15,
+        "radius": 2,
+        "buy": 20,
+        "sell": 40,
+        "upgrade": 160
+      },
+      {
+        "power": 4,
+        "speed": 1.2,
+        "spread": 1,
+        "effect": 20,
+        "radius": 2.5,
+        "buy": 20,
+        "sell": 80,
+        "upgrade": 320
+      },
+      {
+        "power": 5,
+        "speed": 1.3,
+        "spread": 1,
+        "effect": 25,
+        "radius": 2.7,
+        "buy": 20,
+        "sell": 160,
+        "upgrade": null
+      }
+    ]
+  },
+  "energy": {
+    "affect": "buff",
+    "info": {
+      "srcBullet": "purple",
+      "shoot": null,
+      "description": "Tháp năng lượng chỉ tăng sức mạnh và tốc độ cho các tháp khác"
+    },
+    "level": [
+      {
+        "power": 10,
+        "speed": 10,
+        "spread": null,
+        "effect": null,
+        "radius": 1.5,
+        "buy": 30,
+        "sell": 15,
+        "upgrade": 60
+      },
+      {
+        "power": 15,
+        "speed": 15,
+        "spread": null,
+        "effect": null,
+        "radius": 1.5,
+        "buy": 30,
+        "sell": 30,
+        "upgrade": 120
+      },
+      {
+        "power": 20,
+        "speed": 20,
+        "spread": null,
+        "effect": null,
+        "radius": 1.5,
+        "buy": 30,
+        "sell": 60,
+        "upgrade": 240
+      },
+      {
+        "power": 25,
+        "speed": 25,
+        "spread": null,
+        "effect": null,
+        "radius": 1.5,
+        "buy": 30,
+        "sell": 120,
+        "upgrade": 480
+      },
+      {
+        "power": 30,
+        "speed": 30,
+        "spread": null,
+        "effect": null,
+        "radius": 1.5,
+        "buy": 30,
+        "sell": 240,
+        "upgrade": null
+      }
+    ]
+  }
+}

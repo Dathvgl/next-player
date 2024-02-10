@@ -9,7 +9,7 @@ export default function HandleProvider({ children }: ChildReact) {
     <>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <ReduxProvider>
-          {/* <AuthProvider /> */}
+          <AuthProvider />
           <LayoutHandler>
             <>{children}</>
           </LayoutHandler>

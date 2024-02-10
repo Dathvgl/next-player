@@ -14,11 +14,7 @@ type MangaFollowProps = {
   followed?: MangaFollow | null;
 };
 
-export default async function MangaFollow({
-  id,
-  type,
-  followed,
-}: MangaFollowProps) {
+export default function MangaFollow({ id, type, followed }: MangaFollowProps) {
   async function onClick() {
     if (followed) {
       await deleteMangaUserFollow({ id, type });

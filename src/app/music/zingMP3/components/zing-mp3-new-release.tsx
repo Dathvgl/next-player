@@ -48,6 +48,7 @@ function ZingMP3NewReleaseItem({ data }: { data: unknown }) {
         <div className="flex gap-4">
           {filters.map(({ label, value }) => (
             <button
+              key={value}
               className={cn(
                 "px-6 py-2 rounded-3xl border",
                 filter == value && "bg-blue-500"

@@ -1,12 +1,10 @@
 import { Metadata } from "next";
-import { linkApi } from "~/lib/api";
 import { capitalize } from "~/lib/convert";
-import handleFetch from "~/lib/fetch";
 import { getMangaTags } from "~/services/manga-service";
-import { MangaTag, MangaType } from "~/types/manga";
+import { MangaType } from "~/types/manga";
+import { ParamReact } from "~/types/type";
 import MangaFilter from "./components/manga-filter";
 import MangaList from "./components/manga-list";
-import { ParamReact } from "~/types/type";
 
 export async function generateMetadata({
   params: { type },

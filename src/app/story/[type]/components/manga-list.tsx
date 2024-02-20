@@ -4,12 +4,11 @@ import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
 import Pagination from "~/components/pagination";
 import { site } from "~/configs/site";
-import { linkApi } from "~/lib/api";
 import { numChapter, timeFromNow } from "~/lib/convert";
-import handleFetch from "~/lib/fetch";
 import { MotionLi, MotionUl } from "~/lib/motion";
 import { useAppSelector } from "~/redux/hook";
 import { mangaFilterSelector } from "~/redux/selectors/manga-selector";
+import { getMangaList } from "~/services/manga-service";
 import { MangaList, MangaType } from "~/types/manga";
 import MangaThumnailClient from "../../components/manga-thumnail-client";
 import MangaListLoading from "./manga-list-loading";
@@ -21,12 +20,7 @@ export default function MangaList({ type }: { type: MangaType }) {
 
   useEffect(() => {
     async function init() {
-      const data = await handleFetch<MangaList>({
-        url: `${linkApi.manga}/list?${search}`,
-        init: { next: { revalidate: 3600 } },
-      });
-
-      setData(data);
+      setData(await getMangaList({ search }));
     }
 
     init();

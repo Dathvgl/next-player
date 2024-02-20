@@ -9,6 +9,7 @@ import {
   MangaChapterDetail,
   MangaDetail,
   MangaFollow,
+  MangaList,
   MangaListAdmin,
   MangaTag,
   MangaThumnail,
@@ -17,6 +18,13 @@ import {
 import { FetchQuery } from "~/types/type";
 
 type BaseProps = { id: string; type: MangaType };
+
+export async function getMangaList({ search }: { search: string }) {
+  return await handleFetch<MangaList>({
+    url: `${linkApi.manga}/list?${search}`,
+    init: { next: { tags: [`mangaList/${search}`] } },
+  });
+}
 
 export async function getMangaDetail({ id, type }: BaseProps) {
   return await handleFetch<MangaDetail>({
@@ -129,13 +137,15 @@ export async function putMangaUserFollow({
 
 export async function deleteMangaUserFollow({ id, type }: BaseProps) {
   await handleFetch({
-    url: `${linkApi.user}/followManga/${id}?type=${type}`,
+    url: `${linkApi.user}/followManga/${id}`,
     init: {
       method: "DELETE",
       headers: {
         Cookie: cookies().toString(),
         Accept: "application/json",
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({ type }),
     },
   });
 
